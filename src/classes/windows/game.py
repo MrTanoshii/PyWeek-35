@@ -13,7 +13,7 @@ class GameWindow(arcade.Window):
 
     def setup(self):
         # Setup the game manager
-        GameManager()
+        GameManager(self)
 
         # Setup views
         self.game_view = GameView()
@@ -21,9 +21,3 @@ class GameWindow(arcade.Window):
 
         # Set the initial view
         self.show_view(self.game_view)
-
-    def on_draw(self):
-        self.clear()
-
-    def on_update(self, delta_time):
-        pass

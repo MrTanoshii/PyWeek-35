@@ -22,12 +22,12 @@ class GameView(arcade.View):
         self.clear()
 
         arcade.draw_text(
-            "Game Screen - click to advance",
-            C.SCREEN_WIDTH / 2,
-            C.SCREEN_HEIGHT / 2,
+            "Files retrieved: 0/0",
+            10,
+            C.SCREEN_HEIGHT - 30,
             arcade.color.WHITE,
             font_size=30,
-            anchor_x="center",
+            anchor_x="left",
             anchor_y="center",
         )
 
