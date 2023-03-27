@@ -24,16 +24,13 @@ class IngameMenuView(arcade.View):
 
         # Create buttons
         resume_button = GUI.UIFlatButton(text="Resume", width=button_width)
-        self.v_box.add(resume_button.with_space_around(bottom=button_bottom))
-
         options_button = GUI.UIFlatButton(text="Options", width=button_width)
-        self.v_box.add(options_button.with_space_around(bottom=button_bottom))
-
         credits_button = GUI.UIFlatButton(text="Credits", width=button_width)
-        self.v_box.add(credits_button.with_space_around(bottom=button_bottom))
-
         quit_button = GUI.UIFlatButton(text="Quit", width=button_width)
-        self.v_box.add(quit_button.with_space_around(bottom=button_bottom))
+
+        button_lst = [resume_button, options_button, credits_button, quit_button]
+        for button in button_lst:
+            self.v_box.add(button.with_space_around(bottom=button_bottom))
 
         # User decorators to handle on_click events
         @resume_button.event("on_click")
