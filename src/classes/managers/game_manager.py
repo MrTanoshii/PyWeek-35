@@ -12,6 +12,7 @@ class GameManager(object):
         self.player = None
         self.collision = None
         self.score = 0
+        self.guards = []
 
     def set_player(self, player):
         self.player = player

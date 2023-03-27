@@ -1,5 +1,4 @@
 import arcade
-
 import os.path
 
 from classes.managers.game_manager import GameManager
@@ -51,6 +50,7 @@ class Guard(arcade.Sprite):
         self.scale = 1.0
         self.animation_counter = 0
         self.animation_speed = 24 / 60
+        GameManager.instance.guards.append(self)
 
     @ classmethod
     def update(cls, dt: float):
