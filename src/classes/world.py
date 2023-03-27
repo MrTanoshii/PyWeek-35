@@ -15,7 +15,7 @@ class World:
     @classmethod
     def load(cls, map_name: str):
         return cls(
-            arcade.load_tilemap(Path("assets") / "tilemaps" / map_name, scaling=1.25),
+            arcade.load_tilemap(Path("assets") / "tilemaps" / map_name, scaling=C.WORLD_SCALE),
             map_name=map_name.split(".")[0],  # :=
         )
 
