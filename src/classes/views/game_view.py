@@ -1,5 +1,6 @@
 import arcade
 
+from classes.managers.game_manager import GameManager
 from constants import CONSTANTS as C
 from classes.managers.light_manager import LightManager
 from classes.wall import Wall
@@ -19,7 +20,7 @@ class GameView(arcade.View):
         self.hud = None
         self.light = LightManager()
         self.walls = arcade.SpriteList()
-        self.physics_engine = None
+        self.physics_engines = []
         self.setup()
         self.last_pos = (0, 0)
 
@@ -38,10 +39,14 @@ class GameView(arcade.View):
         ]:
             self.walls.append(wall)
 
-        self.guard = Guard()
-        self.hud = HUD()
+        # Guard
+        for guard in self.world.guards:
+            new_guard: arcade.Sprite = Guard(self.walls)
+            new_guard.center_x = (guard.coordinates.x + guard.size.width / 2) * C.WORLD_SCALE
+            new_guard.center_y = (self.world.height * self.world.tile_size - guard.coordinates.y - guard.size.height / 2) * C.WORLD_SCALE
+            self.physics_engines.append(arcade.PhysicsEngineSimple(new_guard, self.walls))
 
-        self.physics_engine = arcade.PhysicsEngineSimple(self.guard, self.walls)
+        self.hud = HUD()
 
     def on_show_view(self):
         """Called when switching to this view."""
@@ -53,7 +58,7 @@ class GameView(arcade.View):
 
         self.light.on_draw_shadows()
         # Draw fragments which shouldn't pass the light:
-        self.walls.draw()
+        # self.walls.draw()
 
         self.light.on_draw()
         # Draw fragments which can be in the shadow:
@@ -63,14 +68,15 @@ class GameView(arcade.View):
         self.clear()
         self.light.on_draw_shader(self.last_pos[0], self.last_pos[1])
 
-        self.guard.draw()
+        Guard.enemy_list.draw()
         self.hud.draw()
 
     def on_update(self, delta_time: float):
         """Update the view."""
-        self.physics_engine.update()
+        for engine in self.physics_engines:
+            engine.update()
         self.scene.update()
-        self.guard.update(delta_time)
+        Guard.enemy_list.on_update(delta_time)
 
     def on_mouse_press(self, _x, _y, _button, _modifiers):
         """Handle mouse press events."""
@@ -78,7 +84,7 @@ class GameView(arcade.View):
 
     def on_key_press(self, key, modifiers):
         """Handle key press events."""
-        self.guard.on_key_press(key, modifiers)
+        pass
 
     def on_resize(self, width: int, height: int):
         self.light.on_resize(width, height)

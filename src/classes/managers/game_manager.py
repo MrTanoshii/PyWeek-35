@@ -1,3 +1,6 @@
+import arcade
+
+
 class GameManager(object):
     """Base class for the game manager.
     Singleton."""
@@ -13,6 +16,7 @@ class GameManager(object):
         self.collision = None
         self.score = 0
         self.guards = []
+        self.walls = None
 
     def set_player(self, player):
         self.player = player

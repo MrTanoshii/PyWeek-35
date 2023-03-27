@@ -1,4 +1,7 @@
+from random import randint
+
 import arcade
+
 import os.path
 
 from classes.managers.game_manager import GameManager
@@ -9,7 +12,7 @@ class Guard(arcade.Sprite):
     # SpriteList class attribute
     enemy_list = arcade.SpriteList()
 
-    def __init__(self):
+    def __init__(self, _walls):
         # Inherit parent class
 
         super().__init__()
@@ -37,7 +40,10 @@ class Guard(arcade.Sprite):
             "down": self.texture_list[0:24],
             "right": self.texture_list[24:48],
         }
+        self.wall_list = _walls
         self.status = None
+        self.animation_counter = None
+        self.some_direction = 1
 
         self.setup()
 
@@ -52,37 +58,20 @@ class Guard(arcade.Sprite):
         self.animation_speed = 24 / 60
         GameManager.instance.guards.append(self)
 
-    @ classmethod
-    def update(cls, dt: float):
-        walls = GameManager.instance.collision
-        # Cycle trough all enemies
-        for enemy in cls.enemy_list:
-            # Move all Enemies Forwards
-            if enemy.status == "left":
-                # Check collision with wall
-                if enemy.center_x <= 100:
-                    enemy.status = "right"
-                enemy.center_x -= 60 * dt
-            elif enemy.status == "right":
-                # Check collision with wall
-                if enemy.center_x >= 1000:
-                    enemy.status = "left"
-                enemy.center_x += 60 * dt
-            elif enemy.status == "up":
-                # Check collision with wall
-                if enemy.center_y >= 700:
-                    enemy.status = "down"
-                enemy.center_y += 60 * dt
-            elif enemy.status == "down":
-                # Check collision with wall
-                if enemy.center_y <= 100:
-                    enemy.status = "up"
-                enemy.center_y -= 60 * dt
-            # Update animation every 2nd frame
-            enemy.animation_counter += enemy.animation_speed
-            if enemy.animation_counter > 1:
-                enemy.update_animation()
-                enemy.animation_counter = 0
+    def on_update(self, dt):
+        # Move all Enemies Forwards
+        self.center_x += 100 * dt * self.some_direction
+
+        # Update animation every 2nd frame
+        self.animation_counter += self.animation_speed
+        if self.animation_counter > 1:
+            self.update_animation()
+            self.animation_counter = 0
+
+        collision_equals = arcade.check_for_collision_with_list(self, self.wall_list)
+        if collision_equals:
+            self.some_direction *= -1
+            self.status = "right" if self.status == "left" else "left"
 
     def on_key_press(self, key, modifiers):
         if key == arcade.key.LEFT:

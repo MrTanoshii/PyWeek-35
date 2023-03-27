@@ -9,8 +9,12 @@ class World:
     def __init__(self, tile_map: arcade.tilemap.TileMap, map_name: str):
         self.map = tile_map
         self.map_name = map_name
+
         self.collision = self.map.get_tilemap_layer("collision")
-        self.walls: list[Rectangle] = list(filter(lambda x: x.class_ == "wall", self.objects))
+        self.walls: list[Rectangle] = list(filter(lambda x: x.class_ == "wall", self.collision.tiled_objects))
+
+        self.paths = self.map.get_tilemap_layer("path")
+        self.guards: list[Rectangle] = list(filter(lambda x: x.class_ == "guard", self.paths.tiled_objects))
 
     @classmethod
     def load(cls, map_name: str):
