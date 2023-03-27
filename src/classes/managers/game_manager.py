@@ -10,6 +10,7 @@ class GameManager(object):
     def __init__(self, game_window):
         self.game_window = game_window
         self.player = None
+        self.collision = None
         self.score = 0
 
     def set_player(self, player):

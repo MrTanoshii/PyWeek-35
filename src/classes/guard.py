@@ -2,6 +2,8 @@ import arcade
 
 import os.path
 
+from classes.managers.game_manager import GameManager
+
 
 class Guard(arcade.Sprite):
 
@@ -32,6 +34,8 @@ class Guard(arcade.Sprite):
         self.animation_list = {
             "idle": self.texture_list[12:13],
             "left": self.texture_list[0:24],
+            "up": self.texture_list[0:24],
+            "down": self.texture_list[0:24],
             "right": self.texture_list[24:48],
         }
         self.status = None
@@ -46,23 +50,34 @@ class Guard(arcade.Sprite):
         self.status = "right"
         self.scale = 1.0
         self.animation_counter = 0
-        self.animation_speed = 40 / 60
+        self.animation_speed = 24 / 60
 
     @ classmethod
     def update(cls, dt: float):
+        walls = GameManager.instance.collision
         # Cycle trough all enemies
         for enemy in cls.enemy_list:
             # Move all Enemies Forwards
             if enemy.status == "left":
                 # Check collision with wall
-                if enemy.center_x <= 200:
+                if enemy.center_x <= 100:
                     enemy.status = "right"
-                enemy.center_x -= 80 * dt
+                enemy.center_x -= 60 * dt
             elif enemy.status == "right":
                 # Check collision with wall
                 if enemy.center_x >= 1000:
                     enemy.status = "left"
-                enemy.center_x += 80 * dt
+                enemy.center_x += 60 * dt
+            elif enemy.status == "up":
+                # Check collision with wall
+                if enemy.center_y >= 700:
+                    enemy.status = "down"
+                enemy.center_y += 60 * dt
+            elif enemy.status == "down":
+                # Check collision with wall
+                if enemy.center_y <= 100:
+                    enemy.status = "up"
+                enemy.center_y -= 60 * dt
             # Update animation every 2nd frame
             enemy.animation_counter += enemy.animation_speed
             if enemy.animation_counter > 1:
@@ -74,6 +89,10 @@ class Guard(arcade.Sprite):
             self.status = "left"
         elif key == arcade.key.RIGHT:
             self.status = "right"
+        elif key == arcade.key.UP:
+            self.status = "up"
+        elif key == arcade.key.DOWN:
+            self.status = "down"
 
     def update_animation(self):
         """ Update the animated texture """

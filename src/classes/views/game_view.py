@@ -1,7 +1,8 @@
 import arcade
 
 from constants import CONSTANTS as C
-from ..guard import Guard
+from classes.guard import Guard
+from classes.managers.game_manager import GameManager
 
 
 class GameView(arcade.View):
@@ -18,12 +19,19 @@ class GameView(arcade.View):
         """Set up the view."""
         self.tilemap = arcade.load_tilemap("assets/tilemaps/example.tilemap.json", scaling=1.25)
         self.scene = arcade.Scene.from_tilemap(self.tilemap)
+        self.collision = self.tilemap.get_tilemap_layer("paths")
+        GameManager.instance.collision = self.collision
+
 
         self.guard = Guard()
 
     def on_show_view(self):
         """Called when switching to this view."""
         arcade.set_background_color(C.BACKGROUND_COLOR)
+
+    @property
+    def objects(self):
+        return self.collision.tiled_objects
 
     def on_draw(self):
         """Draw the view."""
