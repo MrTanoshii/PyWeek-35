@@ -1,4 +1,5 @@
 import arcade
+import arcade.gui as GUI
 
 from constants import CONSTANTS as C
 
@@ -12,16 +13,33 @@ class IngameMenuView(arcade.View):
 
     def on_draw(self):
         """Draw the menu"""
+        button_width = 300
+        button_bottom = 20
+
         self.clear()
 
-        arcade.draw_text(
-            "Menu Screen - click to advance",
-            C.SCREEN_WIDTH / 2,
-            C.SCREEN_HEIGHT / 2,
-            arcade.color.WHITE,
-            font_size=30,
-            anchor_x="center",
+        self.manager = GUI.UIManager()
+        self.manager.enable()
+
+        self.v_box = GUI.UIBoxLayout()
+
+        resume_button = GUI.UIFlatButton(text="Resume", width=button_width)
+        self.v_box.add(resume_button.with_space_around(bottom=button_bottom))
+
+        options_button = GUI.UIFlatButton(text="Options", width=button_width)
+        self.v_box.add(options_button.with_space_around(bottom=button_bottom))
+
+        credits_button = GUI.UIFlatButton(text="Credits", width=button_width)
+        self.v_box.add(credits_button.with_space_around(bottom=button_bottom))
+
+        self.manager.add(
+            GUI.UIAnchorWidget(
+                anchor_x="center_x",
+                anchor_y="center_y",
+                child=self.v_box)
         )
+
+        self.manager.draw()
 
     def on_mouse_press(self, _x, _y, _button, _modifiers):
         """Handle mouse press events."""
