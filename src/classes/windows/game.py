@@ -9,7 +9,7 @@ from classes.views.ingame_menu_view import IngameMenuView
 class GameWindow(arcade.Window):
     def __init__(self, width, height, title):
         super().__init__(width, height, title)
-        arcade.set_background_color(C.BACKGROUND_COLOR)
+        arcade.set_background_color(arcade.color.ARMY_GREEN)
 
     def setup(self):
         # Setup the game manager

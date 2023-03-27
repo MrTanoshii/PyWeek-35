@@ -54,7 +54,6 @@
             34, 240, 0, 0, 380, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 135, 68, 276],
          "height":18,
          "id":5,
-         "locked":true,
          "name":"objects",
          "opacity":1,
          "tintcolor":"#8d3c29",
@@ -128,13 +127,13 @@
         }, 
         {
          "draworder":"topdown",
-         "id":4,
-         "name":"paths",
+         "id":6,
+         "name":"collision",
          "objects":[
                 {
-                 "class":"",
+                 "class":"wall",
                  "height":128,
-                 "id":1,
+                 "id":42,
                  "name":"",
                  "rotation":0,
                  "visible":true,
@@ -143,9 +142,9 @@
                  "y":0
                 }, 
                 {
-                 "class":"",
+                 "class":"wall",
                  "height":64,
-                 "id":2,
+                 "id":43,
                  "name":"",
                  "rotation":0,
                  "visible":true,
@@ -154,9 +153,9 @@
                  "y":64
                 }, 
                 {
-                 "class":"",
+                 "class":"wall",
                  "height":128,
-                 "id":3,
+                 "id":44,
                  "name":"",
                  "rotation":0,
                  "visible":true,
@@ -165,9 +164,9 @@
                  "y":128
                 }, 
                 {
-                 "class":"",
+                 "class":"wall",
                  "height":64,
-                 "id":4,
+                 "id":45,
                  "name":"",
                  "rotation":0,
                  "visible":true,
@@ -176,9 +175,9 @@
                  "y":192
                 }, 
                 {
-                 "class":"",
+                 "class":"wall",
                  "height":64,
-                 "id":5,
+                 "id":46,
                  "name":"",
                  "rotation":0,
                  "visible":true,
@@ -187,9 +186,9 @@
                  "y":128
                 }, 
                 {
-                 "class":"",
+                 "class":"wall",
                  "height":256,
-                 "id":6,
+                 "id":47,
                  "name":"",
                  "rotation":0,
                  "visible":true,
@@ -198,9 +197,9 @@
                  "y":192
                 }, 
                 {
-                 "class":"",
+                 "class":"wall",
                  "height":64,
-                 "id":7,
+                 "id":48,
                  "name":"",
                  "rotation":0,
                  "visible":true,
@@ -209,9 +208,9 @@
                  "y":384
                 }, 
                 {
-                 "class":"",
+                 "class":"wall",
                  "height":64,
-                 "id":8,
+                 "id":49,
                  "name":"",
                  "rotation":0,
                  "visible":true,
@@ -220,9 +219,9 @@
                  "y":320
                 }, 
                 {
-                 "class":"",
+                 "class":"wall",
                  "height":192,
-                 "id":9,
+                 "id":50,
                  "name":"",
                  "rotation":0,
                  "visible":true,
@@ -231,9 +230,9 @@
                  "y":384
                 }, 
                 {
-                 "class":"",
+                 "class":"wall",
                  "height":64,
-                 "id":10,
+                 "id":51,
                  "name":"",
                  "rotation":0,
                  "visible":true,
@@ -242,9 +241,9 @@
                  "y":512
                 }, 
                 {
-                 "class":"",
+                 "class":"wall",
                  "height":128,
-                 "id":11,
+                 "id":52,
                  "name":"",
                  "rotation":0,
                  "visible":true,
@@ -253,9 +252,9 @@
                  "y":384
                 }, 
                 {
-                 "class":"",
+                 "class":"wall",
                  "height":64,
-                 "id":12,
+                 "id":53,
                  "name":"",
                  "rotation":0,
                  "visible":true,
@@ -264,9 +263,9 @@
                  "y":384
                 }, 
                 {
-                 "class":"",
+                 "class":"wall",
                  "height":128,
-                 "id":13,
+                 "id":54,
                  "name":"",
                  "rotation":0,
                  "visible":true,
@@ -275,9 +274,9 @@
                  "y":256
                 }, 
                 {
-                 "class":"",
+                 "class":"wall",
                  "height":64,
-                 "id":14,
+                 "id":55,
                  "name":"",
                  "rotation":0,
                  "visible":true,
@@ -286,9 +285,9 @@
                  "y":256
                 }, 
                 {
-                 "class":"",
+                 "class":"wall",
                  "height":256,
-                 "id":15,
+                 "id":56,
                  "name":"",
                  "rotation":0,
                  "visible":true,
@@ -297,397 +296,15 @@
                  "y":0
                 }, 
                 {
-                 "class":"",
+                 "class":"wall",
                  "height":64,
-                 "id":18,
+                 "id":57,
                  "name":"",
                  "rotation":0,
                  "visible":true,
-                 "width":448,
-                 "x":448,
+                 "width":576,
+                 "x":320,
                  "y":0
-                }, 
-                {
-                 "class":"finish",
-                 "height":64,
-                 "id":19,
-                 "name":"",
-                 "rotation":0,
-                 "visible":true,
-                 "width":64,
-                 "x":448,
-                 "y":0
-                }, 
-                {
-                 "class":"spawner",
-                 "height":32,
-                 "id":20,
-                 "name":"",
-                 "properties":[
-                        {
-                         "name":"path",
-                         "type":"object",
-                         "value":21
-                        }],
-                 "rotation":0,
-                 "visible":true,
-                 "width":64,
-                 "x":256,
-                 "y":0
-                }, 
-                {
-                 "class":"",
-                 "height":0,
-                 "id":21,
-                 "name":"",
-                 "point":true,
-                 "properties":[
-                        {
-                         "name":"path",
-                         "type":"object",
-                         "value":22
-                        }],
-                 "rotation":0,
-                 "visible":true,
-                 "width":0,
-                 "x":288,
-                 "y":0
-                }, 
-                {
-                 "class":"",
-                 "height":0,
-                 "id":22,
-                 "name":"",
-                 "point":true,
-                 "properties":[
-                        {
-                         "name":"path",
-                         "type":"object",
-                         "value":23
-                        }],
-                 "rotation":0,
-                 "visible":true,
-                 "width":0,
-                 "x":288,
-                 "y":96
-                }, 
-                {
-                 "class":"",
-                 "height":0,
-                 "id":23,
-                 "name":"",
-                 "point":true,
-                 "properties":[
-                        {
-                         "name":"path",
-                         "type":"object",
-                         "value":24
-                        }],
-                 "rotation":0,
-                 "visible":true,
-                 "width":0,
-                 "x":96,
-                 "y":96
-                }, 
-                {
-                 "class":"",
-                 "height":0,
-                 "id":24,
-                 "name":"",
-                 "point":true,
-                 "properties":[
-                        {
-                         "name":"path",
-                         "type":"object",
-                         "value":25
-                        }],
-                 "rotation":0,
-                 "visible":true,
-                 "width":0,
-                 "x":96,
-                 "y":224
-                }, 
-                {
-                 "class":"",
-                 "height":0,
-                 "id":25,
-                 "name":"",
-                 "point":true,
-                 "properties":[
-                        {
-                         "name":"path",
-                         "type":"object",
-                         "value":26
-                        }],
-                 "rotation":0,
-                 "visible":true,
-                 "width":0,
-                 "x":480,
-                 "y":224
-                }, 
-                {
-                 "class":"",
-                 "height":0,
-                 "id":26,
-                 "name":"",
-                 "point":true,
-                 "properties":[
-                        {
-                         "name":"path",
-                         "type":"object",
-                         "value":27
-                        }],
-                 "rotation":0,
-                 "visible":true,
-                 "width":0,
-                 "x":480,
-                 "y":160
-                }, 
-                {
-                 "class":"",
-                 "height":0,
-                 "id":27,
-                 "name":"",
-                 "point":true,
-                 "properties":[
-                        {
-                         "name":"path",
-                         "type":"object",
-                         "value":28
-                        }],
-                 "rotation":0,
-                 "visible":true,
-                 "width":0,
-                 "x":672,
-                 "y":160
-                }, 
-                {
-                 "class":"",
-                 "height":0,
-                 "id":28,
-                 "name":"",
-                 "point":true,
-                 "properties":[
-                        {
-                         "name":"path",
-                         "type":"object",
-                         "value":29
-                        }],
-                 "rotation":0,
-                 "visible":true,
-                 "width":0,
-                 "x":672,
-                 "y":416
-                }, 
-                {
-                 "class":"",
-                 "height":0,
-                 "id":29,
-                 "name":"",
-                 "point":true,
-                 "properties":[
-                        {
-                         "name":"path",
-                         "type":"object",
-                         "value":30
-                        }],
-                 "rotation":0,
-                 "visible":true,
-                 "width":0,
-                 "x":416,
-                 "y":416
-                }, 
-                {
-                 "class":"",
-                 "height":0,
-                 "id":30,
-                 "name":"",
-                 "point":true,
-                 "properties":[
-                        {
-                         "name":"path",
-                         "type":"object",
-                         "value":31
-                        }],
-                 "rotation":0,
-                 "visible":true,
-                 "width":0,
-                 "x":416,
-                 "y":352
-                }, 
-                {
-                 "class":"",
-                 "height":0,
-                 "id":31,
-                 "name":"",
-                 "point":true,
-                 "properties":[
-                        {
-                         "name":"path",
-                         "type":"object",
-                         "value":32
-                        }],
-                 "rotation":0,
-                 "visible":true,
-                 "width":0,
-                 "x":96,
-                 "y":352
-                }, 
-                {
-                 "class":"",
-                 "height":0,
-                 "id":32,
-                 "name":"",
-                 "point":true,
-                 "properties":[
-                        {
-                         "name":"path",
-                         "type":"object",
-                         "value":33
-                        }],
-                 "rotation":0,
-                 "visible":true,
-                 "width":0,
-                 "x":96,
-                 "y":544
-                }, 
-                {
-                 "class":"",
-                 "height":0,
-                 "id":33,
-                 "name":"",
-                 "point":true,
-                 "properties":[
-                        {
-                         "name":"path",
-                         "type":"object",
-                         "value":34
-                        }],
-                 "rotation":0,
-                 "visible":true,
-                 "width":0,
-                 "x":928,
-                 "y":544
-                }, 
-                {
-                 "class":"",
-                 "height":0,
-                 "id":34,
-                 "name":"",
-                 "point":true,
-                 "properties":[
-                        {
-                         "name":"path",
-                         "type":"object",
-                         "value":35
-                        }],
-                 "rotation":0,
-                 "visible":true,
-                 "width":0,
-                 "x":928,
-                 "y":416
-                },
-            
-                {
-                 "class":"",
-                 "height":0,
-                 "id":35,
-                 "name":"",
-                 "point":true,
-                 "properties":[
-                        {
-                         "name":"path",
-                         "type":"object",
-                         "value":36
-                        }],
-                 "rotation":0,
-                 "visible":true,
-                 "width":0,
-                 "x":800,
-                 "y":416
-                }, 
-                {
-                 "class":"",
-                 "height":0,
-                 "id":36,
-                 "name":"",
-                 "point":true,
-                 "properties":[
-                        {
-                         "name":"path",
-                         "type":"object",
-                         "value":37
-                        }],
-                 "rotation":0,
-                 "visible":true,
-                 "width":0,
-                 "x":800,
-                 "y":288
-                }, 
-                {
-                 "class":"",
-                 "height":0,
-                 "id":37,
-                 "name":"",
-                 "point":true,
-                 "properties":[
-                        {
-                         "name":"path",
-                         "type":"object",
-                         "value":38
-                        }],
-                 "rotation":0,
-                 "visible":true,
-                 "width":0,
-                 "x":928,
-                 "y":288
-                }, 
-                {
-                 "class":"",
-                 "height":0,
-                 "id":38,
-                 "name":"",
-                 "point":true,
-                 "properties":[
-                        {
-                         "name":"path",
-                         "type":"object",
-                         "value":39
-                        }],
-                 "rotation":0,
-                 "visible":true,
-                 "width":0,
-                 "x":928,
-                 "y":32
-                }, 
-                {
-                 "class":"",
-                 "height":0,
-                 "id":39,
-                 "name":"",
-                 "point":true,
-                 "properties":[
-                        {
-                         "name":"path",
-                         "type":"object",
-                         "value":19
-                        }],
-                 "rotation":0,
-                 "visible":true,
-                 "width":0,
-                 "x":480,
-                 "y":32
-                }, 
-                {
-                 "class":"",
-                 "height":64,
-                 "id":40,
-                 "name":"ui_blocker",
-                 "rotation":0,
-                 "visible":true,
-                 "width":640,
-                 "x":192,
-                 "y":512
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -695,8 +312,8 @@
          "x":0,
          "y":0
         }],
- "nextlayerid":6,
- "nextobjectid":41,
+ "nextlayerid":7,
+ "nextobjectid":60,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.9.1",
