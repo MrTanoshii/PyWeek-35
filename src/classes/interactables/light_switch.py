@@ -41,7 +41,7 @@ class LightSwitch(Interactable):
 
         # Update sprite based on light switch state
         self.texture = self.texture_on if self.is_on else self.texture_off
-        print(f"The texture is {self.texture}.")
+        # print(f"The texture is {self.texture}.")
 
     def interact(self):
         """Interact with the light switch.
