@@ -1,6 +1,8 @@
 class GameManager(object):
-    """Base class for the game manager.
-    Singleton."""
+    """
+    Base class for the game manager.
+    Singleton.
+    """
 
     def __new__(cls, *args, **kwargs):
         if not hasattr(cls, "instance"):
@@ -8,6 +10,13 @@ class GameManager(object):
         return cls.instance
 
     def __init__(self, game_window):
+        """
+        Constructor.
+
+        Keyword Arguments:
+            game_window (GameWindow): The game window.
+        """
+
         self.game_window = game_window
         self.player = None
         self.score = 0

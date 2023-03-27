@@ -1,30 +1,41 @@
 from arcade import Sprite
-from classes.managers.game_manager import GameManager
+
+from classes.managers.interactables_manager import InteractablesManager
 
 
 class Interactable(Sprite):
-    interactable_list = []
+    """Base class for interactables."""
 
     def __init__(self, name: str, description: str, interactable, *args, **kwargs):
+        """
+        Constructor.
+
+        Keyword Arguments:
+            name (str): Name of the interactable.
+            description (str): Description of the interactable.
+            interactable (Interactable): The interactable object.
+        """
+
         super().__init__(*args, **kwargs)
         self.name = name
         self.description = description
         self.interactable = interactable
 
-    def __enter__(self):
-        """Context manager entry."""
-        Interactable.interactable_list.append(self)
-        return self
+        self.setup()
 
-    def __exit__(self, exc_type, exc_value, traceback):
-        """Context manager exit."""
-        Interactable.interactable_list.remove(self)
+    def setup(self):
+        """Setup."""
 
-    def on_update(self, delta_time: float):
-        print("do something")
+        InteractablesManager.instance.interactable_list.append(self)
+        InteractablesManager.instance.interactable_spritelist.append(self)
 
-    def interact(self, key: str):
+    def remove(self):
+        """Delete the object."""
+
+        InteractablesManager.instance.interactable_list.remove(self)
+        InteractablesManager.instance.interactable_spritelist.remove(self)
+
+    def interact(self):
         """Must be overriden by child class."""
-        player = GameManager.instance.player
 
-        # The Entity is gonna be self
+        pass

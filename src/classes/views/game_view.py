@@ -1,7 +1,10 @@
 import arcade
 
 from constants import CONSTANTS as C
+from classes.interactables.interactable import Interactable
 from classes.interactables.light_switch import LightSwitch
+from classes.managers.game_manager import GameManager
+from classes.managers.interactables_manager import InteractablesManager
 
 
 class GameView(arcade.View):
@@ -38,13 +41,37 @@ class GameView(arcade.View):
             anchor_y="center",
         )
 
-        self.light_switch.draw()
+        # TODO: Uncomment when player is implemented
+        # GameManager.instance.player.draw()
+        InteractablesManager.instance.interactable_spritelist.draw()
 
     def update(self, delta_time: float):
-        self.light_switch.update()
-
         return super().update(delta_time)
 
     def on_mouse_press(self, _x, _y, _button, _modifiers):
         """Handle mouse press events."""
         pass
+
+    # TODO: This should be in player, not here
+    def on_key_release(self, key, modifiers):
+        player = GameManager.instance.player
+
+        # TODO: For testing only, remove this player initialisation
+        if player is None:
+            GameManager.instance.set_player(
+                arcade.Sprite(
+                    "./src/assets/art/light_switch/light_switch_off.png",
+                    0.3,
+                    center_x=600,
+                    center_y=445,
+                )
+            )
+
+        if key == arcade.key.E:
+            player = GameManager.instance.player
+            interactables = arcade.check_for_collision_with_list(
+                player, InteractablesManager.instance.interactable_spritelist
+            )
+
+            for interactable in interactables:
+                interactable.interact()
