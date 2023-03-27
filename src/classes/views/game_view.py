@@ -6,7 +6,7 @@ from constants import CONSTANTS as C
 from classes.managers.light_manager import LightManager
 from classes.wall import Wall
 from classes.world import World
-from ..guard import Guard
+from classes.guard import Guard
 
 
 class GameView(arcade.View):
