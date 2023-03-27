@@ -1,7 +1,6 @@
 import arcade
 
 from constants import CONSTANTS as C
-from classes.interactables.light_switch import LightSwitch
 
 
 class GameView(arcade.View):
@@ -10,15 +9,9 @@ class GameView(arcade.View):
     def __init__(self):
         super().__init__()
 
-        self.setup()
-
     def setup(self):
         """Set up the view."""
-
-        self.light_switch = LightSwitch()
-        self.light_switch.center_x = C.SCREEN_WIDTH / 2
-        self.light_switch.center_y = C.SCREEN_HEIGHT / 2
-        self.light_switch.scale = 0.05
+        pass
 
     def on_show_view(self):
         """Called when switching to this view."""
@@ -37,13 +30,6 @@ class GameView(arcade.View):
             anchor_x="left",
             anchor_y="center",
         )
-
-        self.light_switch.draw()
-
-    def update(self, delta_time: float):
-        self.light_switch.update()
-
-        return super().update(delta_time)
 
     def on_mouse_press(self, _x, _y, _button, _modifiers):
         """Handle mouse press events."""

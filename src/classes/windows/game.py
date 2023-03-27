@@ -6,6 +6,7 @@ from classes.views.game_view import GameView
 from classes.views.ingame_menu_view import IngameMenuView
 from classes.entities.player import Player
 
+
 class GameWindow(arcade.Window):
     def __init__(self, width, height, title):
         super().__init__(width, height, title)
@@ -14,6 +15,7 @@ class GameWindow(arcade.Window):
         self.player = None
         # makes a dictionary of A-Z0-9LEFTRIGHTDOWNUP:0. will be used to read keypresses by player
         self.keyboard = {x:0 for x in [chr(y) for y in range(65, 91)] + [chr(z) for z in range(48,58)] + ['LEFT', 'RIGHT', 'DOWN', 'UP']}
+
     def setup(self):
         # Setup the game manager
         GameManager(self)
@@ -84,3 +86,5 @@ class GameWindow(arcade.Window):
             self.keyboard['UP'] = 0
         elif key == arcade.key.DOWN:
             self.keyboard['DOWN'] = 0
+        # Set the initial view
+        self.show_view(self.game_view)
