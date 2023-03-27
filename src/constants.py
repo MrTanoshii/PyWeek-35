@@ -6,3 +6,4 @@ class CONSTANTS:
     SCREEN_HEIGHT = 720
     SCREEN_TITLE = "Shadow Heist v0.0.1 - PyWeek 35"
     BACKGROUND_COLOR = arcade.color.BLACK
+    MOVEMENT_SPEED = 3
