@@ -1,12 +1,11 @@
 import arcade
-from pytiled_parser.tiled_object import Rectangle
-from typing import List
 
 from constants import CONSTANTS as C
 from classes.managers.light_manager import LightManager
 from classes.wall import Wall
 from classes.world import World
 from classes.guard import Guard
+from classes.hud import HUD
 
 
 class GameView(arcade.View):
@@ -17,6 +16,7 @@ class GameView(arcade.View):
         self.scene = None
         self.world = World.load("example.tilemap.json")
         self.guard = None
+        self.hud = None
         self.light = LightManager()
         self.walls = arcade.SpriteList()
         self.physics_engine = None
@@ -26,17 +26,20 @@ class GameView(arcade.View):
     def setup(self):
         """Set up the view."""
         self.scene = arcade.Scene.from_tilemap(self.world.map)
+
+        # Create and append scaled Wall objects from self.world.walls to self.walls
         for wall in [
             Wall(
-                wall.coordinates.x - wall.size.width / 2,
-                self.window.height - wall.coordinates.y - wall.size.height / 2,
-                wall.size.width, wall.size.height
+                (wall.coordinates.x + wall.size.width / 2) * C.WORLD_SCALE,
+                (self.world.height * self.world.tile_size - wall.coordinates.y - wall.size.height / 2) * C.WORLD_SCALE,
+                wall.size.width * C.WORLD_SCALE, wall.size.height * C.WORLD_SCALE
             )
             for wall in self.world.walls
-        ]:  # TODO: fix it
+        ]:
             self.walls.append(wall)
 
         self.guard = Guard()
+        self.hud = HUD()
 
         self.physics_engine = arcade.PhysicsEngineSimple(self.guard, self.walls)
 
@@ -61,19 +64,7 @@ class GameView(arcade.View):
         self.light.on_draw_shader(self.last_pos[0], self.last_pos[1])
 
         self.guard.draw()
-
-        self.walls.draw()
-
-        arcade.draw_text(
-            "Files retrieved: 0/0",
-            10,
-            C.SCREEN_HEIGHT - 30,
-            arcade.color.WHITE,
-            font_size=30,
-            font_name="Minecraft",
-            anchor_x="left",
-            anchor_y="center",
-        )
+        self.hud.draw()
 
     def on_update(self, delta_time: float):
         """Update the view."""
