@@ -4,10 +4,11 @@ from src.constants import CONSTANTS as C
 
 
 class HUD:
-    def __int__(self):
-        self.score = 0
+    def __init__(self):
+        self.camera = arcade.Camera(C.SCREEN_WIDTH, C.SCREEN_HEIGHT)
 
     def draw(self):
+        self.camera.use()
         arcade.draw_rectangle_filled(C.SCREEN_WIDTH / 2, C.SCREEN_HEIGHT - 30, C.SCREEN_WIDTH // 4, 60, (0, 0, 0, 200))
 
         arcade.draw_text(

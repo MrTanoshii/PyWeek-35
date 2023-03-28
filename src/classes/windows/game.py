@@ -1,9 +1,9 @@
 import arcade
 
+from src.constants import CONSTANTS as C
 from src.classes.managers.game_manager import GameManager
 from src.classes.views.game_view import GameView
 from src.classes.views.ingame_menu_view import IngameMenuView
-from src.classes.views.score_view import ScoreView
 from src.classes.entities.player import Player
 
 
@@ -12,7 +12,6 @@ class GameWindow(arcade.Window):
         super().__init__(width, height, title)
 
         # create a player list, and a player (None for now, they will come in setup)
-        self.player_list = None
         self.player = None
         # makes a dictionary of A-Z0-9LEFTRIGHTDOWNUP:0. will be used to read keypresses by player
         self.keyboard = {
@@ -22,31 +21,30 @@ class GameWindow(arcade.Window):
         arcade.set_background_color(arcade.color.ARMY_GREEN)
 
     def setup(self):
-        # Setup the game manager
-        GameManager(self)
+        # Set up the game manager
+        game_manager = GameManager(self)
 
         # Setup views
         self.game_view = GameView()
         self.ingame_menu_view = IngameMenuView()
-        # TODO: Might need to move this somewhere else and trigger it accordingly
-        self.score_view = ScoreView(self.game_view)
 
         # Let's add the player, and add them to the playerlist
-        self.player_list = arcade.SpriteList()
-        self.player = Player(filename="src/assets/panda/0002.png", keyboard=self.keyboard)
-        self.player.center_x = 50
-        self.player.center_y = 50
-        self.player_list.append(self.player)
+        self.player = Player(keyboard=self.keyboard)
+        coords = game_manager.world.player_spawn[0].coordinates
+        self.player.scale = 1
+        self.player.center_x = coords.x * C.WORLD_SCALE
+        self.player.center_y = (C.SCREEN_HEIGHT - coords.y - 96) * C.WORLD_SCALE
+        game_manager.set_player(self.player)
 
         # Set the initial view
         self.show_view(self.game_view)
 
     def on_update(self, delta_time: float):
-        self.player_list.update()
+        self.player.on_update(delta_time=delta_time)
         return super().on_update(delta_time)
 
     def on_draw(self):
-        self.player_list.draw()
+        self.player.draw()
         return super().on_draw()
 
     def on_key_press(self, key, modifiers):
