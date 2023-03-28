@@ -29,7 +29,7 @@ class GameWindow(arcade.Window):
         self.ingame_menu_view = IngameMenuView()
 
         # Let's add the player, and add them to the playerlist
-        self.player = Player(filename="src/assets/animations/panda/0002.png", keyboard=self.keyboard)
+        self.player = Player(keyboard=self.keyboard)
         coords = game_manager.world.player_spawn[0].coordinates
         self.player.scale = 1
         self.player.center_x = coords.x * C.WORLD_SCALE
