@@ -1,4 +1,4 @@
-from .interactable import Interactable
+from classes.interactables.interactable import Interactable
 
 
 class DoorSwitch(Interactable):
