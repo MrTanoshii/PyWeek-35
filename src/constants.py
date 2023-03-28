@@ -10,5 +10,5 @@ class CONSTANTS:
     WORLD_SCALE = 1.2
 
 
-arcade.load_font("assets/fonts/pixel.ttf")  # MODERN WARFARE
-arcade.load_font("assets/fonts/font.ttf")  # Minecraft
+arcade.load_font("src/assets/fonts/pixel.ttf")  # MODERN WARFARE
+arcade.load_font("src/assets/fonts/font.ttf")  # Minecraft

@@ -1,10 +1,9 @@
 import arcade
 
-from constants import CONSTANTS as C
-from classes.managers.game_manager import GameManager
-from classes.views.game_view import GameView
-from classes.views.ingame_menu_view import IngameMenuView
-from classes.entities.player import Player
+from src.classes.managers.game_manager import GameManager
+from src.classes.views.game_view import GameView
+from src.classes.views.ingame_menu_view import IngameMenuView
+from src.classes.entities.player import Player
 
 
 class GameWindow(arcade.Window):
@@ -31,7 +30,7 @@ class GameWindow(arcade.Window):
 
         # Let's add the player, and add them to the playerlist
         self.player_list = arcade.SpriteList()
-        self.player = Player(filename="assets/panda/0002.png", keyboard=self.keyboard)
+        self.player = Player(filename="src/assets/panda/0002.png", keyboard=self.keyboard)
         self.player.center_x = 50
         self.player.center_y = 50
         self.player_list.append(self.player)

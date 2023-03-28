@@ -4,7 +4,7 @@ import arcade
 
 import os.path
 
-from classes.managers.game_manager import GameManager
+from src.classes.managers.game_manager import GameManager
 
 
 class Guard(arcade.Sprite):
@@ -18,7 +18,7 @@ class Guard(arcade.Sprite):
         super().__init__()
 
         """ Load Assets """
-        base_path = f"assets/animations/guard/"
+        base_path = f"src/assets/animations/guard/"
 
         # Load texture
         self.texture_list = []

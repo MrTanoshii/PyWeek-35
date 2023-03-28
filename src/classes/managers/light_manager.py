@@ -7,7 +7,7 @@ from arcade.gl import Framebuffer
 class LightManager:
     def __init__(self):
         window_size = arcade.get_window().get_size()
-        self.shader: Shadertoy = Shadertoy.create_from_file(window_size, Path("assets/shaders/lights.glsl"))
+        self.shader: Shadertoy = Shadertoy.create_from_file(window_size, Path("src/assets/shaders/lights.glsl"))
         self.channel0: Framebuffer = self.shader.ctx.framebuffer(
             color_attachments=[self.shader.ctx.texture(window_size, components=4)],
         )

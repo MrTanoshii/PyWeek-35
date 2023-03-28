@@ -1,12 +1,11 @@
 import arcade
 
-from classes.managers.game_manager import GameManager
-from constants import CONSTANTS as C
-from classes.managers.light_manager import LightManager
-from classes.wall import Wall
-from classes.world import World
-from classes.guard import Guard
-from classes.hud import HUD
+from src.constants import CONSTANTS as C
+from src.classes.managers.light_manager import LightManager
+from src.classes.wall import Wall
+from src.classes.world import World
+from src.classes.guard import Guard
+from src.classes.hud import HUD
 
 
 class GameView(arcade.View):

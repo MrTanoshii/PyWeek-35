@@ -1,6 +1,6 @@
 from typing import Optional
 import arcade
-from constants import CONSTANTS as C
+from src.constants import CONSTANTS as C
 
 class Player(arcade.Sprite):
 

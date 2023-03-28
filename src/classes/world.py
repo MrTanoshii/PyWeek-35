@@ -2,7 +2,7 @@ import arcade
 from pytiled_parser.tiled_object import Rectangle
 from pathlib import Path
 
-from constants import CONSTANTS as C
+from src.constants import CONSTANTS as C
 
 
 class World:
@@ -19,7 +19,7 @@ class World:
     @classmethod
     def load(cls, map_name: str):
         return cls(
-            arcade.load_tilemap(Path("assets") / "tilemaps" / map_name, scaling=C.WORLD_SCALE),
+            arcade.load_tilemap(Path("src/assets") / "tilemaps" / map_name, scaling=C.WORLD_SCALE),
             map_name=map_name.split(".")[0],  # :=
         )
 

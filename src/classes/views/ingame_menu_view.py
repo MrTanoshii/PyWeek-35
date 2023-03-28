@@ -1,6 +1,6 @@
 import arcade
 
-from constants import CONSTANTS as C
+from src.constants import CONSTANTS as C
 
 
 class IngameMenuView(arcade.View):
