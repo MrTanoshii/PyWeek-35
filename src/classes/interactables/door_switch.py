@@ -1,4 +1,5 @@
 from arcade import load_texture
+
 from classes.interactables.interactable import Interactable
 
 
