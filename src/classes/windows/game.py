@@ -12,7 +12,6 @@ class GameWindow(arcade.Window):
         super().__init__(width, height, title)
 
         # create a player list, and a player (None for now, they will come in setup)
-        self.player_list = None
         self.player = None
         # makes a dictionary of A-Z0-9LEFTRIGHTDOWNUP:0. will be used to read keypresses by player
         self.keyboard = {
@@ -30,25 +29,22 @@ class GameWindow(arcade.Window):
         self.ingame_menu_view = IngameMenuView()
 
         # Let's add the player, and add them to the playerlist
-        self.player_list = arcade.SpriteList()
         self.player = Player(filename="src/assets/animations/panda/0002.png", keyboard=self.keyboard)
         coords = game_manager.world.player_spawn[0].coordinates
         self.player.scale = 1
         self.player.center_x = coords.x * C.WORLD_SCALE
         self.player.center_y = (C.SCREEN_HEIGHT - coords.y - 96) * C.WORLD_SCALE
-        self.player_list.append(self.player)
         game_manager.set_player(self.player)
 
         # Set the initial view
         self.show_view(self.game_view)
 
     def on_update(self, delta_time: float):
-        self.player_list.update()
+        self.player.on_update(delta_time=delta_time)
         return super().on_update(delta_time)
 
     def on_draw(self):
-        self.player_list.draw()
-        # self.player_list.draw_hit_boxes()
+        self.player.draw()
         return super().on_draw()
 
     def on_key_press(self, key, modifiers):
