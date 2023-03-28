@@ -1,3 +1,4 @@
+import math
 from typing import Optional
 import arcade
 from src.constants import CONSTANTS as C
@@ -60,7 +61,8 @@ class Player(arcade.Sprite):
         move_y = ((self.keyboard["W"] | self.keyboard["UP"]) * C.MOVEMENT_SPEED) - (
             (self.keyboard["S"] | self.keyboard["DOWN"]) * C.MOVEMENT_SPEED
         )
-        penalty = 0.70710678118 if move_x and move_y else 1
+        # Pythagorean theorem
+        penalty = 1 / math.sqrt(2) if move_x and move_y else 1
         self.center_x += move_x * penalty
         self.center_y += move_y * penalty
 
@@ -69,17 +71,20 @@ class Player(arcade.Sprite):
         elif move_x > 0:
             self.facing_left = False
 
+        # This is to prevent the player from flipping back and forth
         if self.last_facing == self.facing_left:
             pass
         else:
+            # This is to flip the playerd
             self.texture = self.textures[self.facing_left]
             self.last_facing = self.facing_left
 
-        if self.left < 0:
-            self.left = 0
-        elif self.right > C.SCREEN_WIDTH - 1:
-            self.right = C.SCREEN_WIDTH - 1
-        if self.bottom < 0:
-            self.bottom = 0
-        elif self.top > C.SCREEN_HEIGHT - 1:
-            self.top = C.SCREEN_HEIGHT - 1
+        ### This binds the player to the screen
+        # if self.left < 0:
+        #     self.left = 0
+        # elif self.right > C.SCREEN_WIDTH - 1:
+        #     self.right = C.SCREEN_WIDTH - 1
+        # if self.bottom < 0:
+        #     self.bottom = 0
+        # elif self.top > C.SCREEN_HEIGHT - 1:
+        #     self.top = C.SCREEN_HEIGHT - 1
