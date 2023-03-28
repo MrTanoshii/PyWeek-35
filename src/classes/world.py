@@ -38,4 +38,3 @@ class World:
     @property
     def tile_size(self):
         return self.map.tile_width
-

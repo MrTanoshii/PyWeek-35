@@ -33,4 +33,3 @@ class LightManager:
 
     def on_resize(self, width: int, height: int):
         self.shader.resize((width, height))
-

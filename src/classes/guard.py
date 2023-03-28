@@ -8,7 +8,6 @@ from src.classes.managers.game_manager import GameManager
 
 
 class Guard(arcade.Sprite):
-
     # SpriteList class attribute
     enemy_list = arcade.SpriteList()
 
@@ -24,7 +23,10 @@ class Guard(arcade.Sprite):
         self.texture_list = []
 
         # Load all textures in folder
-        self.texture_list = [arcade.load_texture(f"{base_path}/{texture}", hit_box_algorithm="Simple") for texture in os.listdir(base_path)]
+        self.texture_list = [
+            arcade.load_texture(f"{base_path}/{texture}", hit_box_algorithm="Simple")
+            for texture in os.listdir(base_path)
+        ]
 
         self.current_texture: float = 0
         self.animation_speed: float = 24 / 60
@@ -84,11 +86,10 @@ class Guard(arcade.Sprite):
             self.status = "down"
 
     def update_animation(self):
-        """ Update the animated texture """
+        """Update the animated texture"""
         self.texture = self.next_item(self.animation_list[self.status], self.current_texture_index)
 
     def next_item(self, lst: list[arcade.Texture], idx: int):
-        """ Get the next item in a looping list"""
+        """Get the next item in a looping list"""
         self.current_texture_index = (idx + 1) % len(lst)
         return lst[self.current_texture_index]
-
