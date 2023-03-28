@@ -52,7 +52,7 @@ class Player(arcade.Sprite):
         texture = arcade.load_texture(filename, flipped_horizontally=True)
       
 
-        base_path = f"src/assets/animations/panda/"
+        base_path = f"src/assets/animations/cat"
 
         self.texture_list_left = [
             arcade.load_texture(f"{base_path}/{texture}", hit_box_algorithm="Simple")
@@ -61,9 +61,20 @@ class Player(arcade.Sprite):
         
         self.texture_list_right = [
             arcade.load_texture(f"{base_path}/{texture}", hit_box_algorithm="Simple", flipped_horizontally=True)
-            for texture in os.listdir(base_path)
+            for texture in os.listdir(base_path+"")
         ]
-        self.texture_options = [self.texture_list_left, self.texture_list_right]
+
+        self.texture_list_up = [
+            arcade.load_texture(f"{base_path}2/{texture}", hit_box_algorithm="Simple")
+            for texture in os.listdir(base_path+"2")
+        ]
+
+        self.texture_list_down = [
+            arcade.load_texture(f"{base_path}3/{texture}", hit_box_algorithm="Simple")
+            for texture in os.listdir(base_path+"3")
+        ]
+
+        self.texture_options = [self.texture_list_left, self.texture_list_right, self.texture_list_up, self.texture_list_down]
 
         self.current_texture = self.texture_list_left
         self.animation_speed = 48/60
@@ -77,17 +88,23 @@ class Player(arcade.Sprite):
         move_y = ((self.keyboard["W"] | self.keyboard["UP"]) * C.MOVEMENT_SPEED) - (
             (self.keyboard["S"] | self.keyboard["DOWN"]) * C.MOVEMENT_SPEED
         )
+        if not move_x and not move_y:
+            self.animation_speed = 0
+        else:
+            self.animation_speed = 48 / 60
         # Pythagorean theorem
         penalty = 1 / math.sqrt(2) if move_x and move_y else 1
         self.center_x += move_x * penalty
         self.center_y += move_y * penalty
 
         if move_x < 0:
-            self.facing_left = True
-            self.current_texture = self.texture_list_left
-        elif move_x > 0:
-            self.facing_left = False
             self.current_texture = self.texture_list_right
+        elif move_x > 0:
+            self.current_texture = self.texture_list_left
+        elif move_y < 0:
+            self.current_texture = self.texture_list_down
+        elif move_y > 0:
+            self.current_texture = self.texture_list_up
 
         # This is to prevent the player from flipping back and forth
         if self.last_facing == self.facing_left:
