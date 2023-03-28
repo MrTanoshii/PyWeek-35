@@ -3,6 +3,7 @@ import arcade
 from constants import CONSTANTS as C
 from classes.interactables.interactable import Interactable
 from classes.interactables.light_switch import LightSwitch
+from classes.interactables.door_switch import DoorSwitch    #TODO: added for testing
 from classes.managers.game_manager import GameManager
 from classes.managers.interactables_manager import InteractablesManager
 
@@ -15,6 +16,7 @@ class GameView(arcade.View):
 
         self.setup()
 
+    # TODO: refactor this to make it less redundant
     def setup(self):
         """Set up the view."""
 
@@ -23,6 +25,13 @@ class GameView(arcade.View):
         self.light_switch.center_y = C.SCREEN_HEIGHT / 2
         self.light_switch.scale = 0.05
 
+        # added for testing door switch
+        self.door_switch = DoorSwitch()
+        self.door_switch.center_x = C.SCREEN_WIDTH / 4
+        self.door_switch.center_y = C.SCREEN_HEIGHT / 4
+        self.door_switch.scale = 0.5
+
+        
     def on_show_view(self):
         """Called when switching to this view."""
         arcade.set_background_color(C.BACKGROUND_COLOR)
@@ -62,8 +71,10 @@ class GameView(arcade.View):
                 arcade.Sprite(
                     "./src/assets/art/light_switch/light_switch_off.png",
                     0.3,
-                    center_x=600,
-                    center_y=445,
+                    center_x=600,              #testing light switch
+                    center_y=445
+                    # center_x=C.SCREEN_WIDTH / 4, #testing door switch
+                    # center_y=C.SCREEN_HEIGHT / 4
                 )
             )
 
