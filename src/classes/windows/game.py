@@ -1,5 +1,6 @@
 import arcade
 
+from src.constants import CONSTANTS as C
 from src.classes.managers.game_manager import GameManager
 from src.classes.views.game_view import GameView
 from src.classes.views.ingame_menu_view import IngameMenuView
@@ -21,8 +22,8 @@ class GameWindow(arcade.Window):
         arcade.set_background_color(arcade.color.ARMY_GREEN)
 
     def setup(self):
-        # Setup the game manager
-        GameManager(self)
+        # Set up the game manager
+        game_manager = GameManager(self)
 
         # Setup views
         self.game_view = GameView()
@@ -30,10 +31,13 @@ class GameWindow(arcade.Window):
 
         # Let's add the player, and add them to the playerlist
         self.player_list = arcade.SpriteList()
-        self.player = Player(filename="src/assets/panda/0002.png", keyboard=self.keyboard)
-        self.player.center_x = 50
-        self.player.center_y = 50
+        self.player = Player(filename="src/assets/animations/panda/0002.png", keyboard=self.keyboard)
+        coords = game_manager.world.player_spawn[0].coordinates
+        self.player.scale = 1
+        self.player.center_x = coords.x * C.WORLD_SCALE
+        self.player.center_y = (C.SCREEN_HEIGHT - coords.y - 96) * C.WORLD_SCALE
         self.player_list.append(self.player)
+        game_manager.set_player(self.player)
 
         # Set the initial view
         self.show_view(self.game_view)
@@ -44,6 +48,7 @@ class GameWindow(arcade.Window):
 
     def on_draw(self):
         self.player_list.draw()
+        # self.player_list.draw_hit_boxes()
         return super().on_draw()
 
     def on_key_press(self, key, modifiers):
