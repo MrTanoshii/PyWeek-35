@@ -8,6 +8,7 @@ class CONSTANTS:
     BACKGROUND_COLOR = arcade.color.BLACK
     MOVEMENT_SPEED = 3
     WORLD_SCALE = 1.2
+    DEFAULT_LIGHT_RADIUS = 300
 
 
 arcade.load_font("src/assets/fonts/pixel.ttf")  # MODERN WARFARE
