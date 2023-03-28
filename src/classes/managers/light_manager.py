@@ -28,7 +28,7 @@ class LightManager:
 
     def on_draw_shader(self, x, y):
         self.shader.program["lightPosition"] = (x, y)
-        self.shader.program["lightSize"] = 300
+        self.shader.program["lightSize"] = 3000
         self.shader.render()
 
     def on_resize(self, width: int, height: int):
