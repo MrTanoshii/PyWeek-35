@@ -58,7 +58,7 @@ class GameView(arcade.View):
 
         self.light.on_draw_shadows()
         # Draw fragments which shouldn't pass the light:
-        # self.walls.draw()
+        self.walls.draw()
 
         self.light.on_draw()
         # Draw fragments which can be in the shadow:
