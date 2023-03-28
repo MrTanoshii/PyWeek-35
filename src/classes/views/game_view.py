@@ -1,6 +1,11 @@
 import arcade
 
-from constants import CONSTANTS as C
+from src.constants import CONSTANTS as C
+from src.classes.managers.light_manager import LightManager
+from src.classes.wall import Wall
+from src.classes.world import World
+from src.classes.guard import Guard
+from src.classes.hud import HUD
 
 
 class GameView(arcade.View):
@@ -8,29 +13,80 @@ class GameView(arcade.View):
 
     def __init__(self):
         super().__init__()
+        self.scene = None
+        self.world = World.load("example.tilemap.json")
+        self.guard = None
+        self.hud = None
+        self.light = LightManager()
+        self.walls = arcade.SpriteList()
+        self.physics_engines = []
+        self.setup()
+        self.last_pos = (0, 0)
 
     def setup(self):
         """Set up the view."""
-        pass
+        self.scene = arcade.Scene.from_tilemap(self.world.map)
+
+        # Create and append scaled Wall objects from self.world.walls to self.walls
+        for wall in [
+            Wall(
+                (wall.coordinates.x + wall.size.width / 2) * C.WORLD_SCALE,
+                (self.world.height * self.world.tile_size - wall.coordinates.y - wall.size.height / 2) * C.WORLD_SCALE,
+                wall.size.width * C.WORLD_SCALE, wall.size.height * C.WORLD_SCALE
+            )
+            for wall in self.world.walls
+        ]:
+            self.walls.append(wall)
+
+        # Guard
+        for guard in self.world.guards:
+            new_guard: arcade.Sprite = Guard(self.walls)
+            new_guard.center_x = (guard.coordinates.x + guard.size.width / 2) * C.WORLD_SCALE
+            new_guard.center_y = (self.world.height * self.world.tile_size - guard.coordinates.y - guard.size.height / 2) * C.WORLD_SCALE
+            self.physics_engines.append(arcade.PhysicsEngineSimple(new_guard, self.walls))
+
+        self.hud = HUD()
 
     def on_show_view(self):
         """Called when switching to this view."""
-        arcade.set_background_color(C.BACKGROUND_COLOR)
+        arcade.set_background_color(arcade.color.ARMY_GREEN)
 
     def on_draw(self):
         """Draw the view."""
-        self.clear()
+        # Primary camera stuff here:
 
-        arcade.draw_text(
-            "Files retrieved: 0/0",
-            10,
-            C.SCREEN_HEIGHT - 30,
-            arcade.color.WHITE,
-            font_size=30,
-            anchor_x="left",
-            anchor_y="center",
-        )
+        self.light.on_draw_shadows()
+        # Draw fragments which shouldn't pass the light:
+        self.walls.draw()
+
+        self.light.on_draw()
+        # Draw fragments which can be in the shadow:
+        self.scene.draw()
+
+        arcade.get_window().use()
+        self.clear()
+        self.light.on_draw_shader(self.last_pos[0], self.last_pos[1])
+
+        Guard.enemy_list.draw()
+        self.hud.draw()
+
+    def on_update(self, delta_time: float):
+        """Update the view."""
+        for engine in self.physics_engines:
+            engine.update()
+        self.scene.update()
+        Guard.enemy_list.on_update(delta_time)
 
     def on_mouse_press(self, _x, _y, _button, _modifiers):
         """Handle mouse press events."""
         pass
+
+    def on_key_press(self, key, modifiers):
+        """Handle key press events."""
+        pass
+
+    def on_resize(self, width: int, height: int):
+        self.light.on_resize(width, height)
+
+    def on_mouse_motion(self, x: int, y: int, dx: int, dy: int):
+        self.last_pos = (x, y)
