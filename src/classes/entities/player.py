@@ -101,6 +101,11 @@ class Player(arcade.Sprite):
         elif move_y < 0:
             self.current_texture = self.texture_list_down
 
+        if not move_y and not move_x:
+            self.animation_speed = 0
+        else:
+            self.animation_speed = 40/60
+
         # This is to prevent the player from flipping back and forth
         if self.last_facing == self.facing_left:
             pass
