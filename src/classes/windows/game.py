@@ -3,6 +3,7 @@ import arcade
 from src.classes.managers.game_manager import GameManager
 from src.classes.views.game_view import GameView
 from src.classes.views.ingame_menu_view import IngameMenuView
+from src.classes.views.score_view import ScoreView
 from src.classes.entities.player import Player
 
 
@@ -27,6 +28,7 @@ class GameWindow(arcade.Window):
         # Setup views
         self.game_view = GameView()
         self.ingame_menu_view = IngameMenuView()
+        self.score_view = ScoreView(self.game_view)
 
         # Let's add the player, and add them to the playerlist
         self.player_list = arcade.SpriteList()
@@ -36,7 +38,7 @@ class GameWindow(arcade.Window):
         self.player_list.append(self.player)
 
         # Set the initial view
-        self.show_view(self.game_view)
+        self.show_view(self.score_view)
 
     def on_update(self, delta_time: float):
         self.player_list.update()
