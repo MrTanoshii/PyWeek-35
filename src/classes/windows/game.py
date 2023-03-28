@@ -28,6 +28,7 @@ class GameWindow(arcade.Window):
         # Setup views
         self.game_view = GameView()
         self.ingame_menu_view = IngameMenuView()
+        # TODO: Might need to move this somewhere else and trigger it accordingly
         self.score_view = ScoreView(self.game_view)
 
         # Let's add the player, and add them to the playerlist
@@ -38,7 +39,7 @@ class GameWindow(arcade.Window):
         self.player_list.append(self.player)
 
         # Set the initial view
-        self.show_view(self.score_view)
+        self.show_view(self.game_view)
 
     def on_update(self, delta_time: float):
         self.player_list.update()
