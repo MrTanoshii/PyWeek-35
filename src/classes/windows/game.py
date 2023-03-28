@@ -28,7 +28,7 @@ class GameWindow(arcade.Window):
 
         # Let's add the player, and add them to the playerlist
         self.player_list = arcade.SpriteList()
-        self.player = Player(filename='src\\assets\\panda\\0002.png', keyboard = self.keyboard)
+        self.player = Player(filename='assets/panda/0002.png', keyboard=self.keyboard)
         self.player.center_x = 50
         self.player.center_y = 50
         self.player_list.append(self.player)
