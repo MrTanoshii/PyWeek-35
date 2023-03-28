@@ -7,7 +7,7 @@ class CONSTANTS:
     SCREEN_TITLE = "Shadow Heist v0.0.2 - PyWeek 35"
     BACKGROUND_COLOR = arcade.color.BLACK
     MOVEMENT_SPEED = 3
-    WORLD_SCALE = 1.2
+    WORLD_SCALE = 4.0
 
 
 arcade.load_font("src/assets/fonts/pixel.ttf")  # MODERN WARFARE
