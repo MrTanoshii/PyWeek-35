@@ -1,5 +1,5 @@
 from arcade import load_texture
-from .interactable import Interactable
+from classes.interactables.interactable import Interactable
 
 
 class DoorSwitch(Interactable):
