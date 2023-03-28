@@ -49,7 +49,6 @@ class Player(arcade.Sprite):
         self.keyboard = keyboard
         self.facing_left = True
         self.last_facing = True
-        texture = arcade.load_texture(filename, flipped_horizontally=True)
 
         base_path = f"src/assets/animations/cat/"
 
@@ -63,6 +62,7 @@ class Player(arcade.Sprite):
             for texture in os.listdir(base_path)
         ]
         self.texture_options = [self.texture_list_left, self.texture_list_right]
+        self.texture = self.texture_list_left[0]
 
         self.current_texture = self.texture_list_left
         self.animation_speed = 48 / 60
@@ -93,7 +93,6 @@ class Player(arcade.Sprite):
             pass
         else:
             # This is to flip the player
-            # self.texture = self.textures[self.facing_left]
             self.current_texture = self.texture_options[self.facing_left]
             self.last_facing = self.facing_left
 
