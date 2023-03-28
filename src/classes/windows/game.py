@@ -4,6 +4,7 @@ from src.constants import CONSTANTS as C
 from src.classes.managers.game_manager import GameManager
 from src.classes.views.game_view import GameView
 from src.classes.views.ingame_menu_view import IngameMenuView
+from src.classes.views.score_view import ScoreView
 from src.classes.entities.player import Player
 
 
@@ -27,6 +28,8 @@ class GameWindow(arcade.Window):
         # Setup views
         self.game_view = GameView()
         self.ingame_menu_view = IngameMenuView()
+        # TODO: Might need to move this somewhere else and trigger it accordingly
+        self.score_view = ScoreView(self.game_view)
 
         # Let's add the player, and add them to the playerlist
         self.player = Player(keyboard=self.keyboard)
