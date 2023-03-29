@@ -79,7 +79,6 @@ class Player(arcade.Sprite):
         self.animation_speed = 48 / 60
         self.animation_counter = 0
         self.current_texture_index = 0
-        self.scale = 0.5 * C.WORLD_SCALE
 
     def on_update(self, delta_time):
         move_x = ((self.keyboard["D"] | self.keyboard["RIGHT"]) * C.MOVEMENT_SPEED) - (

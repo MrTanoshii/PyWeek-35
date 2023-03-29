@@ -53,6 +53,8 @@ class GameView(arcade.View):
 
         self.game_manager.world = self.world
 
+        self.game_manager.world = self.world
+
         self.hud = HUD()
 
     def on_show_view(self):
@@ -88,6 +90,7 @@ class GameView(arcade.View):
             for light in self.world.lights
         ])  # [(self.last_pos[0], self.last_pos[1], 300)]
 
+        self.scene.draw()
         self.game_manager.guards.draw()
         self.hud.draw()
         self.camera.use()
@@ -98,6 +101,8 @@ class GameView(arcade.View):
             engine.update()
         self.scene.update()
         self.game_manager.guards.on_update(delta_time)
+
+        self.camera.move_to((self.game_manager.player.center_x - C.SCREEN_WIDTH // 2, self.game_manager.player.center_y - C.SCREEN_HEIGHT // 2), 1)
 
         self.camera.move_to((self.game_manager.player.center_x - C.SCREEN_WIDTH // 2, self.game_manager.player.center_y - C.SCREEN_HEIGHT // 2), 1)
 
