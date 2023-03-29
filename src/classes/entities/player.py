@@ -24,7 +24,7 @@ class Player(arcade.Sprite):
         flipped_horizontally: bool = False,
         flipped_vertically: bool = False,
         flipped_diagonally: bool = False,
-        hit_box_algorithm: Optional[str] = "Simple",
+        hit_box_algorithm: Optional[str] = "None",
         hit_box_detail: float = 4.5,
         texture: arcade.Texture = None,
         angle: float = 0,
@@ -52,6 +52,8 @@ class Player(arcade.Sprite):
         self.keyboard = keyboard
         self.facing_left = True
         self.last_facing = True
+        self.mouse_x = 0
+        self.mouse_y = 0
 
         base_path = f"src/assets/animations/cat"
 
@@ -83,6 +85,11 @@ class Player(arcade.Sprite):
         self.animation_counter = 0
         self.current_texture_index = 0
 
+    def on_mouse_motion(self, x, y):
+        # Store the current mouse position
+        self.mouse_x = x * C.WORLD_SCALE
+        self.mouse_y = y * C.WORLD_SCALE
+
     def on_update(self, delta_time):
 
         move_x = ((self.keyboard["D"] | self.keyboard["RIGHT"]) * C.MOVEMENT_SPEED) - (
@@ -93,12 +100,59 @@ class Player(arcade.Sprite):
         )
         # Pythagorean theorem
         penalty = 1 / math.sqrt(2) if move_x and move_y else 1
-        self.center_x += move_x * penalty
-        self.center_y += move_y * penalty
 
-        if move_x < 0:
+        # Calculate the player's new position
+        new_x = self.center_x + move_x * penalty
+        new_y = self.center_y + move_y * penalty
+        
+        if self.keyboard['M']:
+            move_x = self.mouse_x - self.center_x
+            move_y = self.mouse_y - self.center_y
+
+            print(self.mouse_y, self.center_y, 'the ys')
+
+            # Calculate the distance between the player and the mouse
+            distance = math.sqrt(move_x * move_x + move_y * move_y)
+
+            # Scale the movement vector to ensure that the player moves a fixed distance
+            if distance > 0:
+                print(C.MOVEMENT_SPEED / distance, distance)
+                scale = min(C.MOVEMENT_SPEED , C.MOVEMENT_SPEED  / distance)
+                move_x *= scale
+                move_y *= scale
+                print(move_x, move_y, "XY")
+
+                new_x = self.center_x + move_x
+                new_y = self.center_y + move_y
+
+
+        # Check for collisions with walls
+        # for wall in self.game_manager.walls:
+        #     if wall.collides_with_point((new_x, new_y)):
+        #         # Collision detected
+        #         if move_x > 0:
+        #             # Moving right
+        #             new_x = wall.left - self.width / 2
+        #         elif move_x < 0:
+        #             # Moving left
+        #             new_x = wall.right + self.width / 2
+        #         if move_y > 0:
+        #             # Moving up
+        #             new_y = wall.bottom - self.height / 2
+        #         elif move_y < 0:
+        #             # Moving down
+        #             new_y = wall.top + self.height / 2
+
+        # Update the player's position
+        
+        self.center_x = new_x
+        self.center_y = new_y
+        # self.center_x += move_x * penalty
+        # self.center_y += move_y * penalty
+        
+        if move_x < 0 and abs(move_x) >= abs(move_y):
             self.current_texture = self.texture_list_right
-        elif move_x > 0:
+        elif move_x > 0 and abs(move_x) >= abs(move_y):
             self.current_texture = self.texture_list_left
         elif move_y > 0:
             self.current_texture = self.texture_list_up

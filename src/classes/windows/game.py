@@ -48,7 +48,13 @@ class GameWindow(arcade.Window):
 
     def on_draw(self):
         self.player.draw()
+        self.player.draw_hit_box()
         return super().on_draw()
+    
+    def on_mouse_motion(self, x: int, y: int, dx: int, dy: int):
+        self.player.on_mouse_motion(x, y)
+    
+        return super().on_mouse_motion(x, y, dx, dy)    
 
     def on_key_press(self, key, modifiers):
         """called whenever a key is pressed"""
@@ -61,6 +67,8 @@ class GameWindow(arcade.Window):
             self.keyboard["A"] = 1
         elif key == arcade.key.D:
             self.keyboard["D"] = 1
+        elif key == arcade.key.M:
+            self.keyboard["M"] = 1
         elif key == arcade.key.LEFT:
             self.keyboard["LEFT"] = 1
         elif key == arcade.key.RIGHT:
@@ -83,6 +91,8 @@ class GameWindow(arcade.Window):
             self.keyboard["A"] = 0
         elif key == arcade.key.D:
             self.keyboard["D"] = 0
+        elif key == arcade.key.M:
+            self.keyboard["M"] = 0
         elif key == arcade.key.LEFT:
             self.keyboard["LEFT"] = 0
         elif key == arcade.key.RIGHT:
