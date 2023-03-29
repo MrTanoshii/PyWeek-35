@@ -55,10 +55,10 @@ class Guard(arcade.Sprite):
         self.center_x = 100
         self.center_y = 100
         self.status = "right"
-        self.scale = 1.0
+        self.scale = 2.0
         self.animation_counter = 0
         self.animation_speed = 24 / 60
-        GameManager.instance.guards.append(self)
+        GameManager().guards.append(self)
 
     def on_update(self, dt):
         # Move all Enemies Forwards
