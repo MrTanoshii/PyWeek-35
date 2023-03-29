@@ -172,7 +172,6 @@ class Guard(arcade.Sprite):
     def get_patrolling_points(self):
         path = self.game_manager.world.guard_patrol_points
         for point in path:
-            print(point)
             # Point(id=40, coordinates=OrderedPair(x=288, y=192), name='guard_1', properties={'path': 41})
             if point.name == self.name:
                 _x = (point.coordinates.x + point.size.width / 2) * C.WORLD_SCALE
