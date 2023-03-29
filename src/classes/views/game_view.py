@@ -4,6 +4,7 @@ from constants import CONSTANTS as C
 from classes.interactables.interactable import Interactable
 from classes.interactables.light_switch import LightSwitch
 from classes.interactables.door_switch import DoorSwitch    #TODO: added for testing
+from classes.interactables.safe import Safe          #TODO: added for testing
 from classes.managers.game_manager import GameManager
 from classes.managers.interactables_manager import InteractablesManager
 
@@ -25,11 +26,17 @@ class GameView(arcade.View):
         self.light_switch.center_y = C.SCREEN_HEIGHT / 2
         self.light_switch.scale = 0.05
 
-        # added for testing door switch
+        # TODO: clean up (only for testing door switch )
         self.door_switch = DoorSwitch()
         self.door_switch.center_x = C.SCREEN_WIDTH / 4
         self.door_switch.center_y = C.SCREEN_HEIGHT / 4
-        self.door_switch.scale = 0.5
+        self.door_switch.scale = 0.05
+
+        # TODO: clean up (only for testing safe switch )
+        self.safe_switch = Safe()
+        self.safe_switch.center_x = C.SCREEN_WIDTH / 6
+        self.safe_switch.center_y = C.SCREEN_HEIGHT / 6
+        self.safe_switch.scale = 0.05
 
         
     def on_show_view(self):
@@ -71,10 +78,12 @@ class GameView(arcade.View):
                 arcade.Sprite(
                     "./src/assets/art/light_switch/light_switch_off.png",
                     0.3,
-                    center_x=600,              #testing light switch
-                    center_y=445
+                    # center_x=600,              #testing light switch
+                    # center_y=445
                     # center_x=C.SCREEN_WIDTH / 4, #testing door switch
                     # center_y=C.SCREEN_HEIGHT / 4
+                    center_x=C.SCREEN_WIDTH / 6, #testing safe switch
+                    center_y=C.SCREEN_HEIGHT / 6
                 )
             )
 
