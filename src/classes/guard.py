@@ -86,7 +86,7 @@ class Guard(arcade.Sprite):
         # Configure Sprite
         self.center_x = 100
         self.center_y = 100
-        self.scale = 0.5 * C.WORLD_SCALE
+        self.scale = 0.2 * C.WORLD_SCALE
 
         # Load animation textures
         self.texture_list = [
@@ -103,10 +103,10 @@ class Guard(arcade.Sprite):
 
         self.animation_map = {
             "idle": self.texture_list[12:13],
-            "left": self.texture_list[0:24],
-            "up": self.texture_list[0:24],
+            "left": self.texture_list[24:48],
+            "up": self.texture_list[72:96],
             "down": self.texture_list[0:24],
-            "right": self.texture_list[24:48],
+            "right": self.texture_list[48:64],
         }
 
         self.collision_list = self.game_manager.walls
