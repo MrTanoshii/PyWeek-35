@@ -26,9 +26,16 @@ class LightManager:
         self.channel1.use()
         self.channel1.clear()
 
-    def on_draw_shader(self, x, y):
-        self.shader.program["lightPosition"] = (x, y)
-        self.shader.program["lightSize"] = 3000
+    def on_draw_shader(self, light_sources: list[tuple[int, int, int]]):
+        # self.shader.program["lightPosition"] = (x, y)
+        # self.shader.program["lightSize"] = 300
+        lights = []
+        for el in [light_sources[i] if i < len(light_sources) else [0, 0, 0] for i in range(128)]:
+            lights += el
+            # TODO: Needs to be applied to WORLD_SCALE
+
+        self.shader.program["lightSources"] = lights
+        self.shader.program["lightCount"] = len(light_sources)
         self.shader.render()
 
     def on_resize(self, width: int, height: int):

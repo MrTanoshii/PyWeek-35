@@ -141,6 +141,53 @@
         }, 
         {
          "draworder":"topdown",
+         "id":12,
+         "name":"lights",
+         "objects":[
+                {
+                 "class":"light",
+                 "height":0,
+                 "id":48,
+                 "name":"",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"radius",
+                         "type":"int",
+                         "value":500
+                        }],
+                 "rotation":0,
+                 "visible":true,
+                 "width":0,
+                 "x":736,
+                 "y":320
+                }, 
+                {
+                 "class":"light",
+                 "height":0,
+                 "id":49,
+                 "name":"",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"radius",
+                         "type":"int",
+                         "value":300
+                        }],
+                 "rotation":0,
+                 "visible":true,
+                 "width":0,
+                 "x":480,
+                 "y":192
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "draworder":"topdown",
          "id":9,
          "name":"path",
          "objects":[
@@ -406,8 +453,8 @@
          "x":0,
          "y":0
         }],
- "nextlayerid":12,
- "nextobjectid":48,
+ "nextlayerid":13,
+ "nextobjectid":50,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.9.1",
