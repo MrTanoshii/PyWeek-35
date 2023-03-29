@@ -32,6 +32,7 @@ class LightManager:
         lights = []
         for el in [light_sources[i] if i < len(light_sources) else [0, 0, 0] for i in range(128)]:
             lights += el
+            # TODO: Needs to be applied to WORLD_SCALE
 
         self.shader.program["lightSources"] = lights
         self.shader.program["lightCount"] = len(light_sources)
