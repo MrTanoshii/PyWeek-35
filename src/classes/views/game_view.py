@@ -75,7 +75,7 @@ class GameView(arcade.View):
         arcade.get_window().use()
         self.clear()
         # TODO: Mihett, should this be kept or removed?
-        self.light.on_draw_shader(C.SCREEN_WIDTH//2, C.SCREEN_HEIGHT//2)
+        # self.light.on_draw_shader(C.SCREEN_WIDTH//2, C.SCREEN_HEIGHT//2) # one argument expected
 
         self.scene.draw()
 
