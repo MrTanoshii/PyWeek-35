@@ -2,6 +2,7 @@ import arcade
 
 from src.constants import CONSTANTS as C
 from src.classes.managers.light_manager import LightManager
+from src.classes.managers.game_manager import GameManager
 from src.classes.wall import Wall
 from src.classes.world import World
 from src.classes.guard import Guard
@@ -20,8 +21,12 @@ class GameView(arcade.View):
         self.light = LightManager()
         self.walls = arcade.SpriteList()
         self.physics_engines = []
-        self.setup()
         self.last_pos = (0, 0)
+        self.camera = arcade.Camera(C.SCREEN_WIDTH, C.SCREEN_HEIGHT)
+        self.game_manager = GameManager()
+
+        # LAST ??
+        self.setup()
 
     def setup(self):
         """Set up the view."""
@@ -39,11 +44,13 @@ class GameView(arcade.View):
             self.walls.append(wall)
 
         # Guard
-        for guard in self.world.guards:
+        for guard in self.world.guard_spawn:
             new_guard: arcade.Sprite = Guard(self.walls)
             new_guard.center_x = (guard.coordinates.x + guard.size.width / 2) * C.WORLD_SCALE
             new_guard.center_y = (self.world.height * self.world.tile_size - guard.coordinates.y - guard.size.height / 2) * C.WORLD_SCALE
             self.physics_engines.append(arcade.PhysicsEngineSimple(new_guard, self.walls))
+
+        self.game_manager.world = self.world
 
         self.hud = HUD()
 
@@ -65,10 +72,12 @@ class GameView(arcade.View):
 
         arcade.get_window().use()
         self.clear()
-        self.light.on_draw_shader(self.last_pos[0], self.last_pos[1])
+
+        self.light.on_draw_shader(C.SCREEN_WIDTH//2, C.SCREEN_HEIGHT//2)
 
         Guard.enemy_list.draw()
         self.hud.draw()
+        self.camera.use()
 
     def on_update(self, delta_time: float):
         """Update the view."""
@@ -76,6 +85,8 @@ class GameView(arcade.View):
             engine.update()
         self.scene.update()
         Guard.enemy_list.on_update(delta_time)
+
+        self.camera.move_to((self.game_manager.player.center_x - C.SCREEN_WIDTH // 2, self.game_manager.player.center_y - C.SCREEN_HEIGHT // 2), 1)
 
     def on_mouse_press(self, _x, _y, _button, _modifiers):
         """Handle mouse press events."""
