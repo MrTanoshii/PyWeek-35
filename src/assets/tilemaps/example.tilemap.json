@@ -179,6 +179,60 @@
                  "width":0,
                  "x":480,
                  "y":192
+                }, 
+                {
+                 "class":"light",
+                 "height":0,
+                 "id":50,
+                 "name":"",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"radius",
+                         "type":"int",
+                         "value":400
+                        }],
+                 "rotation":0,
+                 "visible":true,
+                 "width":0,
+                 "x":256,
+                 "y":448
+                }, 
+                {
+                 "class":"light",
+                 "height":0,
+                 "id":51,
+                 "name":"",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"radius",
+                         "type":"int",
+                         "value":100
+                        }],
+                 "rotation":0,
+                 "visible":true,
+                 "width":0,
+                 "x":768,
+                 "y":160
+                }, 
+                {
+                 "class":"light",
+                 "height":0,
+                 "id":52,
+                 "name":"",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"radius",
+                         "type":"int",
+                         "value":100
+                        }],
+                 "rotation":0,
+                 "visible":true,
+                 "width":0,
+                 "x":640,
+                 "y":192
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -454,7 +508,7 @@
          "y":0
         }],
  "nextlayerid":13,
- "nextobjectid":50,
+ "nextobjectid":54,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.9.1",

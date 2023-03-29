@@ -2,12 +2,6 @@
 #define MAX_SOURCES 128
 #define TRANSPARENCY 0.8
 
-// x, y position of the light
-//uniform vec2 lightPosition;
-// Size of light in pixels
-//uniform float lightSize;
-
-//uniform int lightSources[MAX_SOURCES * 3];
 uniform vec3 lightSources[MAX_SOURCES];
 uniform int lightCount;
 
@@ -27,11 +21,8 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
     float maxLight = 0;
     for (int i = 0; i < lightCount; ++i)
     {
-//        vec2 lightPosition = vec2(lightSources[i], lightSources[i + 1]); // :=
-//        int lightSize = lightSources[i + 2];
         vec2 lightPosition = lightSources[i].xy;
         float lightSize = lightSources[i].z;
-        // Distance in pixels to the light
         float distanceToLight = length(lightPosition - fragCoord);
 
         // Normalize the fragment coordinate from (0.0, 0.0) to (1.0, 1.0)
@@ -64,7 +55,7 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
             // dependent on the value of b.
             vec4 color = mix(blackColor, texture(iChannel1, normalizedFragCoord), lightAmount);
             maxLight = lightAmount;
-            preFragColor = color;
+            preFragColor = mix(preFragColor, color, lightAmount);
         }
     }
 

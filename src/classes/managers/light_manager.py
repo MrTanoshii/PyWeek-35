@@ -27,8 +27,6 @@ class LightManager:
         self.channel1.clear()
 
     def on_draw_shader(self, light_sources: list[tuple[int, int, int]]):
-        # self.shader.program["lightPosition"] = (x, y)
-        # self.shader.program["lightSize"] = 300
         lights = []
         for el in [light_sources[i] if i < len(light_sources) else [0, 0, 0] for i in range(128)]:
             lights += el

@@ -76,7 +76,7 @@ class GameView(arcade.View):
                 light.properties.get("radius", C.DEFAULT_LIGHT_RADIUS)
             )
             for light in self.world.lights
-        ])  # [(self.last_pos[0], self.last_pos[1], 300)]
+        ])
 
         self.hud.draw()
 
