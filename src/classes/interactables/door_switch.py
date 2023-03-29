@@ -1,6 +1,9 @@
+import arcade
 from arcade import load_texture
 
 from classes.interactables.interactable import Interactable
+from src.classes.views.doorswitch_mini import DoorSwitchMini
+from src.classes.interactables.minigame import MiniGame
 
 
 class DoorSwitch(Interactable):
@@ -58,6 +61,7 @@ class DoorSwitch(Interactable):
         if self.is_open:
             self.close_door()
         else:
+            MiniGame(DoorSwitchMini())
             self.open_door()
 
         self.update_texture()

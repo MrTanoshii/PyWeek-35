@@ -1,6 +1,8 @@
 from arcade import load_texture
 
 from classes.interactables.interactable import Interactable
+from classes.interactables.minigame import MiniGame
+from classes.views.safe_mini import SafeMini
 
 
 class Safe(Interactable):
@@ -22,13 +24,14 @@ class Safe(Interactable):
             name = f"{type(self).__name__} #{Safe.index_count}"
             Safe.index_count += 1
 
-        self.texture = load_texture("./src/assets/art/safe/usb.png")
+        self.safe_texture = load_texture("./src/assets/art/safe/usb.png")
 
         super().__init__(name, description, self, *args, **kwargs)
 
     def setup(self):
         """Setup."""
 
+        self.set_texture()
         Safe.safe_list.append(self)
 
         super().setup()
@@ -40,10 +43,16 @@ class Safe(Interactable):
 
         Safe.safe_list.remove(self)
 
+    # TODO: texture works like this for some reason
+    def set_texture(self):
+        self.texture = self.safe_texture
+
+
     def interact(self):
         """
         Interact with the light switch.
         Overrides the parent class method.
         """
-
-        pass
+        print("u gae")
+        MiniGame(SafeMini())
+        
