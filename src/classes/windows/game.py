@@ -32,7 +32,7 @@ class GameWindow(arcade.Window):
         self.score_view = ScoreView(self.game_view)
 
         # Let's add the player, and add them to the playerlist
-        self.player = Player(keyboard=self.keyboard)
+        self.player = Player(keyboard=self.keyboard, game_manager=game_manager)
         coords = game_manager.world.player_spawn[0].coordinates
         self.player.scale = 1
         self.player.center_x = coords.x * C.WORLD_SCALE

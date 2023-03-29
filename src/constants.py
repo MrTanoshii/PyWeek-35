@@ -8,7 +8,9 @@ class CONSTANTS:
     BACKGROUND_COLOR = arcade.color.BLACK
     MOVEMENT_SPEED = 10
     WORLD_SCALE = 4.0
+    PLAYER_COLLISION_THRESHOLD = 25
 
 
 arcade.load_font("src/assets/fonts/pixel.ttf")  # MODERN WARFARE
 arcade.load_font("src/assets/fonts/font.ttf")  # Minecraft
+

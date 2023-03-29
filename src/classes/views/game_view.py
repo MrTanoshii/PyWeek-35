@@ -24,7 +24,6 @@ class GameView(arcade.View):
         self.last_pos = (0, 0)
         self.camera = arcade.Camera(C.SCREEN_WIDTH, C.SCREEN_HEIGHT)
         self.game_manager = GameManager()
-
         # LAST ??
         self.setup()
 
@@ -49,7 +48,7 @@ class GameView(arcade.View):
             new_guard.center_x = (guard.coordinates.x + guard.size.width / 2) * C.WORLD_SCALE
             new_guard.center_y = (self.world.height * self.world.tile_size - guard.coordinates.y - guard.size.height / 2) * C.WORLD_SCALE
             self.physics_engines.append(arcade.PhysicsEngineSimple(new_guard, self.walls))
-
+        self.game_manager.walls = self.walls
         self.game_manager.world = self.world
 
         self.hud = HUD()
