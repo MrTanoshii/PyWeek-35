@@ -1,20 +1,31 @@
 #define N 500
 #define MAX_SOURCES 128
+#define MAX_OBSTACLES 256
 #define TRANSPARENCY 0.8
 
-// x, y position of the light
-//uniform vec2 lightPosition;
-// Size of light in pixels
-//uniform float lightSize;
 
-//uniform int lightSources[MAX_SOURCES * 3];
 uniform vec3 lightSources[MAX_SOURCES];
 uniform int lightCount;
+uniform vec4 obstacles[MAX_OBSTACLES];
+uniform int obstaclesCount;
 
 
 float terrain(vec2 samplePoint)
 {
     float samplePointAlpha = texture(iChannel0, samplePoint).a;
+//    float samplePointAlpha = 0.8;
+//    for (int i = 0; i < obstaclesCount; ++i)
+//    {
+//        vec2 leftTop = obstacles[i].xy;
+//        vec2 rightBottom = obstacles[i].zw;
+//        bool x = samplePoint.x > leftTop.x && samplePoint.x < rightBottom.x;
+//        bool y = samplePoint.y < leftTop.y && samplePoint.y > rightBottom.y;
+//        if (x && y)
+//        {
+//            samplePointAlpha = 0.0;
+//            break;
+//        }
+//    }
     float sampleStepped = step(0.1, samplePointAlpha);
     float returnValue = 1.0 - sampleStepped;
 
@@ -27,11 +38,8 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
     float maxLight = 0;
     for (int i = 0; i < lightCount; ++i)
     {
-//        vec2 lightPosition = vec2(lightSources[i], lightSources[i + 1]); // :=
-//        int lightSize = lightSources[i + 2];
         vec2 lightPosition = lightSources[i].xy;
         float lightSize = lightSources[i].z;
-        // Distance in pixels to the light
         float distanceToLight = length(lightPosition - fragCoord);
 
         // Normalize the fragment coordinate from (0.0, 0.0) to (1.0, 1.0)
@@ -64,9 +72,8 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
             // dependent on the value of b.
             vec4 color = mix(blackColor, texture(iChannel1, normalizedFragCoord), lightAmount);
             maxLight = lightAmount;
-            preFragColor = color;
+            preFragColor = mix(preFragColor, color, lightAmount);
         }
     }
-
     fragColor = preFragColor;
 }
