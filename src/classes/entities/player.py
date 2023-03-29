@@ -147,8 +147,6 @@ class Player(arcade.Sprite):
         
         self.center_x = new_x
         self.center_y = new_y
-        # self.center_x += move_x * penalty
-        # self.center_y += move_y * penalty
         
         if move_x < 0 and abs(move_x) >= abs(move_y):
             self.current_texture = self.texture_list_right
