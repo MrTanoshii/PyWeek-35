@@ -34,8 +34,10 @@ class GameManager(object):
         self.player = None
         self.collision = None
         self.score = 0
+
         self.guards = guards
         self.walls: arcade.SpriteList = arcade.SpriteList()
+
         self.camera = None
         self.world = None
 

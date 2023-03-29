@@ -94,7 +94,6 @@ class Guard(arcade.Sprite):
         self.collision_list = self.game_manager.walls
 
         # Configure Movement
-
         self.speed = 3
 
         # Configure AI
