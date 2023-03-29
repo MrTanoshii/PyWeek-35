@@ -19,7 +19,6 @@ class GameView(arcade.View):
         self.guard = None
         self.hud = None
         self.light = LightManager()
-        self.walls = arcade.SpriteList()
         self.physics_engines = []
         self.last_pos = (0, 0)
         self.camera = arcade.Camera(C.SCREEN_WIDTH, C.SCREEN_HEIGHT)
@@ -32,7 +31,7 @@ class GameView(arcade.View):
         """Set up the view."""
         self.scene = arcade.Scene.from_tilemap(self.world.map)
 
-        # Create and append scaled Wall objects from self.world.walls to self.walls
+        # Create and append scaled Wall objects from self.world.walls to self.game_manager.walls
         for wall in [
             Wall(
                 (wall.coordinates.x + wall.size.width / 2) * C.WORLD_SCALE,
@@ -41,14 +40,14 @@ class GameView(arcade.View):
             )
             for wall in self.world.walls
         ]:
-            self.walls.append(wall)
+            self.game_manager.walls.append(wall)
 
         # Guard
         for guard in self.world.guard_spawn:
-            new_guard: arcade.Sprite = Guard(self.walls)
+            new_guard: arcade.Sprite = Guard()
             new_guard.center_x = (guard.coordinates.x + guard.size.width / 2) * C.WORLD_SCALE
             new_guard.center_y = (self.world.height * self.world.tile_size - guard.coordinates.y - guard.size.height / 2) * C.WORLD_SCALE
-            self.physics_engines.append(arcade.PhysicsEngineSimple(new_guard, self.walls))
+            self.physics_engines.append(arcade.PhysicsEngineSimple(new_guard, self.game_manager.walls))
 
         self.game_manager.world = self.world
 
@@ -64,12 +63,12 @@ class GameView(arcade.View):
 
         self.light.on_draw_shadows()
         # Draw fragments which shouldn't pass the light:
-        self.walls.draw()
+        self.game_manager.walls.draw()
 
         self.light.on_draw()
         # Draw fragments which can be in the shadow:
         # Put here drawing interactables and guards
-        Guard.enemy_list.draw()
+        self.game_manager.guards.draw()
 
         arcade.get_window().use()
         self.clear()
@@ -85,7 +84,7 @@ class GameView(arcade.View):
             for light in self.world.lights
         ])  # [(self.last_pos[0], self.last_pos[1], 300)]
 
-        Guard.enemy_list.draw()
+        self.game_manager.guards.draw()
         self.hud.draw()
         self.camera.use()
 
@@ -94,7 +93,7 @@ class GameView(arcade.View):
         for engine in self.physics_engines:
             engine.update()
         self.scene.update()
-        Guard.enemy_list.on_update(delta_time)
+        self.game_manager.guards.on_update(delta_time)
 
         self.camera.move_to((self.game_manager.player.center_x - C.SCREEN_WIDTH // 2, self.game_manager.player.center_y - C.SCREEN_HEIGHT // 2), 1)
 
