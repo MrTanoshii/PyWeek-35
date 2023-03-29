@@ -67,12 +67,22 @@ class GameView(arcade.View):
 
         self.light.on_draw()
         # Draw fragments which can be in the shadow:
-        self.scene.draw()
+        # Put here drawing interactables and guards
+        Guard.enemy_list.draw()
 
         arcade.get_window().use()
         self.clear()
 
-        self.light.on_draw_shader(C.SCREEN_WIDTH//2, C.SCREEN_HEIGHT//2)
+        self.scene.draw()
+
+        self.light.on_draw_shader([
+            (
+                self.world.tiled_to_screen(light.coordinates.x, light.coordinates.y)[0],
+                self.world.tiled_to_screen(light.coordinates.x, light.coordinates.y)[1],  # :=
+                light.properties.get("radius", C.DEFAULT_LIGHT_RADIUS)
+            )
+            for light in self.world.lights
+        ])  # [(self.last_pos[0], self.last_pos[1], 300)]
 
         Guard.enemy_list.draw()
         self.hud.draw()

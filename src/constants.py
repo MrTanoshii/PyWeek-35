@@ -9,6 +9,7 @@ class CONSTANTS:
     MOVEMENT_SPEED = 10
     WORLD_SCALE = 4.0
     PLAYER_COLLISION_THRESHOLD = 25
+    DEFAULT_LIGHT_RADIUS = 300
 
 
 arcade.load_font("src/assets/fonts/pixel.ttf")  # MODERN WARFARE

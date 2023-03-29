@@ -19,6 +19,8 @@ class World:
 
         self.paths = self.map.get_tilemap_layer("path")
         self.guards_path: list[Rectangle] = list(filter(lambda x: x.class_ == "guard", self.paths.tiled_objects))
+        self.guards: list[Rectangle] = list(filter(lambda x: x.class_ == "guard", self.paths.tiled_objects))
+        self.lights = list(filter(lambda x: x.class_ == "light", self.map.get_tilemap_layer("lights").tiled_objects))
 
     @classmethod
     def load(cls, map_name: str):
@@ -42,3 +44,6 @@ class World:
     @property
     def tile_size(self):
         return self.map.tile_width
+
+    def tiled_to_screen(self, x: int, y: int) -> tuple[int, int]:
+        return x * C.WORLD_SCALE, (self.height * self.tile_size - y) * C.WORLD_SCALE
