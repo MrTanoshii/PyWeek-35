@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.1" orientation="orthogonal" renderorder="right-down" width="30" height="20" tilewidth="32" tileheight="32" infinite="0" nextlayerid="12" nextobjectid="48">
+<map version="1.10" tiledversion="1.10.0" orientation="orthogonal" renderorder="right-down" width="30" height="20" tilewidth="32" tileheight="32" infinite="0" nextlayerid="13" nextobjectid="53">
  <editorsettings>
   <export target="example.tilemap.json" format="json"/>
  </editorsettings>
  <tileset firstgid="1" source="example_tileset.tsx"/>
+ <tileset firstgid="561" source="assest.tsx"/>
  <layer id="1" name="base_tiles" width="30" height="20">
   <data encoding="csv">
 37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,
@@ -36,9 +37,9 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,386,387,387,387,387,387,387,387,387,388,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,284,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,89,93,0,0,0,89,93,0,0,0,89,93,0,0,319,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,55,266,266,57,0,55,266,266,57,0,55,266,266,57,0,319,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,300,301,301,302,0,55,266,266,57,0,300,301,301,302,0,319,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,89,93,0,0,0,89,93,0,0,0,0,0,0,0,319,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,55,266,266,57,0,55,266,266,57,0,0,0,0,0,0,319,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,300,301,301,302,0,55,266,266,57,0,0,561,0,0,0,319,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,300,301,301,302,0,0,0,0,0,0,319,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,386,387,387,387,387,387,387,387,387,388,0,89,93,0,0,319,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,55,266,266,57,0,55,266,266,57,0,55,266,266,57,0,354,0,0,0,
@@ -77,21 +78,21 @@
 </data>
  </layer>
  <objectgroup id="8" name="interactable">
-  <object id="17" name="light_switch_1" class="switch" x="608" y="256" width="32" height="32"/>
-  <object id="18" name="light_switch_2" class="switch" x="608" y="384" width="32" height="32"/>
-  <object id="42" name="treasure" class="treasure" x="832" y="416" width="32" height="32"/>
+  <object id="17" name="light_switch_1" type="switch" x="608" y="256" width="32" height="32"/>
+  <object id="18" name="light_switch_2" type="switch" x="608" y="384" width="32" height="32"/>
+  <object id="42" name="treasure" type="treasure" x="832" y="416" width="32" height="32"/>
  </objectgroup>
  <objectgroup id="9" name="path">
-  <object id="27" name="guard_1" class="guard" x="320" y="128" width="320" height="32"/>
-  <object id="28" name="guard_2" class="guard" x="832" y="160" width="32" height="224"/>
-  <object id="29" name="guard_3" class="guard" x="352" y="320" width="320" height="32"/>
-  <object id="40" class="start" x="368" y="334">
+  <object id="27" name="guard_1" type="guard" x="320" y="128" width="320" height="32"/>
+  <object id="28" name="guard_2" type="guard" x="832" y="160" width="32" height="224"/>
+  <object id="29" name="guard_3" type="guard" x="352" y="320" width="320" height="32"/>
+  <object id="40" type="start" x="368" y="334">
    <properties>
     <property name="path" type="object" value="41"/>
    </properties>
    <point/>
   </object>
-  <object id="41" class="end" x="655" y="336">
+  <object id="41" type="end" x="655" y="336">
    <properties>
     <property name="path" type="object" value="0"/>
    </properties>
@@ -99,22 +100,36 @@
   </object>
  </objectgroup>
  <objectgroup id="7" name="collision">
-  <object id="7" class="wall" x="384" y="224" width="64" height="64"/>
-  <object id="8" class="wall" x="384" y="352" width="64" height="64"/>
-  <object id="9" class="wall" x="544" y="352" width="64" height="96"/>
-  <object id="10" class="wall" x="544" y="224" width="64" height="96"/>
-  <object id="11" class="wall" x="704" y="224" width="64" height="64"/>
-  <object id="12" class="wall" x="704" y="352" width="64" height="64"/>
-  <object id="22" class="wall" x="160" y="64" width="32" height="448"/>
-  <object id="23" class="wall" x="192" y="64" width="704" height="32"/>
-  <object id="24" class="wall" x="896" y="64" width="32" height="448"/>
-  <object id="25" class="wall" x="192" y="480" width="704" height="32"/>
-  <object id="44" class="wall" x="832" y="448" width="32" height="32"/>
+  <object id="7" type="wall" x="384" y="224" width="64" height="64"/>
+  <object id="8" type="wall" x="384" y="352" width="64" height="64"/>
+  <object id="9" type="wall" x="544" y="352" width="64" height="96"/>
+  <object id="10" type="wall" x="544" y="224" width="64" height="96"/>
+  <object id="11" type="wall" x="704" y="224" width="64" height="64"/>
+  <object id="12" type="wall" x="704" y="352" width="64" height="64"/>
+  <object id="22" type="wall" x="160" y="64" width="32" height="448"/>
+  <object id="23" type="wall" x="192" y="64" width="704" height="32"/>
+  <object id="24" type="wall" x="896" y="64" width="32" height="448"/>
+  <object id="25" type="wall" x="192" y="480" width="704" height="32"/>
+  <object id="44" type="wall" x="832" y="448" width="32" height="32"/>
  </objectgroup>
  <objectgroup id="10" name="spawner">
-  <object id="30" name="player_spawner" class="player" x="224" y="128" width="32" height="32"/>
-  <object id="31" class="guard" x="608" y="128" width="32" height="32"/>
-  <object id="33" class="guard" x="832" y="352" width="32" height="32"/>
-  <object id="36" class="guard" x="352" y="320" width="32" height="32"/>
+  <object id="30" name="player_spawner" type="player" x="224" y="128" width="32" height="32"/>
+  <object id="31" type="guard" x="608" y="128" width="32" height="32"/>
+  <object id="33" type="guard" x="832" y="352" width="32" height="32"/>
+  <object id="36" type="guard" x="352" y="320" width="32" height="32"/>
+ </objectgroup>
+ <objectgroup id="12" name="lights">
+  <object id="49" type="light" x="736" y="160">
+   <properties>
+    <property name="radius" type="int" value="300"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="52" type="light" x="256" y="448">
+   <properties>
+    <property name="radius" type="int" value="300"/>
+   </properties>
+   <point/>
+  </object>
  </objectgroup>
 </map>
