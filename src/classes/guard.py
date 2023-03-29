@@ -19,6 +19,21 @@ def get_distance_between_coords(x1, y1, x2, y2):
     return math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
 
 
+def get_direction_from_angle(angle):
+    if abs(math.cos(angle)) > abs(math.sin(angle)):
+        if math.cos(angle) > 0:
+            direction = "right"
+        elif math.cos(angle) < 0:
+            direction = "left"
+    else:
+        if math.sin(angle) > 0:
+            direction = "up"
+        elif math.sin(angle) < 0:
+            direction = "down"
+
+    return direction
+
+
 class Guard(arcade.Sprite):
     def __init__(self):
         # Inherit parent class
@@ -41,6 +56,7 @@ class Guard(arcade.Sprite):
 
         # Init Physics
         self.collision_list = None
+        self.is_colliding = False
 
         # Init Movement
         self.target = None
@@ -58,6 +74,8 @@ class Guard(arcade.Sprite):
 
         self.chase_target = None
         self.chase_target_last_pos = None
+
+        self.view_distance = None
 
         self.game_manager = GameManager()
 
@@ -98,6 +116,7 @@ class Guard(arcade.Sprite):
 
         # Configure AI
         self.is_patrolling = True
+        self.view_distance = 300
 
         self.game_manager.guards.append(self)
 
@@ -113,11 +132,61 @@ class Guard(arcade.Sprite):
             self.update_animation()
             self.animation_counter = 0
 
-        is_colliding = arcade.check_for_collision_with_list(self, self.collision_list)
+        self.is_colliding = arcade.check_for_collision_with_list(self, self.collision_list)
+
+        # calculate the angle between the guard and the player
+        angle = calculate_angle(
+            self.center_x,
+            self.center_y,
+            self.game_manager.player.center_x,
+            self.game_manager.player.center_y,
+        )
+
+        # calculate the distance between the guard and the player
+        distance = get_distance_between_coords(
+            self.center_x,
+            self.center_y,
+            self.game_manager.player.center_x,
+            self.game_manager.player.center_y,
+        )
+
+        # if the guard is close enough to the player
+        if distance < self.view_distance and self.direction == get_direction_from_angle(angle) or distance < 150:
+
+            if distance < 100:
+                print("Game Over")
+
+            # if the guard is not colliding with a wall
+            if not self.is_colliding:
+
+                # set the guard to chase the player
+                self.is_chasing = True
+                self.is_patrolling = False
+                self.chase_target = self.game_manager.player
+                self.chase_target_last_pos = (self.chase_target.center_x, self.chase_target.center_y)
+
+            # if the guard is colliding with a wall
+            else:
+
+                # set the guard to patrol
+                self.is_chasing = False
+                self.is_patrolling = True
+                self.chase_target = None
+                self.chase_target_last_pos = None
+
+        else:
+            self.is_chasing = False
+            self.is_patrolling = True
+            self.chase_target = None
+            self.chase_target_last_pos = None
 
         # If the guard is patrolling
         if self.is_patrolling:
             self.patrol()
+
+        # move the guard towards the player
+        elif self.is_chasing:
+            self.chase()
 
     def update_animation(self):
         """Update the animated texture"""
@@ -139,21 +208,12 @@ class Guard(arcade.Sprite):
             self.patrol_points[self.patrol_index][1],
         )
 
-        # Move towards patrol point
-        self.center_x += math.cos(angle) * self.speed
-        self.center_y += math.sin(angle) * self.speed
+        if not self.is_colliding:
+            # Move towards patrol point
+            self.center_x += math.cos(angle) * self.speed
+            self.center_y += math.sin(angle) * self.speed
 
-        # Calculate if the guard is moving more horizontally or vertically and set animating direction
-        if abs(math.cos(angle)) > abs(math.sin(angle)):
-            if math.cos(angle) > 0:
-                self.direction = "right"
-            elif math.cos(angle) < 0:
-                self.direction = "left"
-        else:
-            if math.sin(angle) > 0:
-                self.direction = "up"
-            elif math.sin(angle) < 0:
-                self.direction = "down"
+        self.direction = get_direction_from_angle(angle)
 
         # If the guard is close enough to the patrol point
 
@@ -168,6 +228,40 @@ class Guard(arcade.Sprite):
         ):
             # Change patrol point
             self.patrol_index = self.get_next_patrol_point()
+
+    def chase(self):
+        """Chase the target"""
+
+        # Calculate angle to target
+        angle = calculate_angle(
+            self.center_x,
+            self.center_y,
+            self.chase_target.center_x,
+            self.chase_target.center_y,
+        )
+
+        if not self.is_colliding:
+            # Move towards target
+            self.center_x += math.cos(angle) * self.speed * 3
+            self.center_y += math.sin(angle) * self.speed * 3
+
+        self.direction = get_direction_from_angle(angle)
+
+        # If the guard is close enough to the target
+        if (
+            get_distance_between_coords(
+                self.center_x,
+                self.center_y,
+                self.chase_target.center_x,
+                self.chase_target.center_y,
+            )
+            < 5
+        ):
+            # Set the guard to patrol
+            self.is_chasing = False
+            self.is_patrolling = True
+            self.chase_target = None
+            self.chase_target_last_pos = None
 
     def get_patrolling_points(self):
         path = self.game_manager.world.guard_patrol_points
