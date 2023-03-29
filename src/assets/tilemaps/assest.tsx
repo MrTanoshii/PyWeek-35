@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.10" tiledversion="1.10.0" name="assest" tilewidth="144" tileheight="96" tilecount="32" columns="0">
+<tileset version="1.10" tiledversion="1.10.0" name="assest" tilewidth="144" tileheight="96" tilecount="34" columns="0">
  <grid orientation="orthogonal" width="1" height="1"/>
  <tile id="21">
   <image width="32" height="32" source="../tiles/g32.png"/>
@@ -96,5 +96,11 @@
  </tile>
  <tile id="54">
   <image width="64" height="96" source="../../../../../Documents/compuuter.png"/>
+ </tile>
+ <tile id="55">
+  <image width="32" height="32" source="../../../../../Documents/fgf.png"/>
+ </tile>
+ <tile id="56">
+  <image width="32" height="32" source="../../../../../Documents/fgf1.png"/>
  </tile>
 </tileset>
