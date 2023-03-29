@@ -68,7 +68,7 @@ class Guard(arcade.Sprite):
         # Configure Sprite
         self.center_x = 100
         self.center_y = 100
-        self.scale = 0.5 * C.WORLD_SCALE
+        self.scale = 0.2 * C.WORLD_SCALE
 
         # Load animation textures
         self.texture_list = [
@@ -85,10 +85,10 @@ class Guard(arcade.Sprite):
 
         self.animation_map = {
             "idle": self.texture_list[12:13],
-            "left": self.texture_list[0:24],
-            "up": self.texture_list[0:24],
+            "left": self.texture_list[24:48],
+            "up": self.texture_list[72:96],
             "down": self.texture_list[0:24],
-            "right": self.texture_list[24:48],
+            "right": self.texture_list[48:64],
         }
 
         self.collision_list = self.game_manager.walls
@@ -172,6 +172,7 @@ class Guard(arcade.Sprite):
     def get_patrolling_points(self):
         path = self.game_manager.world.guard_patrol_points
         for point in path:
+            print(point)
             # Point(id=40, coordinates=OrderedPair(x=288, y=192), name='guard_1', properties={'path': 41})
             if point.name == self.name:
                 _x = (point.coordinates.x + point.size.width / 2) * C.WORLD_SCALE
