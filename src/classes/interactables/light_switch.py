@@ -1,6 +1,11 @@
+
+import arcade
 from arcade import load_texture
 
 from classes.interactables.interactable import Interactable
+from classes.interactables.minigame import MiniGame
+from classes.views.lightswitch_mini import LightSwitchMini
+from classes.managers.game_manager import GameManager
 
 
 class LightSwitch(Interactable):
@@ -57,6 +62,7 @@ class LightSwitch(Interactable):
             self.turn_off()
         else:
             self.turn_on()
+            MiniGame(LightSwitchMini())
 
         self.update_texture()
 
