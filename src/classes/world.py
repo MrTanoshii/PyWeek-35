@@ -22,7 +22,7 @@ class World:
         self.guards: list[Rectangle] = list(filter(lambda x: x.class_ == "guard", self.paths.tiled_objects))
         self.lights = list(filter(lambda x: x.class_ == "light", self.map.get_tilemap_layer("lights").tiled_objects))
 
-        self.points: list[Point] = list(filter(lambda x: x.class_ == "point", self.paths.tiled_objects))
+        self.guard_patrol_points: list[Point] = list(filter(lambda x: x.class_ == "point", self.paths.tiled_objects))
 
     @classmethod
     def load(cls, map_name: str):

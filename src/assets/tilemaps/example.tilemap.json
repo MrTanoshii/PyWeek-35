@@ -239,14 +239,14 @@
                  "rotation":0,
                  "visible":true,
                  "width":0,
-                 "x":288,
-                 "y":192
+                 "x":640,
+                 "y":128
                 }, 
                 {
                  "class":"point",
                  "height":0,
                  "id":41,
-                 "name":"",
+                 "name":"guard_1",
                  "point":true,
                  "properties":[
                         {
@@ -257,14 +257,14 @@
                  "rotation":0,
                  "visible":true,
                  "width":0,
-                 "x":288,
-                 "y":448
+                 "x":320,
+                 "y":128
                 }, 
                 {
                  "class":"point",
                  "height":0,
                  "id":50,
-                 "name":"",
+                 "name":"guard_1",
                  "point":true,
                  "properties":[
                         {
@@ -275,14 +275,14 @@
                  "rotation":0,
                  "visible":true,
                  "width":0,
-                 "x":480,
-                 "y":448
+                 "x":320,
+                 "y":192
                 }, 
                 {
                  "class":"point",
                  "height":0,
                  "id":51,
-                 "name":"",
+                 "name":"guard_1",
                  "point":true,
                  "properties":[
                         {
@@ -293,8 +293,80 @@
                  "rotation":0,
                  "visible":true,
                  "width":0,
-                 "x":480,
-                 "y":224
+                 "x":640,
+                 "y":192
+                }, 
+                {
+                 "class":"point",
+                 "height":0,
+                 "id":52,
+                 "name":"guard_2",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"path",
+                         "type":"object",
+                         "value":53
+                        }],
+                 "rotation":0,
+                 "visible":true,
+                 "width":0,
+                 "x":849,
+                 "y":160.5
+                }, 
+                {
+                 "class":"point",
+                 "height":0,
+                 "id":53,
+                 "name":"guard_2",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"path",
+                         "type":"object",
+                         "value":0
+                        }],
+                 "rotation":0,
+                 "visible":true,
+                 "width":0,
+                 "x":848,
+                 "y":383
+                }, 
+                {
+                 "class":"point",
+                 "height":0,
+                 "id":55,
+                 "name":"guard_3",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"path",
+                         "type":"object",
+                         "value":56
+                        }],
+                 "rotation":0,
+                 "visible":true,
+                 "width":0,
+                 "x":320,
+                 "y":320
+                }, 
+                {
+                 "class":"point",
+                 "height":0,
+                 "id":56,
+                 "name":"guard_3",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"path",
+                         "type":"object",
+                         "value":0
+                        }],
+                 "rotation":0,
+                 "visible":true,
+                 "width":0,
+                 "x":672,
+                 "y":320
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -490,7 +562,7 @@
          "y":0
         }],
  "nextlayerid":13,
- "nextobjectid":52,
+ "nextobjectid":57,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.9.1",

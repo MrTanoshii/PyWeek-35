@@ -24,6 +24,8 @@ class Guard(arcade.Sprite):
         # Inherit parent class
         super().__init__()
 
+        self.name = ""
+
         # Init Assets
         self.texture_list = []
         self.animation_path = f"src/assets/animations/guard/"
@@ -100,6 +102,8 @@ class Guard(arcade.Sprite):
 
         self.game_manager.guards.append(self)
 
+        self.name = f"guard_{len(self.game_manager.get_guards())}"
+
     def on_update(self, dt):
         if not self.patrol_points:
             self.get_patrolling_points()
@@ -124,18 +128,6 @@ class Guard(arcade.Sprite):
         """Get the next item in a looping list"""
         self.current_texture_index = (idx + 1) % len(lst)
         return lst[self.current_texture_index]
-
-    def get_patrolling_points(self):
-        path = self.game_manager.world.points
-        for point in path:
-            # Point(id=40, coordinates=OrderedPair(x=288, y=192), name='guard_1', properties={'path': 41})
-            _x = (point.coordinates.x + point.size.width / 2) * C.WORLD_SCALE
-            _y = (
-                self.game_manager.world.height * self.game_manager.world.tile_size
-                - point.coordinates.y
-                - point.size.height / 2
-            ) * C.WORLD_SCALE
-            self.patrol_points.append((_x, _y))
 
     def patrol(self):
         """Patrol between the patrol points"""
@@ -177,6 +169,19 @@ class Guard(arcade.Sprite):
         ):
             # Change patrol point
             self.patrol_index = self.get_next_patrol_point()
+
+    def get_patrolling_points(self):
+        path = self.game_manager.world.guard_patrol_points
+        for point in path:
+            # Point(id=40, coordinates=OrderedPair(x=288, y=192), name='guard_1', properties={'path': 41})
+            if point.name == self.name:
+                _x = (point.coordinates.x + point.size.width / 2) * C.WORLD_SCALE
+                _y = (
+                    self.game_manager.world.height * self.game_manager.world.tile_size
+                    - point.coordinates.y
+                    - point.size.height / 2
+                ) * C.WORLD_SCALE
+                self.patrol_points.append((_x, _y))
 
     def get_next_patrol_point(self):
         """Get the next patrol point"""

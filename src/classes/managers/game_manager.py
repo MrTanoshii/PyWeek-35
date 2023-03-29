@@ -41,3 +41,6 @@ class GameManager(object):
 
     def set_player(self, player):
         self.player = player
+
+    def get_guards(self):
+        return guards.guards
