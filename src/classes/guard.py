@@ -1,3 +1,4 @@
+import math
 from random import randint
 
 import arcade
@@ -6,6 +7,16 @@ import os.path
 
 from src.classes.managers.game_manager import GameManager
 from src.constants import CONSTANTS as C
+
+
+def calculate_angle(x1, y1, x2, y2):
+    """Calculate the angle between two points"""
+    return math.atan2(y2 - y1, x2 - x1)
+
+
+def get_distance_between_coords(x1, y1, x2, y2):
+    """Get the distance between two coordinates"""
+    return math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
 
 
 class Guard(arcade.Sprite):
@@ -80,9 +91,18 @@ class Guard(arcade.Sprite):
 
         self.collision_list = self.game_manager.walls
 
+        # Configure Movement
+
+        self.speed = 3
+
+        # Configure AI
+        self.is_patrolling = True
+
         self.game_manager.guards.append(self)
 
     def on_update(self, dt):
+        if not self.patrol_points:
+            self.get_patrolling_points()
 
         """Animation"""
         self.animation_counter += self.animation_speed
@@ -92,6 +112,10 @@ class Guard(arcade.Sprite):
 
         is_colliding = arcade.check_for_collision_with_list(self, self.collision_list)
 
+        # If the guard is patrolling
+        if self.is_patrolling:
+            self.patrol()
+
     def update_animation(self):
         """Update the animated texture"""
         self.texture = self.next_item(self.animation_map[self.direction], self.current_texture_index)
@@ -100,3 +124,61 @@ class Guard(arcade.Sprite):
         """Get the next item in a looping list"""
         self.current_texture_index = (idx + 1) % len(lst)
         return lst[self.current_texture_index]
+
+    def get_patrolling_points(self):
+        path = self.game_manager.world.points
+        for point in path:
+            # Point(id=40, coordinates=OrderedPair(x=288, y=192), name='guard_1', properties={'path': 41})
+            _x = (point.coordinates.x + point.size.width / 2) * C.WORLD_SCALE
+            _y = (
+                self.game_manager.world.height * self.game_manager.world.tile_size
+                - point.coordinates.y
+                - point.size.height / 2
+            ) * C.WORLD_SCALE
+            self.patrol_points.append((_x, _y))
+
+    def patrol(self):
+        """Patrol between the patrol points"""
+
+        # Calculate angle to patrol point
+        angle = calculate_angle(
+            self.center_x,
+            self.center_y,
+            self.patrol_points[self.patrol_index][0],
+            self.patrol_points[self.patrol_index][1],
+        )
+
+        # Move towards patrol point
+        self.center_x += math.cos(angle) * self.speed
+        self.center_y += math.sin(angle) * self.speed
+
+        # Calculate if the guard is moving more horizontally or vertically and set animating direction
+        if abs(math.cos(angle)) > abs(math.sin(angle)):
+            if math.cos(angle) > 0:
+                self.direction = "right"
+            elif math.cos(angle) < 0:
+                self.direction = "left"
+        else:
+            if math.sin(angle) > 0:
+                self.direction = "up"
+            elif math.sin(angle) < 0:
+                self.direction = "down"
+
+        # If the guard is close enough to the patrol point
+
+        if (
+            get_distance_between_coords(
+                self.center_x,
+                self.center_y,
+                self.patrol_points[self.patrol_index][0],
+                self.patrol_points[self.patrol_index][1],
+            )
+            < 5
+        ):
+            # Change patrol point
+            self.patrol_index = self.get_next_patrol_point()
+
+    def get_next_patrol_point(self):
+        """Get the next patrol point"""
+        self.patrol_index = (self.patrol_index + 1) % len(self.patrol_points)
+        return self.patrol_index

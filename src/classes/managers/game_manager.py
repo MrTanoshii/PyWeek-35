@@ -14,7 +14,7 @@ class Guards:
 
     def on_update(self, dt):
         for guard in self.guards:
-            guard.update()
+            guard.on_update(dt)
 
 
 guards = Guards()

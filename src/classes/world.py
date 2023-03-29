@@ -1,5 +1,5 @@
 import arcade
-from pytiled_parser.tiled_object import Rectangle
+from pytiled_parser.tiled_object import Rectangle, Point
 from pathlib import Path
 
 from src.constants import CONSTANTS as C
@@ -21,6 +21,8 @@ class World:
         self.guards_path: list[Rectangle] = list(filter(lambda x: x.class_ == "guard", self.paths.tiled_objects))
         self.guards: list[Rectangle] = list(filter(lambda x: x.class_ == "guard", self.paths.tiled_objects))
         self.lights = list(filter(lambda x: x.class_ == "light", self.map.get_tilemap_layer("lights").tiled_objects))
+
+        self.points: list[Point] = list(filter(lambda x: x.class_ == "point", self.paths.tiled_objects))
 
     @classmethod
     def load(cls, map_name: str):
