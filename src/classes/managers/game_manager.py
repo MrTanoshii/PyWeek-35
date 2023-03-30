@@ -41,6 +41,8 @@ class GameManager(object):
         self.camera = None
         self.world = None
 
+        self.game_over = False
+
     def set_player(self, player):
         self.player = player
 
