@@ -95,6 +95,7 @@ class GameView(arcade.View):
 
     def on_update(self, delta_time: float):
         """Update the view."""
+        GameManager.instance.time += delta_time
         for engine in self.physics_engines:
             engine.update()
         self.scene.update()
