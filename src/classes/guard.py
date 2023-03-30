@@ -124,10 +124,18 @@ class Guard(arcade.Sprite):
         self.name = f"guard_{len(self.game_manager.get_guards())}"
 
     def draw(self):
-        print("Drawing Guard vision")
         super().draw()
-        arcade.draw_arc_outline(self.center_x, self.center_y, 100, 100,
-                                arcade.color.RED, self.angle * 2/3, 40)
+        arcade.draw_arc_outline(
+            center_x=self.center_x,
+            center_y=self.center_y,
+            width=self.view_distance * self.angle,
+            height=self.view_distance * self.angle,
+            color=arcade.color.RED,
+            start_angle=-38.2,
+            end_angle=38.2,
+            border_width=5,
+            tilt_angle=0,
+            num_segments=360)
 
     def on_update(self, dt):
         if not self.patrol_points:
