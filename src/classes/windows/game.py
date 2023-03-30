@@ -28,7 +28,7 @@ class GameWindow(arcade.Window):
         self.game_manager = game_manager
         # Setup views
         self.game_view = GameView()
-        self.ingame_menu_view = IngameMenuView()
+        self.ingame_menu_view = IngameMenuView(self.game_view)
         # TODO: Might need to move this somewhere else and trigger it accordingly
         self.score_view = None
 
@@ -101,4 +101,3 @@ class GameWindow(arcade.Window):
             self.keyboard["UP"] = 0
         elif key == arcade.key.DOWN:
             self.keyboard["DOWN"] = 0
-
