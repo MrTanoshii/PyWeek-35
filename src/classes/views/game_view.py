@@ -1,4 +1,5 @@
 import arcade
+from pytiled_parser.tiled_object import Rectangle
 
 from src.constants import CONSTANTS as C
 from src.classes.managers.light_manager import LightManager
@@ -84,7 +85,7 @@ class GameView(arcade.View):
                 light.properties.get("radius", C.DEFAULT_LIGHT_RADIUS) * C.WORLD_SCALE
             )
             for light in self.world.lights
-        ])
+        ], [self._wall_to_screen_coords(wall) for wall in self.world.walls])
 
         self.game_manager.walls.draw()
 
@@ -115,3 +116,12 @@ class GameView(arcade.View):
 
     def on_mouse_motion(self, x: int, y: int, dx: int, dy: int):
         self.last_pos = (x, y)
+
+    def _wall_to_screen_coords(self, wall: Rectangle) -> tuple[int, int, int, int]:
+        x_1, y_1 = wall.coordinates
+        x_2, y_2 = [
+            camera_coord + wall_coord
+            for camera_coord, wall_coord in zip((self.camera.position.x, self.camera.position.y), wall.coordinates)
+        ]
+
+        return x_1, y_1, x_2, y_2

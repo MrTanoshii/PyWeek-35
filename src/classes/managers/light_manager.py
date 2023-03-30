@@ -3,6 +3,8 @@ from pathlib import Path
 from arcade.experimental import Shadertoy
 from arcade.gl import Framebuffer
 
+from itertools import chain
+
 
 class LightManager:
     def __init__(self):
@@ -26,13 +28,17 @@ class LightManager:
         self.channel1.use()
         self.channel1.clear()
 
-    def on_draw_shader(self, light_sources: list[tuple[int, int, int]]):
+    def on_draw_shader(self, light_sources: list[tuple[int, int, int]], walls: list[tuple[int, int, int, int]]):
         lights = []  # TODO: Needs to be applied to WORLD_SCALE
         for el in [light_sources[i] if i < len(light_sources) else [0, 0, 0] for i in range(128)]:
             lights += el
 
+        _walls = list(chain.from_iterable(walls)) + [0, 0, 0, 0] * (256 - len(walls))
+
         self.shader.program["lightSources"] = lights
         self.shader.program["lightCount"] = len(light_sources)
+        self.shader.program['obstacles'] = _walls
+        self.shader.program['obstaclesCount'] = len(walls)
         self.shader.render()
 
     def on_resize(self, width: int, height: int):
