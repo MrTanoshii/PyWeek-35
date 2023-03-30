@@ -89,7 +89,7 @@ class Guard(arcade.Sprite):
         self.killing_distance = 100
         self.angle = 0.0
 
-        self.game_manager = GameManager()
+        self.game_manager = GameManager.instance
 
         # Setup
         self.setup()
