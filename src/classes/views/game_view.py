@@ -21,6 +21,7 @@ class GameView(arcade.View):
     def setup(self):
         """Set up the view."""
 
+        # TODO: clean up (only for testing light switch )
         self.light_switch = LightSwitch()
         self.light_switch.center_x = C.SCREEN_WIDTH / 2
         self.light_switch.center_y = C.SCREEN_HEIGHT / 2
@@ -88,6 +89,8 @@ class GameView(arcade.View):
             )
 
         if key == arcade.key.E:
+            #saves OG game view to game manager 
+            GameManager.instance.save_game_view(self)
             player = GameManager.instance.player
             interactables = arcade.check_for_collision_with_list(
                 player, InteractablesManager.instance.interactable_spritelist
