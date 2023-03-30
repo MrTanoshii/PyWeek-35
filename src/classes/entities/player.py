@@ -1,4 +1,3 @@
-import math
 import os
 from typing import Optional
 import arcade
@@ -86,6 +85,8 @@ class Player(arcade.Sprite):
         self.scale = 0.5 * C.WORLD_SCALE
 
     def on_update(self, delta_time):
+
+
         move_x = ((self.keyboard["D"] | self.keyboard["RIGHT"]) * C.MOVEMENT_SPEED) - (
             (self.keyboard["A"] | self.keyboard["LEFT"]) * C.MOVEMENT_SPEED
         )
@@ -133,7 +134,6 @@ class Player(arcade.Sprite):
                     self.top = wall.bottom
                 elif self.bottom <= wall.top and wall.top - self.bottom < C.PLAYER_COLLISION_THRESHOLD:
                     self.bottom = wall.top
-
         self.animation_counter += self.animation_speed
         if self.animation_counter > 1:
             self.update_animation()

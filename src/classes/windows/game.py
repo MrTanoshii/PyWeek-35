@@ -45,7 +45,6 @@ class GameWindow(arcade.Window):
 
     def on_update(self, delta_time: float):
         self.player.on_update(delta_time=delta_time)
-        print(len(self.game_manager.walls))
         return super().on_update(delta_time)
 
     def on_draw(self):
