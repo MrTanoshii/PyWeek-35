@@ -76,6 +76,7 @@ class Guard(arcade.Sprite):
         self.chase_target_last_pos = None
 
         self.view_distance = None
+        self.angle = None
 
         self.game_manager = GameManager()
 
@@ -135,7 +136,7 @@ class Guard(arcade.Sprite):
         self.is_colliding = arcade.check_for_collision_with_list(self, self.collision_list)
 
         # calculate the angle between the guard and the player
-        angle = calculate_angle(
+        angle_between_player_guard = calculate_angle(
             self.center_x,
             self.center_y,
             self.game_manager.player.center_x,
@@ -151,7 +152,7 @@ class Guard(arcade.Sprite):
         )
 
         # if the guard is close enough to the player
-        if distance < self.view_distance and self.direction == get_direction_from_angle(angle) or distance < 150:
+        if distance < self.view_distance and abs(angle_between_player_guard + self.angle) < 2/3:
 
             if distance < 100:
                 print("Game Over")
@@ -201,7 +202,7 @@ class Guard(arcade.Sprite):
         """Patrol between the patrol points"""
 
         # Calculate angle to patrol point
-        angle = calculate_angle(
+        self.angle = calculate_angle(
             self.center_x,
             self.center_y,
             self.patrol_points[self.patrol_index][0],
@@ -210,10 +211,10 @@ class Guard(arcade.Sprite):
 
         if not self.is_colliding:
             # Move towards patrol point
-            self.center_x += math.cos(angle) * self.speed
-            self.center_y += math.sin(angle) * self.speed
+            self.center_x += math.cos(self.angle) * self.speed
+            self.center_y += math.sin(self.angle) * self.speed
 
-        self.direction = get_direction_from_angle(angle)
+        self.direction = get_direction_from_angle(self.angle)
 
         # If the guard is close enough to the patrol point
 
@@ -233,7 +234,7 @@ class Guard(arcade.Sprite):
         """Chase the target"""
 
         # Calculate angle to target
-        angle = calculate_angle(
+        self.angle = calculate_angle(
             self.center_x,
             self.center_y,
             self.chase_target.center_x,
@@ -242,10 +243,10 @@ class Guard(arcade.Sprite):
 
         if not self.is_colliding:
             # Move towards target
-            self.center_x += math.cos(angle) * self.speed * 3
-            self.center_y += math.sin(angle) * self.speed * 3
+            self.center_x += math.cos(self.angle) * self.speed * 3
+            self.center_y += math.sin(self.angle) * self.speed * 3
 
-        self.direction = get_direction_from_angle(angle)
+        self.direction = get_direction_from_angle(self.angle)
 
         # If the guard is close enough to the target
         if (
