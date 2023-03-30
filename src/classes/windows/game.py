@@ -28,7 +28,7 @@ class GameWindow(arcade.Window):
         self.game_manager = game_manager
         # Setup views
         self.game_view = GameView()
-        self.ingame_menu_view = IngameMenuView()
+        self.ingame_menu_view = IngameMenuView(self.game_view)
         # TODO: Might need to move this somewhere else and trigger it accordingly
         self.score_view = ScoreView(self.game_view)
 
@@ -71,9 +71,6 @@ class GameWindow(arcade.Window):
             self.keyboard["UP"] = 1
         elif key == arcade.key.DOWN:
             self.keyboard["DOWN"] = 1
-        # TODO REMOVE FOR RELEASE
-        elif key == arcade.key.ESCAPE:
-            arcade.exit()
 
     def on_key_release(self, key, modifiers):
         """called whenever the user releases a key"""
@@ -93,5 +90,5 @@ class GameWindow(arcade.Window):
             self.keyboard["UP"] = 0
         elif key == arcade.key.DOWN:
             self.keyboard["DOWN"] = 0
-        # Set the initial view
-        self.show_view(self.game_view)
+        elif key == arcade.key.ESCAPE:
+            self.show_view(self.ingame_menu_view)

@@ -7,7 +7,7 @@ from src.constants import CONSTANTS as C
 class IngameMenuView(arcade.View):
     """Base class for the 'ingame menu' view."""
 
-    def __init__(self):
+    def __init__(self, game_view):
         super().__init__()
 
         # Measurement variables
@@ -33,9 +33,11 @@ class IngameMenuView(arcade.View):
             self.v_box.add(button.with_space_around(bottom=button_bottom))
 
         # User decorators to handle on_click events
+        
+        # Return to game
         @resume_button.event("on_click")
         def on_click_resume(event):
-            print("Resume button clicked: ", event)
+            self.window.show_view(game_view)
 
         @options_button.event("on_click")
         def on_click_options(event):
@@ -45,6 +47,7 @@ class IngameMenuView(arcade.View):
         def on_click_credits(event):
             print("Credits button clicked: ", event)
 
+        # Exit the game
         @quit_button.event("on_click")
         def on_click_quit(event):
             print("Quit button clicked: ", event)
@@ -65,7 +68,3 @@ class IngameMenuView(arcade.View):
         """Draw the menu"""
         self.clear()
         self.manager.draw()
-
-    def on_mouse_press(self, _x, _y, _button, _modifiers):
-        """Handle mouse press events."""
-        pass
