@@ -18,8 +18,15 @@ class GameManager(object):
         """
 
         self.game_window = game_window
+        self.game_view = None
         self.player = None
         self.score = 0
 
     def set_player(self, player):
         self.player = player
+
+    def save_game_view(self, game_view):
+        self.game_view = game_view
+    
+    def get_game_view(self):
+        return self.game_view
