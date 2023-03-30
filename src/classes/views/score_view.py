@@ -12,6 +12,7 @@ class ScoreView(arcade.View):
         super().__init__()
         self.game_view = game_view
         self.sprite_lst = arcade.SpriteList()
+        self.camera = arcade.Camera(C.SCREEN_WIDTH, C.SCREEN_HEIGHT)
 
         # TODO: Need to replace this with a rating system
         self.rating = 3
@@ -34,6 +35,7 @@ class ScoreView(arcade.View):
 
     def on_show(self):
         arcade.set_background_color(C.BACKGROUND_COLOR)
+        self.camera.use()
 
     # TODO: add a rating and a completion time
     def on_draw(self):
