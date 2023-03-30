@@ -53,6 +53,5 @@ class Safe(Interactable):
         Interact with the light switch.
         Overrides the parent class method.
         """
-        print("u gae")
         MiniGame(SafeMini())
         
