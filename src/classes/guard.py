@@ -1,4 +1,5 @@
 import math
+import random
 from random import randint
 
 import arcade
@@ -10,7 +11,14 @@ from src.constants import CONSTANTS as C
 
 
 def calculate_angle(x1, y1, x2, y2):
-    """Calculate the angle between two points"""
+    """
+    Calculate the angle between two points
+    :param x1: x coordinate of point 1
+    :param y1: y coordinate of point 1
+    :param x2: x coordinate of point 2
+    :param y2: y coordinate of point 2
+    :return: angle in radians
+    """
     return math.atan2(y2 - y1, x2 - x1)
 
 
@@ -76,7 +84,7 @@ class Guard(arcade.Sprite):
         self.chase_target_last_pos = None
 
         self.view_distance = None
-        self.angle = None
+        self.angle = 0.0
 
         self.game_manager = GameManager()
 
@@ -117,7 +125,7 @@ class Guard(arcade.Sprite):
 
         # Configure AI
         self.is_patrolling = True
-        self.view_distance = 300
+        self.view_distance = 500
 
         self.game_manager.guards.append(self)
 
@@ -128,14 +136,25 @@ class Guard(arcade.Sprite):
         arcade.draw_arc_outline(
             center_x=self.center_x,
             center_y=self.center_y,
-            width=self.view_distance * self.angle,
-            height=self.view_distance * self.angle,
+            width=self.view_distance,
+            height=self.view_distance,
             color=arcade.color.RED,
             start_angle=-38.2,
             end_angle=38.2,
             border_width=5,
-            tilt_angle=0,
+            tilt_angle=math.degrees(self.angle),
             num_segments=360)
+        triangle = arcade.draw_triangle_outline(
+            self.center_x,
+            self.center_y,
+            self.center_x + self.view_distance * math.cos(self.angle - 0.5),
+            self.center_y + self.view_distance * math.sin(self.angle - 0.5),
+            self.center_x + self.view_distance * math.cos(self.angle + 0.5),
+            self.center_y + self.view_distance * math.sin(self.angle + 0.5),
+            arcade.color.RED,
+            5
+        )
+        triangle.draw()
 
     def on_update(self, dt):
         if not self.patrol_points:
@@ -166,6 +185,12 @@ class Guard(arcade.Sprite):
         )
 
         # if the guard is close enough to the player
+
+        # Print angle in rad and deg
+        if random.randint(0, 10) == 1:
+            print(f"Angle: [{round(angle_between_player_guard):>4} | {round(math.degrees(angle_between_player_guard)):>4} ]", end=" ")
+            print(f"Pos: [{round(math.cos(self.angle), 1):<5} | {round(math.sin(self.angle), 1):<5}]")
+
         if distance < self.view_distance and abs(angle_between_player_guard + self.angle) < 2/3:
 
             if distance < 100:
