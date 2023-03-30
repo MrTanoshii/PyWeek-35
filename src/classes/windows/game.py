@@ -79,9 +79,6 @@ class GameWindow(arcade.Window):
             self.keyboard["UP"] = 1
         elif key == arcade.key.DOWN:
             self.keyboard["DOWN"] = 1
-        # TODO REMOVE FOR RELEASE
-        elif key == arcade.key.ESCAPE:
-            arcade.exit()
 
     def on_key_release(self, key, modifiers):
         """called whenever the user releases a key"""
@@ -101,3 +98,5 @@ class GameWindow(arcade.Window):
             self.keyboard["UP"] = 0
         elif key == arcade.key.DOWN:
             self.keyboard["DOWN"] = 0
+        elif key == arcade.key.ESCAPE:
+            self.show_view(self.ingame_menu_view)
