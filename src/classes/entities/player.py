@@ -1,13 +1,14 @@
-import math
 import os
 from typing import Optional
 import arcade
+from src.classes.managers.game_manager import GameManager
 from src.constants import CONSTANTS as C
 
 
 class Player(arcade.Sprite):
     def __init__(
         self,
+        game_manager,
         keyboard: dict,
         filename: str = None,
         scale: float = 1,
@@ -46,9 +47,11 @@ class Player(arcade.Sprite):
             texture,
             angle,
         )
+        # self.game_manager = GameManager() DOES NOT WORK SINGLETON IS FUCKED
         self.keyboard = keyboard
         self.facing_left = True
         self.last_facing = True
+        self.game_manager = game_manager
 
         base_path = f"src/assets/animations/cat"
 
@@ -82,6 +85,8 @@ class Player(arcade.Sprite):
         self.scale = 0.5 * C.WORLD_SCALE
 
     def on_update(self, delta_time):
+
+
         move_x = ((self.keyboard["D"] | self.keyboard["RIGHT"]) * C.MOVEMENT_SPEED) - (
             (self.keyboard["A"] | self.keyboard["LEFT"]) * C.MOVEMENT_SPEED
         )
@@ -89,7 +94,7 @@ class Player(arcade.Sprite):
             (self.keyboard["S"] | self.keyboard["DOWN"]) * C.MOVEMENT_SPEED
         )
         # Pythagorean theorem
-        penalty = 1 / math.sqrt(2) if move_x and move_y else 1
+        penalty = C.ONE_DIVIDED_BY_ROOT_TWO if move_x and move_y else 1
         self.center_x += move_x * penalty
         self.center_y += move_y * penalty
 
@@ -115,6 +120,20 @@ class Player(arcade.Sprite):
             self.current_texture = self.texture_options[self.facing_left]
             self.last_facing = self.facing_left
 
+
+        # collisions = arcade.check_for_collision_with_list(self, self.game_manager.walls)
+        # for wall in collisions:
+        # IDK which is more efficient or if there is a difference.
+        for wall in self.game_manager.walls:
+            if wall.collides_with_sprite(self):
+                if self.right >= wall.left and self.right - wall.left < C.PLAYER_COLLISION_THRESHOLD:
+                    self.right = wall.left
+                elif self.left <= wall.right and wall.right - self.left < C.PLAYER_COLLISION_THRESHOLD:
+                    self.left = wall.right
+                if self.top >= wall.bottom and self.top - wall.bottom < C.PLAYER_COLLISION_THRESHOLD:
+                    self.top = wall.bottom
+                elif self.bottom <= wall.top and wall.top - self.bottom < C.PLAYER_COLLISION_THRESHOLD:
+                    self.bottom = wall.top
         self.animation_counter += self.animation_speed
         if self.animation_counter > 1:
             self.update_animation()

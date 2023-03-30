@@ -22,7 +22,7 @@ class GameView(arcade.View):
         self.physics_engines = []
         self.last_pos = (0, 0)
         self.camera = arcade.Camera(C.SCREEN_WIDTH, C.SCREEN_HEIGHT)
-        self.game_manager = GameManager()
+        self.game_manager = GameManager.instance
 
         # LAST ??
         self.setup()
@@ -88,6 +88,7 @@ class GameView(arcade.View):
             for light in self.world.lights
         ])  # [(self.last_pos[0], self.last_pos[1], 300)]
 
+        self.scene.draw()
         self.game_manager.guards.draw()
         self.hud.draw()
         self.camera.use()

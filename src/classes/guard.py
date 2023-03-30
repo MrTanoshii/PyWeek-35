@@ -59,7 +59,7 @@ class Guard(arcade.Sprite):
         self.chase_target = None
         self.chase_target_last_pos = None
 
-        self.game_manager = GameManager()
+        self.game_manager = GameManager.instance
 
         # Setup
         self.setup()
