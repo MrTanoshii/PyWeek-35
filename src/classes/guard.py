@@ -59,7 +59,7 @@ class Guard(arcade.Sprite):
         self.chase_target = None
         self.chase_target_last_pos = None
 
-        self.game_manager = GameManager.instance
+        self.game_manager = GameManager()
 
         # Setup
         self.setup()
@@ -102,14 +102,6 @@ class Guard(arcade.Sprite):
         self.game_manager.guards.append(self)
 
         self.name = f"guard_{len(self.game_manager.get_guards())}"
-    def setup(self):
-        # Add to SpriteList
-        self.center_x = 100
-        self.center_y = 100
-        self.status = "right"
-        self.scale = 2.0
-        self.animation_counter = 0
-        self.animation_speed = 24 / 60
 
     def on_update(self, dt):
         if not self.patrol_points:
