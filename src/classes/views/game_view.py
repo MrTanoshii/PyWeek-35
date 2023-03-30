@@ -22,7 +22,7 @@ class GameView(arcade.View):
         self.physics_engines = []
         self.last_pos = (0, 0)
         self.camera = arcade.Camera(C.SCREEN_WIDTH, C.SCREEN_HEIGHT)
-        self.game_manager = GameManager()
+        self.game_manager = GameManager.instance
 
         # LAST ??
         self.setup()

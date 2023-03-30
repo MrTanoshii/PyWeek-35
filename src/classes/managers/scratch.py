@@ -9,7 +9,7 @@ from src.constants import CONSTANTS as C
 class Player(arcade.Sprite):
     def __init__(
         self,
-        game_manager,
+        game_manager: GameManager,
         keyboard: dict,
         filename: str = None,
         scale: float = 1,
@@ -48,11 +48,10 @@ class Player(arcade.Sprite):
             texture,
             angle,
         )
-        # self.game_manager = GameManager() DOES NOT WORK SINGLETON IS FUCKED
+        self.game_manager = game_manager
         self.keyboard = keyboard
         self.facing_left = True
         self.last_facing = True
-        self.game_manager = game_manager
 
         base_path = f"src/assets/animations/cat"
 
@@ -67,8 +66,8 @@ class Player(arcade.Sprite):
         ]
 
         self.texture_list_up = [
-            arcade.load_texture(f"{base_path}2/{texture}", hit_box_algorithm="Simple")
-            for texture in os.listdir(base_path+"2")
+            arcade.load_texture(f"{base_path}3/{texture}", hit_box_algorithm="Simple", flipped_vertically=True)
+            for texture in os.listdir(base_path+"3")
         ]
 
         self.texture_list_down = [
@@ -85,6 +84,7 @@ class Player(arcade.Sprite):
         self.current_texture_index = 0
 
     def on_update(self, delta_time):
+
         move_x = ((self.keyboard["D"] | self.keyboard["RIGHT"]) * C.MOVEMENT_SPEED) - (
             (self.keyboard["A"] | self.keyboard["LEFT"]) * C.MOVEMENT_SPEED
         )
@@ -92,7 +92,7 @@ class Player(arcade.Sprite):
             (self.keyboard["S"] | self.keyboard["DOWN"]) * C.MOVEMENT_SPEED
         )
         # Pythagorean theorem
-        penalty = C.ONE_DIVIDED_BY_ROOT_TWO if move_x and move_y else 1
+        penalty = 1 / math.sqrt(2) if move_x and move_y else 1
         self.center_x += move_x * penalty
         self.center_y += move_y * penalty
 
@@ -118,10 +118,10 @@ class Player(arcade.Sprite):
             self.current_texture = self.texture_options[self.facing_left]
             self.last_facing = self.facing_left
 
-
         # collisions = arcade.check_for_collision_with_list(self, self.game_manager.walls)
         # for wall in collisions:
         # IDK which is more efficient or if there is a difference.
+        
         for wall in self.game_manager.walls:
             if wall.collides_with_sprite(self):
                 if self.right >= wall.left and self.right - wall.left < C.PLAYER_COLLISION_THRESHOLD:
