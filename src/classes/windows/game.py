@@ -48,6 +48,7 @@ class GameWindow(arcade.Window):
 
     def on_draw(self):
         self.player.draw()
+        self.player.draw_hit_box()
         return super().on_draw()
 
     def on_key_press(self, key, modifiers):
