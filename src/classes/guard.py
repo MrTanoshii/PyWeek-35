@@ -295,6 +295,7 @@ class Guard(arcade.Sprite):
             self.chase_target_last_pos = None
 
     def get_patrolling_points(self):
+        """Get the patrol points from the world"""
         path = self.game_manager.world.guard_patrol_points
         for point in path:
             # Point(id=40, coordinates=OrderedPair(x=288, y=192), name='guard_1', properties={'path': 41})
