@@ -9,10 +9,10 @@ import os.path
 from src.classes.managers.game_manager import GameManager
 from src.constants import CONSTANTS as C
 
-
 def calculate_angle(x1, y1, x2, y2):
     """
     Calculate the angle between two points
+    :
     :param x1: x coordinate of point 1
     :param y1: y coordinate of point 1
     :param x2: x coordinate of point 2
@@ -23,11 +23,25 @@ def calculate_angle(x1, y1, x2, y2):
 
 
 def get_distance_between_coords(x1, y1, x2, y2):
-    """Get the distance between two coordinates"""
+    """
+    Get the distance between two coordinates
+    :
+    :param x1: x coordinate of point 1
+    :param y1: y coordinate of point 1
+    :param x2: x coordinate of point 2
+    :param y2: y coordinate of point 2
+    :return: distance between the two points
+    """
     return math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
 
 
 def get_direction_from_angle(angle):
+    """
+    Get the direction from an angle
+    :
+    :param angle: angle in radians
+    :return: direction as a string
+    """
     if abs(math.cos(angle)) > abs(math.sin(angle)):
         if math.cos(angle) > 0:
             direction = "right"
