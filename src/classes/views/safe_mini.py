@@ -3,7 +3,7 @@ import arcade.gui as GUI
 import random
 
 from src.classes.managers.game_manager import GameManager
-from constants import CONSTANTS as C
+from src.constants import CONSTANTS as C
 
 
 class SafeMini(arcade.View):

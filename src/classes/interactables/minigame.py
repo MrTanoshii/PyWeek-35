@@ -1,6 +1,3 @@
-#IFNDEF
-#DEFINE MINIGAME.H
-#ENDIF
 import arcade
 
 class MiniGame(arcade.View):

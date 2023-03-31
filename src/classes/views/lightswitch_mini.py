@@ -1,6 +1,6 @@
 import arcade
 
-from constants import CONSTANTS as C
+from src.constants import CONSTANTS as C
 from src.classes.managers.game_manager import GameManager
 
 
