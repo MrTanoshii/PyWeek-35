@@ -1,4 +1,5 @@
 import arcade
+
 import arcade.gui as GUI
 
 from src.constants import CONSTANTS as C
@@ -6,7 +7,7 @@ from src.constants import CONSTANTS as C
 
 class IngameMenuView(arcade.View):
     """Base class for the 'ingame menu' view."""
-
+    
     def __init__(self, game_view):
         super().__init__()
 
