@@ -52,8 +52,6 @@ class GameView(arcade.View):
 
         self.game_manager.world = self.world
 
-        self.game_manager.world = self.world
-
         self.hud = HUD()
 
     def on_show_view(self):
@@ -64,21 +62,15 @@ class GameView(arcade.View):
         """Draw the view."""
         # Primary camera stuff here:
 
-        self.light.on_draw_shadows()
-        # Draw fragments which shouldn't pass the light:
-        self.game_manager.walls.draw()
-
-        self.light.on_draw()
-        # Draw fragments which can be in the shadow:
-        # Put here drawing interactables and guards
-        self.game_manager.guards.draw()
-
         arcade.get_window().use()
         self.clear()
 
+        # Draw fragments which can be in the shadow:
+        # Put here drawing interactables and guards
         self.scene.draw()
+        self.game_manager.guards.draw()
 
-        self.light.on_draw_shader([
+        self.light.draw_shader([
             (
                 self.world.tiled_to_screen(light.coordinates.x, light.coordinates.y)[0] - self.camera.position.x,
                 self.world.tiled_to_screen(light.coordinates.x, light.coordinates.y)[1] - self.camera.position.y,  # :=
@@ -87,7 +79,6 @@ class GameView(arcade.View):
             for light in self.world.lights
         ], [self._wall_to_screen_coords(wall) for wall in self.world.walls])
 
-        self.game_manager.guards.draw()
         self.world.map.sprite_lists["collision_tiles"].draw()  # to remove light from collision tiles
 
         self.hud.draw()
@@ -101,9 +92,13 @@ class GameView(arcade.View):
         self.scene.update()
         self.game_manager.guards.on_update(delta_time)
 
-        self.camera.move_to((self.game_manager.player.center_x - C.SCREEN_WIDTH // 2, self.game_manager.player.center_y - C.SCREEN_HEIGHT // 2), 1)
-
-        self.camera.move_to((self.game_manager.player.center_x - C.SCREEN_WIDTH // 2, self.game_manager.player.center_y - C.SCREEN_HEIGHT // 2), 1)
+        self.camera.move_to(
+            (
+                self.game_manager.player.center_x - C.SCREEN_WIDTH // 2,
+                self.game_manager.player.center_y - C.SCREEN_HEIGHT // 2
+            ),
+            1
+        )
 
     def on_mouse_press(self, _x, _y, _button, _modifiers):
         """Handle mouse press events."""
