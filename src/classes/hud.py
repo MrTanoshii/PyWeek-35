@@ -1,3 +1,5 @@
+import os
+
 import arcade
 
 from src.constants import CONSTANTS as C
@@ -6,6 +8,24 @@ from src.constants import CONSTANTS as C
 class HUD:
     def __init__(self):
         self.camera = arcade.Camera(C.SCREEN_WIDTH, C.SCREEN_HEIGHT)
+
+        self.inventory = arcade.SpriteList()
+
+        self.asset_path = f"src/assets/art/storage_devices/"
+
+        self.setup()
+
+    def setup(self):
+        for idx, asset in enumerate(os.listdir(self.asset_path)):
+            sprite = arcade.Sprite(
+                    f"{self.asset_path}/{asset}",
+                    hit_box_algorithm="Simple",
+                    center_y=C.SCREEN_HEIGHT - 50,
+                    center_x=idx * 90 + 50,
+                )
+            sprite.color = (5, 5, 5)
+            self.inventory.append(sprite)
+        self.inventory[2].color = (255, 255, 255)
 
     def draw(self):
         self.camera.use()
@@ -21,3 +41,5 @@ class HUD:
             anchor_x="center",
             anchor_y="center",
         )
+
+        self.inventory.draw()
