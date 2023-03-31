@@ -1,8 +1,8 @@
 from arcade import load_texture
 
-from classes.interactables.interactable import Interactable
-from classes.interactables.minigame import MiniGame
-from classes.views.safe_mini import SafeMini
+from src.classes.interactables.interactable import Interactable
+from src.classes.interactables.minigame import MiniGame
+from src.classes.views.safe_mini import SafeMini
 
 
 class Safe(Interactable):

@@ -1,7 +1,7 @@
 import arcade
 
 from constants import CONSTANTS as C
-from classes.managers.game_manager import GameManager
+from src.classes.managers.game_manager import GameManager
 
 
 class LightSwitchMini(arcade.View):

@@ -2,10 +2,10 @@
 import arcade
 from arcade import load_texture
 
-from classes.interactables.interactable import Interactable
-from classes.interactables.minigame import MiniGame
-from classes.views.lightswitch_mini import LightSwitchMini
-from classes.managers.game_manager import GameManager
+from src.classes.interactables.interactable import Interactable
+from src.classes.interactables.minigame import MiniGame
+from src.classes.views.lightswitch_mini import LightSwitchMini
+from src.classes.managers.game_manager import GameManager
 
 
 class LightSwitch(Interactable):

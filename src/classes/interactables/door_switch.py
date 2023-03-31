@@ -1,7 +1,7 @@
 import arcade
 from arcade import load_texture
 
-from classes.interactables.interactable import Interactable
+from src.classes.interactables.interactable import Interactable
 from src.classes.views.doorswitch_mini import DoorSwitchMini
 from src.classes.interactables.minigame import MiniGame
 

@@ -1,8 +1,8 @@
 import arcade
 import arcade.gui as GUI
-from classes.managers.game_manager import GameManager
 import random
 
+from src.classes.managers.game_manager import GameManager
 from constants import CONSTANTS as C
 
 

@@ -1,6 +1,6 @@
 from arcade import Sprite
 
-from classes.managers.interactables_manager import InteractablesManager
+from src.classes.managers.interactables_manager import InteractablesManager
 
 
 class Interactable(Sprite):
