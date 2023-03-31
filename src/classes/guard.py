@@ -1,13 +1,10 @@
 import math
-import random
-from random import randint
-
 import arcade
-
 import os.path
 
 from src.classes.managers.game_manager import GameManager
 from src.constants import CONSTANTS as C
+
 
 def calculate_angle(x1, y1, x2, y2):
     """
@@ -42,6 +39,7 @@ def get_direction_from_angle(angle):
     :param angle: angle in radians
     :return: direction as a string
     """
+    direction = "idle"
     if abs(math.cos(angle)) > abs(math.sin(angle)):
         if math.cos(angle) > 0:
             direction = "right"
@@ -137,11 +135,11 @@ class Guard(arcade.Sprite):
         self.collision_list = self.game_manager.walls
 
         # Configure Movement
-        self.speed = 3
+        self.speed = C.GUARD_SPEED
 
         # Configure AI
         self.is_patrolling = True
-        self.view_distance = 500
+        self.view_distance = C.GUARD_VIEW_DISTANCE
         self.fov = arcade.SpriteSolidColor(self.view_distance * 2, self.view_distance * 2, (0, 0, 0, 128))
 
         self.game_manager.guards.append(self)
@@ -151,23 +149,30 @@ class Guard(arcade.Sprite):
     def draw(self):
         super().draw()
 
-        # Draw FOV
-        if arcade.check_for_collision(self.fov, self.game_manager.player):
-            self.fov.draw_hit_box((255, 0, 0, 128))
-        else:
-            self.fov.draw_hit_box((255, 255, 0, 64))
+        if C.DEBUG:
+            # Draw FOV
+            if arcade.check_for_collision(self.fov, self.game_manager.player):
+                self.fov.draw_hit_box((255, 0, 0, 255))
+            else:
+                self.fov.draw_hit_box((255, 255, 0, 255))
 
     def on_update(self, dt):
+
+        # Ensure we have patrol points
         if not self.patrol_points:
             self.get_patrolling_points()
 
-        """Animation"""
+        # Update View Distance
+        if self.game_manager.player_in_light:
+            self.view_distance = C.GUARD_VIEW_DISTANCE * 2
+        else:
+            self.view_distance = C.GUARD_VIEW_DISTANCE
+
+        # Animation
         self.animation_counter += self.animation_speed
         if self.animation_counter > 1:
             self.update_animation()
             self.animation_counter = 0
-
-        self.is_colliding = arcade.check_for_collision_with_list(self, self.collision_list)
 
         self.fov.set_hit_box(
             [
@@ -178,6 +183,8 @@ class Guard(arcade.Sprite):
         )
         self.fov.center_x = self.center_x
         self.fov.center_y = self.center_y
+
+        self.is_colliding = arcade.check_for_collision_with_list(self, self.collision_list)
 
         if self.fov.collides_with_sprite(self.game_manager.player):
 
@@ -248,13 +255,13 @@ class Guard(arcade.Sprite):
         # If the guard is close enough to the patrol point
 
         if (
-                get_distance_between_coords(
-                    self.center_x,
-                    self.center_y,
-                    self.patrol_points[self.patrol_index][0],
-                    self.patrol_points[self.patrol_index][1],
-                )
-                < 5
+            get_distance_between_coords(
+                self.center_x,
+                self.center_y,
+                self.patrol_points[self.patrol_index][0],
+                self.patrol_points[self.patrol_index][1],
+            )
+            < 5
         ):
             # Change patrol point
             self.patrol_index = self.get_next_patrol_point()
@@ -279,13 +286,13 @@ class Guard(arcade.Sprite):
 
         # If the guard is close enough to the target
         if (
-                get_distance_between_coords(
-                    self.center_x,
-                    self.center_y,
-                    self.chase_target.center_x,
-                    self.chase_target.center_y,
-                )
-                < 5
+            get_distance_between_coords(
+                self.center_x,
+                self.center_y,
+                self.chase_target.center_x,
+                self.chase_target.center_y,
+            )
+            < 5
         ):
             # Set the guard to patrol
             self.is_chasing = False
@@ -301,10 +308,10 @@ class Guard(arcade.Sprite):
             if point.name == self.name:
                 _x = (point.coordinates.x + point.size.width / 2) * C.WORLD_SCALE
                 _y = (
-                             self.game_manager.world.height * self.game_manager.world.tile_size
-                             - point.coordinates.y
-                             - point.size.height / 2
-                     ) * C.WORLD_SCALE
+                    self.game_manager.world.height * self.game_manager.world.tile_size
+                    - point.coordinates.y
+                    - point.size.height / 2
+                ) * C.WORLD_SCALE
                 self.patrol_points.append((_x, _y))
 
     def get_next_patrol_point(self):
@@ -315,7 +322,5 @@ class Guard(arcade.Sprite):
     def get_distance_from_player(self):
         """Get the distance between the player and the guard"""
         return get_distance_between_coords(
-            self.center_x,
-            self.center_y,
-            self.game_manager.player.center_x,
-            self.game_manager.player.center_y)
+            self.center_x, self.center_y, self.game_manager.player.center_x, self.game_manager.player.center_y
+        )

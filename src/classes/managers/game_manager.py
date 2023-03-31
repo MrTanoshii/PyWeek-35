@@ -53,6 +53,10 @@ class GameManager(object):
         self.game_over = False
         self.time = 0
 
+        self.lights = arcade.SpriteList()
+
+        self.player_in_light = False
+
     def set_player(self, player):
         self.player = player
 

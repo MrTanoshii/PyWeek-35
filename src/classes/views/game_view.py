@@ -1,6 +1,7 @@
 import arcade
 from pytiled_parser.tiled_object import Rectangle
 
+from src.classes.entities.light import Light
 from src.constants import CONSTANTS as C
 from src.classes.managers.light_manager import LightManager
 from src.classes.managers.game_manager import GameManager
@@ -43,6 +44,14 @@ class GameView(arcade.View):
         ]:
             self.game_manager.walls.append(wall)
 
+        # Create and append scaled Light objects from self.world.Light to self.game_manager.Light
+        for light in self.world.lights:
+            new_light: Light = Light(light.properties["radius"])
+            new_light.center_x = (light.coordinates.x + light.size.width / 2) * C.WORLD_SCALE
+            new_light.center_y = (self.world.height * self.world.tile_size - light.coordinates.y - light.size.height / 2) * C.WORLD_SCALE
+            self.game_manager.lights.append(new_light)
+
+
         # Guard
         for guard in self.world.guard_spawn:
             new_guard: arcade.Sprite = Guard()
@@ -80,6 +89,9 @@ class GameView(arcade.View):
         ], [self._wall_to_screen_coords(wall) for wall in self.world.walls])
 
         self.world.map.sprite_lists["collision_tiles"].draw()  # to remove light from collision tiles
+
+        for light in self.game_manager.lights:
+            light.draw()
 
         self.hud.draw()
         self.camera.use()
