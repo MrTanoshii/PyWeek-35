@@ -12,6 +12,9 @@ class CONSTANTS:
     DEFAULT_LIGHT_RADIUS = 300
     PLAYER_COLLISION_THRESHOLD = 25
     ONE_DIVIDED_BY_ROOT_TWO = 1 / math.sqrt(2)
+    DEBUG = True
+    GUARD_VIEW_DISTANCE = 500
+    GUARD_SPEED = 3
 
 
 arcade.load_font("src/assets/fonts/pixel.ttf")  # MODERN WARFARE

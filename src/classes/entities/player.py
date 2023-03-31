@@ -1,7 +1,7 @@
+import math
 import os
 from typing import Optional
 import arcade
-from src.classes.managers.game_manager import GameManager
 from src.constants import CONSTANTS as C
 
 
@@ -86,7 +86,6 @@ class Player(arcade.Sprite):
 
     def on_update(self, delta_time):
 
-
         move_x = ((self.keyboard["D"] | self.keyboard["RIGHT"]) * C.MOVEMENT_SPEED) - (
             (self.keyboard["A"] | self.keyboard["LEFT"]) * C.MOVEMENT_SPEED
         )
@@ -120,7 +119,6 @@ class Player(arcade.Sprite):
             self.current_texture = self.texture_options[self.facing_left]
             self.last_facing = self.facing_left
 
-
         # collisions = arcade.check_for_collision_with_list(self, self.game_manager.walls)
         # for wall in collisions:
         # IDK which is more efficient or if there is a difference.
@@ -139,10 +137,24 @@ class Player(arcade.Sprite):
             self.update_animation()
             self.animation_counter = 0
 
+        self.game_manager.player_in_light = self.check_if_player_in_light()
+
     def update_animation(self):
         """Update the animated texture"""
         self.texture = self.next_item(self.current_texture, self.current_texture_index)
 
     def next_item(self, lst, idx):
+        """Get next item in texture list"""
         self.current_texture_index = (idx + 1) % len(lst)
         return lst[self.current_texture_index]
+
+    def check_if_player_in_light(self):
+        """Check if player is in light"""
+        for light in self.game_manager.lights:
+            # calculate if player is inside circle
+            light_x = light.center_x
+            light_y = light.center_y
+            if light.light_radius > math.sqrt((self.center_x - light_x)**2 + (self.center_y - light_y)**2):
+                return True
+        return False
+
