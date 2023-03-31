@@ -16,6 +16,7 @@ class SafeMini(arcade.View):
 
         super().__init__()
         arcade.set_background_color(C.BACKGROUND_COLOR)
+        # Assigning variables
         self.input = ""
         self.value1 = random.randint(0, 100)
         self.value2 = random.randint(0, 100)
@@ -29,7 +30,7 @@ class SafeMini(arcade.View):
         self.v_box2 = GUI.UIBoxLayout()
         self.v_box3 = GUI.UIBoxLayout()
 
-        # give me buttons up to 10
+        # Create Buttons
         butt1 = GUI.UIFlatButton(text="1", width=button_width, height=button_height)
         butt2 = GUI.UIFlatButton(text="2", width=button_width, height=button_height)
         butt3 = GUI.UIFlatButton(text="3", width=button_width, height=button_height)
@@ -41,6 +42,7 @@ class SafeMini(arcade.View):
         butt9 = GUI.UIFlatButton(text="9", width=button_width, height=button_height)
         butt0 = GUI.UIFlatButton(text="0", width=button_width, height=button_height)
 
+        # Add buttons to the boxes
         for button1, button2, button3 in zip(
             [butt1, butt4, butt7], [butt2, butt5, butt8, butt0], [butt3, butt6, butt9]
         ):
@@ -50,6 +52,7 @@ class SafeMini(arcade.View):
 
         self.v_box2.add(butt0.with_space_around(bottom=button_bottom))
 
+        # Add functions to buttons when pressed
         @butt1.event("on_click")
         def on_click(event):
             if self.num_flag:
@@ -134,12 +137,38 @@ class SafeMini(arcade.View):
     # If correct, go back to game view
     # TODO: Add a way to go back to game view
     def on_key_release(self, _symbol: int, _modifiers: int):
-        if self.key == arcade.key.ENTER:
+        num_dict = {
+            arcade.key.NUM_0: "0",
+            arcade.key.NUM_1: "1",
+            arcade.key.NUM_2: "2",
+            arcade.key.NUM_3: "3",
+            arcade.key.NUM_4: "4",
+            arcade.key.NUM_5: "5",
+            arcade.key.NUM_6: "6",
+            arcade.key.NUM_7: "7",
+            arcade.key.NUM_8: "8",
+            arcade.key.NUM_9: "9",
+            arcade.key.KEY_0: "0",
+            arcade.key.KEY_1: "1",
+            arcade.key.KEY_2: "2",
+            arcade.key.KEY_3: "3",
+            arcade.key.KEY_4: "4",
+            arcade.key.KEY_5: "5",
+            arcade.key.KEY_6: "6",
+            arcade.key.KEY_7: "7",
+            arcade.key.KEY_8: "8",
+            arcade.key.KEY_9: "9",
+        }
+        if self.key in num_dict and self.num_flag:
+            self.input += num_dict[self.key]
+
+        elif self.key == arcade.key.ENTER:
             try:
                 if int(self.input) == self.value1 + self.value2:  # When won
                     # TODO: change to should leave minigame
                     self.input = ""
                     self.num_flag = True
+                    print("You won")
                 elif self.tries == 4:  # when no attempt left
                     print("You lost")
                 else:  # when incorrect but attempts still there
