@@ -21,197 +21,96 @@ class SafeMini(arcade.View):
         self.value1 = random.randint(0, 100)
         self.value2 = random.randint(0, 100)
         self.tries = 0
-        self.num_flag = True
+        self.is_not_full = True
+        self.is_ended = False
+        self.game_outcome = None
 
         self.manager = GUI.UIManager()
         self.manager.enable()
 
-        self.v_box = GUI.UIBoxLayout()
-        self.v_box2 = GUI.UIBoxLayout()
-        self.v_box3 = GUI.UIBoxLayout()
+        self.v_boxes = [GUI.UIBoxLayout(), GUI.UIBoxLayout(), GUI.UIBoxLayout()]
 
         # Create Buttons
-        butt1 = GUI.UIFlatButton(text="1", width=button_width, height=button_height)
-        butt2 = GUI.UIFlatButton(text="2", width=button_width, height=button_height)
-        butt3 = GUI.UIFlatButton(text="3", width=button_width, height=button_height)
-        butt4 = GUI.UIFlatButton(text="4", width=button_width, height=button_height)
-        butt5 = GUI.UIFlatButton(text="5", width=button_width, height=button_height)
-        butt6 = GUI.UIFlatButton(text="6", width=button_width, height=button_height)
-        butt7 = GUI.UIFlatButton(text="7", width=button_width, height=button_height)
-        butt8 = GUI.UIFlatButton(text="8", width=button_width, height=button_height)
-        butt9 = GUI.UIFlatButton(text="9", width=button_width, height=button_height)
-        butt0 = GUI.UIFlatButton(text="0", width=button_width, height=button_height)
+        buttons = []
+        for i in range(10):
+            buttons.append(GUI.UIFlatButton(text=str(i), width=button_width, height=button_height))
 
         # Add buttons to the boxes
-        for button1, button2, button3 in zip(
-            [butt1, butt4, butt7], [butt2, butt5, butt8, butt0], [butt3, butt6, butt9]
-        ):
-            self.v_box.add(button1.with_space_around(bottom=button_bottom))
-            self.v_box2.add(button2.with_space_around(bottom=button_bottom))
-            self.v_box3.add(button3.with_space_around(bottom=button_bottom))
-
-        self.v_box2.add(butt0.with_space_around(bottom=button_bottom))
+        for i, button in enumerate(buttons[1:]):
+            self.v_boxes[i % 3].add(button.with_space_around(bottom=button_bottom))
+        self.v_boxes[-2].add(buttons[0].with_space_around(bottom=button_bottom)) # Add the zero button
 
         # Add functions to buttons when pressed
-        @butt1.event("on_click")
-        def on_click(event):
-            if self.num_flag:
-                self.input += "1"
+        def make_func(index):
+            def _function(event):
+                if self.is_not_full:
+                    self.input += str(index)
+                    self.is_not_full = not len(self.input) == 5
+            return _function
+        for i, button in enumerate(buttons):
+            button.on_click = make_func(i)
 
-        @butt2.event("on_click")
-        def on_click(event):
-            if self.num_flag:
-                self.input += "2"
-
-        @butt3.event("on_click")
-        def on_click(event):
-            if self.num_flag:
-                self.input += "3"
-
-        @butt4.event("on_click")
-        def on_click(event):
-            if self.num_flag:
-                self.input += "4"
-
-        @butt5.event("on_click")
-        def on_click(event):
-            if self.num_flag:
-                self.input += "5"
-
-        @butt6.event("on_click")
-        def on_click(event):
-            if self.num_flag:
-                self.input += "6"
-
-        @butt7.event("on_click")
-        def on_click(event):
-            if self.num_flag:
-                self.input += "7"
-
-        @butt8.event("on_click")
-        def on_click(event):
-            if self.num_flag:
-                self.input += "8"
-
-        @butt9.event("on_click")
-        def on_click(event):
-            if self.num_flag:
-                self.input += "9"
-
-        @butt0.event("on_click")
-        def on_click(event):
-            if self.num_flag:
-                self.input += "0"
-
-        # TODO: Issue here with anchor_x and anchor_y
         # Creating buttons
-        self.manager.add(
-            GUI.UIAnchorWidget(
-                anchor_x="center",
-                align_x=-100,
-                anchor_y="center",
-                align_y=-27,
-                child=self.v_box,
+        for i in range(len(self.v_boxes)):
+            self.manager.add(
+                GUI.UIAnchorWidget(
+                    anchor_x="center",
+                    align_x=-100 + (i * 100),
+                    anchor_y="center",
+                    align_y=-27 if i % 2 == 0 else -70,
+                    child=self.v_boxes[i],
+                )
             )
-        )
-        self.manager.add(
-            GUI.UIAnchorWidget(
-                anchor_x="center",
-                align_x=0,
-                anchor_y="center",
-                align_y=-70,
-                child=self.v_box2,
-            )
-        )
-        self.manager.add(
-            GUI.UIAnchorWidget(
-                anchor_x="center",
-                align_x=100,
-                anchor_y="center",
-                align_y=-27,
-                child=self.v_box3,
-            )
-        )
 
     # If user presses enter, check if the answer is correct
     # If correct, go back to game view
     # TODO: Add a way when won, player cant play minigame again
     def on_key_release(self, _symbol: int, _modifiers: int):
-        num_dict = {
-            arcade.key.NUM_0: "0",
-            arcade.key.NUM_1: "1",
-            arcade.key.NUM_2: "2",
-            arcade.key.NUM_3: "3",
-            arcade.key.NUM_4: "4",
-            arcade.key.NUM_5: "5",
-            arcade.key.NUM_6: "6",
-            arcade.key.NUM_7: "7",
-            arcade.key.NUM_8: "8",
-            arcade.key.NUM_9: "9",
-            arcade.key.KEY_0: "0",
-            arcade.key.KEY_1: "1",
-            arcade.key.KEY_2: "2",
-            arcade.key.KEY_3: "3",
-            arcade.key.KEY_4: "4",
-            arcade.key.KEY_5: "5",
-            arcade.key.KEY_6: "6",
-            arcade.key.KEY_7: "7",
-            arcade.key.KEY_8: "8",
-            arcade.key.KEY_9: "9",
-        }
-        if self.key in num_dict and self.num_flag:
-            self.input += num_dict[self.key]
+        if self.is_not_full and chr(self.key).isnumeric():
+            self.input += chr(self.key)
+            self.is_not_full = not len(self.input) == 5
 
         elif self.key == arcade.key.ENTER:
-            resume_game = GameManager.instance.get_game_view()
-            try:
-                if int(self.input) == self.value1 + self.value2:  # When won
-                    # TODO: change to should leave minigame
-                    self.input = ""
-                    self.num_flag = True
-                    
-                    #TODO: return to game view
-                    self.window.show_view(resume_game)
-                    print("You won")
+            if not self.is_ended:
+                if self.tries >= 4:  # when no attempt left
+                    self.game_outcome = "YOU LOSE!"
+                    self.is_ended = True
+                else:
+                    try: # Winning
+                        if int(self.input) == self.value1 + self.value2:
+                            self.game_outcome = "YOU WIN!"
+                            self.is_ended = True
+                    except ValueError:
+                        pass
 
-                elif self.tries == 4:  # when no attempt left
-                    self.window.show_view(resume_game)
-                    print("You lost")
-                else:  # when incorrect but attempts still there
-                    self.tries += 1
-                    self.input = ""
-                    self.num_flag = True
-            except ValueError:
                 self.input = ""
+                self.is_not_full = True
                 self.tries += 1
-
-    # To prevent user from entering more than 3 digits
-    def update(self, delta_time: float):
-        if len(self.input) == 5:
-            self.num_flag = False
+            else:
+                self.window.show_view(GameManager.instance.get_game_view())
 
     def on_draw(self):
         self.clear()
-        arcade.draw_rectangle_filled(
-            C.SCREEN_WIDTH / 2, C.SCREEN_HEIGHT / 2, 300, 450, arcade.color.WHITE
-        )
-        arcade.draw_text(
-            f"{self.input}",
-            C.SCREEN_WIDTH / 2 - 130,
-            C.SCREEN_HEIGHT / 2 + 140,
-            arcade.color.BLUE,
-            font_size=30,
-            anchor_x="left",
-            anchor_y="center",
-        )
-        arcade.draw_text(
-            f"{self.value1} + {self.value2} =",
-            C.SCREEN_WIDTH / 2 - 130,
-            C.SCREEN_HEIGHT / 2 + 200,
-            arcade.color.BLACK,
-            font_size=15,
-            anchor_x="left",
-            anchor_y="center",
-        )
+        if not self.is_ended:
+            arcade.draw_rectangle_filled(
+                C.SCREEN_WIDTH / 2, C.SCREEN_HEIGHT / 2, 300, 450, arcade.color.WHITE
+            )
+            self.draw_text(f"{self.input}", (-130, 140), arcade.color.BLUE, 30, ("left","center"))
+            self.draw_text(f"{self.value1} + {self.value2} =", (-130, 200), arcade.color.BLACK, 15, ("left","center"))
+            self.draw_text("Press Enter to validate answer", (0, -350), arcade.color.WHITE, 30, ("center","baseline"))
+            self.manager.draw() # Draw buttons
+        else:
+            self.draw_text(f"MINIGAME COMPLETED", (0, 0), arcade.color.WHITE, 30, ("center","baseline"))
+            self.draw_text(f"{self.game_outcome}", (0, -50), arcade.color.WHITE, 30, ("center","baseline"))
+            self.draw_text("Press Enter to exit", (0, -300), arcade.color.WHITE, 20, ("center","baseline"))
 
-        self.manager.draw()
+    def draw_text(self, text, offset = (0, 0), color = arcade.color.WHITE, font_size = 30, anchor = ("left", "baseline")):
+        return arcade.draw_text(
+            f"{text}",
+            C.SCREEN_WIDTH / 2 + offset[0],
+            C.SCREEN_HEIGHT / 2 + offset[1],
+            color,
+            font_size=font_size,
+            anchor_x=anchor[0],
+            anchor_y=anchor[1],
+        )
