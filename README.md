@@ -1,4 +1,15 @@
-# PyWeek 35
+
+# PyWeek-35
+
+## Running the game
+
+```bash
+# Windows
+py run_game.py
+
+# Linux/macOS
+python3 run_game.py
+```
 
 ## Attribution
 
@@ -10,3 +21,4 @@
 - [Start icons created by Freepik - Flaticon](https://www.flaticon.com/free-icons/start)
 - [Stop sign icons created by Freepik - Flaticon](https://www.flaticon.com/free-icons/stop-sign)
 - [Switch icons created by Pixel perfect - Flaticon](https://www.flaticon.com/free-icons/switch)
+- [Star icons created by Pixel perfect - Flaticon](https://www.flaticon.com/free-icons/star)

@@ -1,19 +1,16 @@
 import arcade
 
-from constants import CONSTANTS as C
-from classes.managers.game_manager import GameManager
-from classes.managers.interactables_manager import InteractablesManager
-from classes.windows.game import GameWindow
+
+from src.classes.managers.interactables_manager import InteractablesManager
+from src.classes.windows.game import GameWindow
+from pyglet.image import load as pyglet_load
+from .constants import CONSTANTS as C
 
 
-if __name__ == "__main__":
-    # Setup managers
+def main():
     InteractablesManager()
-
     game_window = GameWindow(C.SCREEN_WIDTH, C.SCREEN_HEIGHT, C.SCREEN_TITLE)
     game_window.setup()
-
-    # Setup game manager
-    GameManager(game_window)
+    game_window.set_icon(pyglet_load("src/assets/icons/kiisu.png"))
 
     arcade.run()
