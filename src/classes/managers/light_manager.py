@@ -1,7 +1,6 @@
 import arcade
 from pathlib import Path
 from arcade.experimental import Shadertoy
-from arcade.gl import Framebuffer
 
 from itertools import chain
 
