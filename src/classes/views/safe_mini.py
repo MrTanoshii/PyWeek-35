@@ -135,7 +135,7 @@ class SafeMini(arcade.View):
 
     # If user presses enter, check if the answer is correct
     # If correct, go back to game view
-    # TODO: Add a way to go back to game view
+    # TODO: Add a way when won, player cant play minigame again
     def on_key_release(self, _symbol: int, _modifiers: int):
         num_dict = {
             arcade.key.NUM_0: "0",
@@ -163,13 +163,19 @@ class SafeMini(arcade.View):
             self.input += num_dict[self.key]
 
         elif self.key == arcade.key.ENTER:
+            resume_game = GameManager.instance.get_game_view()
             try:
                 if int(self.input) == self.value1 + self.value2:  # When won
                     # TODO: change to should leave minigame
                     self.input = ""
                     self.num_flag = True
+                    
+                    #TODO: return to game view
+                    self.window.show_view(resume_game)
                     print("You won")
+
                 elif self.tries == 4:  # when no attempt left
+                    self.window.show_view(resume_game)
                     print("You lost")
                 else:  # when incorrect but attempts still there
                     self.tries += 1
