@@ -48,6 +48,3 @@ class World:
 
     def tiled_to_screen(self, x: int, y: int) -> tuple[int, int]:
         return x * C.WORLD_SCALE, (self.height * self.tile_size - y) * C.WORLD_SCALE
-
-    def tiled_to_opengl(self, x: int, y: int) -> tuple[int, int]:
-        return x * C.WORLD_SCALE, y * C.WORLD_SCALE
