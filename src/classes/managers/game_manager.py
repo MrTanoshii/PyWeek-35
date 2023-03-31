@@ -33,6 +33,7 @@ class GameManager(object):
 
         self.game_over = False
         self.time = 0
+        self.keyboard = None
 
         self.lights = arcade.SpriteList()
 

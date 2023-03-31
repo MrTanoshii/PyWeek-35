@@ -2,14 +2,13 @@ import math
 import os
 from typing import Optional
 import arcade
+from src.classes.managers.game_manager import GameManager
 from src.constants import CONSTANTS as C
 
 
 class Player(arcade.Sprite):
     def __init__(
         self,
-        game_manager,
-        keyboard: dict,
         filename: str = None,
         scale: float = 1,
         image_x: float = 0,
@@ -47,11 +46,10 @@ class Player(arcade.Sprite):
             texture,
             angle,
         )
-        # self.game_manager = GameManager() DOES NOT WORK SINGLETON IS FUCKED
-        self.keyboard = keyboard
         self.facing_left = True
         self.last_facing = True
-        self.game_manager = game_manager
+        self.game_manager = GameManager.instance
+        self.keyboard = self.game_manager.keyboard
 
         base_path = f"src/assets/animations/cat"
 
