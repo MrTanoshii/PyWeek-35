@@ -2,6 +2,7 @@ import arcade
 from pytiled_parser.tiled_object import Rectangle
 
 from src.classes.entities.light import Light
+from src.classes.entities.player import Player
 from src.constants import CONSTANTS as C
 from src.classes.managers.light_manager import LightManager
 from src.classes.managers.game_manager import GameManager
@@ -25,6 +26,7 @@ class GameView(arcade.View):
         self.last_pos = (0, 0)
         self.camera = arcade.Camera(C.SCREEN_WIDTH, C.SCREEN_HEIGHT)
         self.game_manager = GameManager.instance
+        self.player = None
 
         # LAST ??
         self.setup()
@@ -32,6 +34,9 @@ class GameView(arcade.View):
     def setup(self):
         """Set up the view."""
         self.scene = arcade.Scene.from_tilemap(self.world.map)
+
+        
+
 
         # Create and append scaled Wall objects from self.world.walls to self.game_manager.walls
         for wall in [
@@ -60,7 +65,14 @@ class GameView(arcade.View):
             self.physics_engines.append(arcade.PhysicsEngineSimple(new_guard, self.game_manager.walls))
 
         self.game_manager.world = self.world
-
+        
+        # Let's add the player
+        self.player = Player()
+        coords = self.game_manager.world.player_spawn[0].coordinates
+        self.player.scale = 1
+        self.player.center_x = coords.x * C.WORLD_SCALE
+        self.player.center_y = (C.SCREEN_HEIGHT - coords.y - 96) * C.WORLD_SCALE
+        self.game_manager.set_player(self.player)
         self.hud = HUD()
 
     def on_show_view(self):
@@ -92,7 +104,9 @@ class GameView(arcade.View):
 
         for light in self.game_manager.lights:
             light.draw()
-
+        self.player.draw()
+        if C.DEBUG:
+            self.player.draw_hit_box()
         self.hud.draw()
         self.camera.use()
 
@@ -102,6 +116,7 @@ class GameView(arcade.View):
         for engine in self.physics_engines:
             engine.update()
         self.scene.update()
+        self.player.on_update(delta_time=delta_time)
         self.game_manager.guards.on_update(delta_time)
 
         self.camera.move_to(

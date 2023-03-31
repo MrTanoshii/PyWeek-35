@@ -5,16 +5,12 @@ from src.classes.managers.game_manager import GameManager
 from src.classes.views.game_view import GameView
 from src.classes.views.ingame_menu_view import IngameMenuView
 from src.classes.views.score_view import ScoreView
-from src.classes.entities.player import Player
-
 
 class GameWindow(arcade.Window):
     def __init__(self, width, height, title):
         super().__init__(width, height, title)
 
-        # create a player list, and a player (None for now, they will come in setup)
-        self.player = None
-        # makes a dictionary of A-Z0-9LEFTRIGHTDOWNUP:0. will be used to read keypresses by player
+        # makes a dictionary of A-Z0-9LEFTRIGHTDOWNUP:0. will be used to read keypresses by user
         self.keyboard = {
             x: 0
             for x in [chr(y) for y in range(65, 91)] + [chr(z) for z in range(48, 58)] + ["LEFT", "RIGHT", "DOWN", "UP"]
@@ -26,19 +22,13 @@ class GameWindow(arcade.Window):
         # Set up the game manager
         game_manager = GameManager(self)
         self.game_manager = game_manager
+        self.game_manager.keyboard = self.keyboard
         # Setup views
         self.game_view = GameView()
         self.ingame_menu_view = IngameMenuView(self.game_view)
         # TODO: Might need to move this somewhere else and trigger it accordingly
         self.score_view = None
 
-        # Let's add the player, and add them to the playerlist
-        self.player = Player(keyboard=self.keyboard, game_manager=game_manager)
-        coords = game_manager.world.player_spawn[0].coordinates
-        self.player.scale = 1
-        self.player.center_x = coords.x * C.WORLD_SCALE
-        self.player.center_y = (C.SCREEN_HEIGHT - coords.y - 96) * C.WORLD_SCALE
-        game_manager.set_player(self.player)
 
         # Set the initial view
         self.show_view(self.game_view)
@@ -47,18 +37,10 @@ class GameWindow(arcade.Window):
         if GameManager.instance.game_over:
             if self.score_view is None:
                 self.score_view = ScoreView(self.game_view)
-                self.show_view(self.score_view)
+            self.show_view(self.score_view)
         else:
-            self.player.on_update(delta_time=delta_time)
+            pass
         return super().on_update(delta_time)
-
-    def on_draw(self):
-        if GameManager.instance.game_over:
-            ...
-        else:
-            self.player.draw()
-            self.player.draw_hit_box()
-        return super().on_draw()
 
     def on_key_press(self, key, modifiers):
         """called whenever a key is pressed"""
