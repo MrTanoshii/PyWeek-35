@@ -30,7 +30,7 @@ class GameWindow(arcade.Window):
         self.game_view = GameView()
         self.ingame_menu_view = IngameMenuView(self.game_view)
         # TODO: Might need to move this somewhere else and trigger it accordingly
-        self.score_view = ScoreView(self.game_view)
+        self.score_view = None
 
         # Let's add the player, and add them to the playerlist
         self.player = Player(keyboard=self.keyboard, game_manager=game_manager)
@@ -44,12 +44,20 @@ class GameWindow(arcade.Window):
         self.show_view(self.game_view)
 
     def on_update(self, delta_time: float):
-        self.player.on_update(delta_time=delta_time)
+        if GameManager.instance.game_over:
+            if self.score_view is None:
+                self.score_view = ScoreView(self.game_view)
+                self.show_view(self.score_view)
+        else:
+            self.player.on_update(delta_time=delta_time)
         return super().on_update(delta_time)
 
     def on_draw(self):
-        self.player.draw()
-        self.player.draw_hit_box()
+        if GameManager.instance.game_over:
+            ...
+        else:
+            self.player.draw()
+            self.player.draw_hit_box()
         return super().on_draw()
 
     def on_key_press(self, key, modifiers):

@@ -42,6 +42,7 @@ class GameManager(object):
         self.world = None
 
         self.game_over = False
+        self.time = 0
 
     def set_player(self, player):
         self.player = player

@@ -12,6 +12,7 @@ class ScoreView(arcade.View):
         super().__init__()
         self.game_view = game_view
         self.sprite_lst = arcade.SpriteList()
+        self.camera = arcade.Camera(C.SCREEN_WIDTH, C.SCREEN_HEIGHT)
 
         # TODO: Need to replace this with a rating system
         self.rating = 3
@@ -34,6 +35,7 @@ class ScoreView(arcade.View):
 
     def on_show(self):
         arcade.set_background_color(C.BACKGROUND_COLOR)
+        self.camera.use()
 
     # TODO: add a rating and a completion time
     def on_draw(self):
@@ -48,7 +50,7 @@ class ScoreView(arcade.View):
         # Whitespace in front of first character required to center text properly
         # and avoid weird spacing
         self._draw_centered_text(f" {GameManager.instance.score}", 22, -40, "left")
-        self._draw_centered_text(f" 10s", 22, -100, "left")  # Placeholder for Time
+        self._draw_centered_text(f" {GameManager.instance.time:.2f} s", 22, -100, "left")
 
         self._draw_centered_text("Press any key to restart", 12, -250)
         self._draw_centered_text("Press ESC to exit", 12, -300)
