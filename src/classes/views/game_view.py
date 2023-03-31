@@ -82,12 +82,18 @@ class GameView(arcade.View):
             (
                 self.world.tiled_to_screen(light.coordinates.x, light.coordinates.y)[0] - self.camera.position.x,
                 self.world.tiled_to_screen(light.coordinates.x, light.coordinates.y)[1] - self.camera.position.y,  # :=
-                light.properties.get("radius", C.DEFAULT_LIGHT_RADIUS) * C.WORLD_SCALE
+                light.properties.get("radius", C.DEFAULT_LIGHT_RADIUS)
             )
             for light in self.world.lights
         ], [self._wall_to_screen_coords(wall) for wall in self.world.walls])
 
         self.game_manager.walls.draw()
+
+        for light in self.world.lights:
+            x, y = self.world.tiled_to_screen(light.coordinates.x, light.coordinates.y)
+            arcade.draw_circle_filled(
+                x, y, 50, arcade.color.ATOMIC_TANGERINE
+            )
 
         self.hud.draw()
         self.camera.use()
@@ -118,10 +124,8 @@ class GameView(arcade.View):
         self.last_pos = (x, y)
 
     def _wall_to_screen_coords(self, wall: Rectangle) -> tuple[int, int, int, int]:
-        x_1, y_1 = wall.coordinates
-        x_2, y_2 = [
-            camera_coord + wall_coord
-            for camera_coord, wall_coord in zip((self.camera.position.x, self.camera.position.y), wall.coordinates)
-        ]
+        x_1, y_1 = self.world.tiled_to_screen(wall.coordinates.x, wall.coordinates.y)
+        x_1, y_1 = [x_1 - self.camera.position.x, y_1 - self.camera.position.y]
+        x_2, y_2 = x_1 + wall.size.width * C.WORLD_SCALE, y_1 - wall.size.height * C.WORLD_SCALE
 
         return x_1, y_1, x_2, y_2
