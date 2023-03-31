@@ -1,7 +1,7 @@
 #define N 500
 #define MAX_SOURCES 128
 #define MAX_OBSTACLES 256
-#define TRANSPARENCY 0.8
+#define TRANSPARENCY 1
 
 
 uniform vec3 lightSources[MAX_SOURCES];
@@ -10,98 +10,68 @@ uniform vec4 obstacles[MAX_OBSTACLES];
 uniform int obstaclesCount;
 
 
-float terrain(vec2 samplePoint)
+bool segmentsIntersection(vec2 first, vec2 second, vec2 third, vec2 fourth)
 {
-//    float samplePointAlpha = texture(iChannel0, samplePoint).a;
-    float samplePointAlpha = 0.8;
-    for (int i = 0; i < obstaclesCount; ++i)
-    {
-        vec2 leftTop = obstacles[i].xy;
-        vec2 rightBottom = obstacles[i].zw;
-        bool x = samplePoint.x > leftTop.x && samplePoint.x < rightBottom.x;
-        bool y = samplePoint.y < leftTop.y && samplePoint.y > rightBottom.y;
-        if (x && y)
-        {
-            samplePointAlpha = 0.0;
-            break;
-        }
-    }
-    float sampleStepped = step(0.1, samplePointAlpha);
-    float returnValue = 1.0 - sampleStepped;
+    vec3 r = vec3(second - first, 0.0);
+    vec3 s = vec3(fourth - third, 0.0);
+    vec3 first_third = vec3(third - first, 0.0);
 
-    return returnValue;
+    float t_numerator = cross(first_third, s).z;
+    float u_numerator = cross(first_third, r).z;
+    float denominator = cross(r, s).z;
+
+    if (abs(denominator) <= 1e-8)
+        return false;
+
+    if (0.0 <= t_numerator && t_numerator <= denominator && 0.0 <= u_numerator && u_numerator <= denominator)
+        return true;
+    else if (denominator <= t_numerator && t_numerator <= 0.0 && denominator <= u_numerator && u_numerator <= 0.0)
+        return true;
+    else
+        return false;
 }
 
 
-bool isInsideObstacle(vec2 point)
+bool segmentRectangleIntersection(vec4 segment, vec4 rectangle)
 {
+    vec4 firstDiagonal = rectangle;
+    vec4 secondDiagonal = vec4(rectangle.z, rectangle.y, rectangle.x, rectangle.w);
 
-    vec2 leftTop, rightBottom;
-    bool x, y;
-    bool obstacleMet = false;
+    if (segmentsIntersection(firstDiagonal.xy, firstDiagonal.zw, segment.xy, segment.zw))
+        return true;
+    else if (segmentsIntersection(secondDiagonal.xy, secondDiagonal.zw, segment.xy, segment.zw))
+        return true;
+    else
+        return false;
+}
+
+
+float computeLight(vec3 light, vec2 pixelPosition)
+{
+    float _distance = length(light.xy - pixelPosition);
+    if (_distance > light.z)
+        return 0.0;
+
+    vec4 segment = vec4(light.xy, pixelPosition);
 
     for (int i = 0; i < obstaclesCount; ++i)
-    {
-        leftTop = obstacles[i].xy;
-        rightBottom = obstacles[i].zw;
-        x = point.x > leftTop.x && point.x < rightBottom.x;
-        y = point.y < leftTop.y && point.y > rightBottom.y;
-        if (x && y)
-        {
-            obstacleMet = true;
-            break;
-        }
-    }
+        if (segmentRectangleIntersection(segment, obstacles[i]))
+            return 0.0;
 
-    return obstacleMet;
+    return 50.0;
 }
 
 
 void mainImage( out vec4 fragColor, in vec2 fragCoord )
 {
-    vec4 preFragColor = vec4(0, 0, 0, TRANSPARENCY);
-    vec2 normalizedFragCoord = fragCoord / iResolution.xy;
-    vec2 normalizedLightCoord;
-    float maxLight = 0;
-
-    vec2 lightPosition;
-    float lightRange;
-    float distanceToLight;
-
-    vec2 currentPoint;
     float lightIntensity = 0.0;
 
-    bool reachedLightSource;
+    for (int i = 0; i < lightCount; ++i)
+        lightIntensity += computeLight(lightSources[i], fragCoord);
 
-    for (int lightCounter = 0; lightCounter < lightCount; ++lightCounter)
-    {
+    lightIntensity /= 255.0;
 
-        lightPosition = lightSources[lightCounter].xy;
-        normalizedLightCoord = lightPosition.xy / iResolution.xy;
-        lightRange = lightSources[lightCounter].z;
-        distanceToLight = length(lightRange - fragColor);
-
-        if (distanceToLight > lightRange)
-            continue;
-
-        reachedLightSource = true;
-        for (float stepNumber = 0.0; stepNumber < N; stepNumber++)
-        {
-            currentPoint = mix(normalizedFragCoord, normalizedLightCoord, stepNumber / N);
-            if (isInsideObstacle(currentPoint))
-            {
-                reachedLightSource = false;
-                break;
-            }
-        }
-
-        if (reachedLightSource)
-            lightIntensity += 1.0 / lightCount;
-    }
-
-    vec4 blackColor = vec4(0.0, 0.0, 0.0, TRANSPARENCY);
-    vec4 color = mix(blackColor, texture(iChannel1, normalizedFragCoord), lightIntensity);
-    fragColor = mix(preFragColor, color, lightIntensity);
+    fragColor = vec4(0.0, 0.0, 0.0, 1 - lightIntensity);
 //
 //    for (int i = 0; i < lightCount; ++i)
 //    {
