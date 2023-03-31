@@ -24,10 +24,12 @@ class GameManager(object):
     """Base class for the game manager.
     Singleton."""
 
+    instance = None
+
     def __new__(cls, *args, **kwargs):
-        if not hasattr(cls, "instance"):
-            cls.instance = super(GameManager, cls).__new__(cls)
-        return cls.instance
+        if not cls.instance:  # :=
+            cls.instance = super(GameManager, cls).__new__(cls)  # :=
+        return cls.instance  # :=
 
     def __init__(self, game_window=None):
         """

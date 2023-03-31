@@ -1,4 +1,5 @@
 import arcade
+from pytiled_parser.tiled_object import Rectangle
 
 from src.constants import CONSTANTS as C
 from src.classes.managers.light_manager import LightManager
@@ -51,8 +52,6 @@ class GameView(arcade.View):
 
         self.game_manager.world = self.world
 
-        self.game_manager.world = self.world
-
         self.hud = HUD()
 
     def on_show_view(self):
@@ -63,33 +62,25 @@ class GameView(arcade.View):
         """Draw the view."""
         # Primary camera stuff here:
 
-        self.light.on_draw_shadows()
-        # Draw fragments which shouldn't pass the light:
-        self.game_manager.walls.draw()
-
-        self.light.on_draw()
-        # Draw fragments which can be in the shadow:
-        # Put here drawing interactables and guards
-        self.game_manager.guards.draw()
-
         arcade.get_window().use()
         self.clear()
-        # TODO: Mihett, should this be kept or removed?
-        # self.light.on_draw_shader(C.SCREEN_WIDTH//2, C.SCREEN_HEIGHT//2) # one argument expected
 
-        self.scene.draw()
-
-        self.light.on_draw_shader([
-            (
-                self.world.tiled_to_screen(light.coordinates.x, light.coordinates.y)[0],
-                self.world.tiled_to_screen(light.coordinates.x, light.coordinates.y)[1],  # :=
-                light.properties.get("radius", C.DEFAULT_LIGHT_RADIUS)
-            )
-            for light in self.world.lights
-        ])  # [(self.last_pos[0], self.last_pos[1], 300)]
-
+        # Draw fragments which can be in the shadow:
+        # Put here drawing interactables and guards
         self.scene.draw()
         self.game_manager.guards.draw()
+
+        self.light.draw_shader([
+            (
+                self.world.tiled_to_screen(light.coordinates.x, light.coordinates.y)[0] - self.camera.position.x,
+                self.world.tiled_to_screen(light.coordinates.x, light.coordinates.y)[1] - self.camera.position.y,  # :=
+                light.properties.get("radius", C.DEFAULT_LIGHT_RADIUS) * C.WORLD_SCALE
+            )
+            for light in self.world.lights
+        ], [self._wall_to_screen_coords(wall) for wall in self.world.walls])
+
+        self.world.map.sprite_lists["collision_tiles"].draw()  # to remove light from collision tiles
+
         self.hud.draw()
         self.camera.use()
 
@@ -101,9 +92,13 @@ class GameView(arcade.View):
         self.scene.update()
         self.game_manager.guards.on_update(delta_time)
 
-        self.camera.move_to((self.game_manager.player.center_x - C.SCREEN_WIDTH // 2, self.game_manager.player.center_y - C.SCREEN_HEIGHT // 2), 1)
-
-        self.camera.move_to((self.game_manager.player.center_x - C.SCREEN_WIDTH // 2, self.game_manager.player.center_y - C.SCREEN_HEIGHT // 2), 1)
+        self.camera.move_to(
+            (
+                self.game_manager.player.center_x - C.SCREEN_WIDTH // 2,
+                self.game_manager.player.center_y - C.SCREEN_HEIGHT // 2
+            ),
+            1
+        )
 
     def on_mouse_press(self, _x, _y, _button, _modifiers):
         """Handle mouse press events."""
@@ -116,5 +111,9 @@ class GameView(arcade.View):
     def on_resize(self, width: int, height: int):
         self.light.on_resize(width, height)
 
-    def on_mouse_motion(self, x: int, y: int, dx: int, dy: int):
-        self.last_pos = (x, y)
+    def _wall_to_screen_coords(self, wall: Rectangle) -> tuple[int, int, int, int]:
+        x_1, y_1 = self.world.tiled_to_screen(wall.coordinates.x, wall.coordinates.y)
+        x_1, y_1 = [x_1 - self.camera.position.x, y_1 - self.camera.position.y]
+        x_2, y_2 = x_1 + wall.size.width * C.WORLD_SCALE, y_1 - wall.size.height * C.WORLD_SCALE
+
+        return x_1, y_1, x_2, y_2
