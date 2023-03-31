@@ -467,7 +467,7 @@
                  "rotation":0,
                  "visible":true,
                  "width":32,
-                 "x":224,
+                 "x":256,
                  "y":128
                 }, 
                 {
@@ -577,24 +577,6 @@
                  "visible":true,
                  "width":0,
                  "x":744,
-                 "y":495
-                }, 
-                {
-                 "class":"light",
-                 "height":0,
-                 "id":109,
-                 "name":"",
-                 "point":true,
-                 "properties":[
-                        {
-                         "name":"radius",
-                         "type":"int",
-                         "value":100
-                        }],
-                 "rotation":0,
-                 "visible":true,
-                 "width":0,
-                 "x":424,
                  "y":495
                 }],
          "opacity":1,
