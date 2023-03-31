@@ -22,3 +22,6 @@ python3 run_game.py
 - [Stop sign icons created by Freepik - Flaticon](https://www.flaticon.com/free-icons/stop-sign)
 - [Switch icons created by Pixel perfect - Flaticon](https://www.flaticon.com/free-icons/switch)
 - [Star icons created by Pixel perfect - Flaticon](https://www.flaticon.com/free-icons/star)
+- [Important icons created by Creatype - Flaticon](https://www.flaticon.com/free-icons/important)
+- [Question mark icons created by Creatype - Flaticon](https://www.flaticon.com/free-icons/question-mark)
+- [guard](src/assets/animations/guard/readme.md)
