@@ -58,7 +58,6 @@ def get_direction_from_angle(angle):
 class Guard(arcade.Sprite):
     
     roster = None
-    first_time = True
     # how long after the chase to wait to play the normal music (keeps the glitching to a minimum)
     cooldown = .2
     timer = 0
