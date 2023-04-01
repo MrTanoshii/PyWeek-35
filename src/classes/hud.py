@@ -3,9 +3,11 @@ import os
 import arcade
 
 from src.constants import CONSTANTS as C
+from src.classes.managers.game_manager import GameManager
 
 
 class HUD:
+    """Class for the HUD"""
     def __init__(self):
         self.camera = arcade.Camera(C.SCREEN_WIDTH, C.SCREEN_HEIGHT)
 
@@ -13,9 +15,13 @@ class HUD:
 
         self.asset_path = f"src/assets/art/storage_devices/"
 
+        self.text_box = None
+        self.story_line = "Placeholder text"
+
         self.setup()
 
     def setup(self):
+        """Set up HUD"""
         for idx, asset in enumerate(os.listdir(self.asset_path)):
             sprite = arcade.Sprite(
                 f"{self.asset_path}/{asset}",
@@ -27,7 +33,11 @@ class HUD:
             self.inventory.append(sprite)
         self.inventory[2].color = (255, 255, 255)
 
+        story = GameManager.instance.story_manager
+        self.story_line = story.next_story()
+
     def draw(self):
+        """Draw the HUD"""
         self.camera.use()
         arcade.draw_rectangle_filled(
             C.SCREEN_WIDTH / 2,
@@ -48,4 +58,36 @@ class HUD:
             anchor_y="center",
         )
 
+        if self.story_line:
+            # Draw the text
+
+            self.text_box = arcade.Text(
+                self.story_line,
+                C.SCREEN_WIDTH // 2,
+                C.SCREEN_HEIGHT * .1 // 1,
+                arcade.color.WHITE,
+                font_size=30,
+                multiline=True,
+                width=C.SCREEN_WIDTH * .8,
+                anchor_x="center",
+                align="center",
+            )
+
+            arcade.draw_rectangle_filled(
+                self.text_box.position[0],
+                self.text_box.position[1] + self.text_box.y // 2 -
+                self.text_box.content_height // 2,
+                self.text_box.content_width * 1.1,
+                self.text_box.content_height * 1.1,
+                (0, 0, 0, 128)
+            )
+
+            self.text_box.draw()
+
         self.inventory.draw()
+
+    def on_key_release(self, key, modifiers):
+        """Handle key release events."""
+        if key == arcade.key.SPACE:
+            story = GameManager.instance.story_manager
+            self.story_line = story.next_story()
