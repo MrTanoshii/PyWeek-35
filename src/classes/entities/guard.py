@@ -180,7 +180,7 @@ class Guard(arcade.Sprite):
         # Configure AI
         self.is_patrolling = True
         self.view_distance = C.GUARD_VIEW_DISTANCE
-        self.fov = arcade.SpriteSolidColor(self.view_distance * 2, self.view_distance * 2, (0, 0, 0, 128))
+        self.fov = arcade.SpriteSolidColor(self.view_distance * 2 * C.LIGHT_VIEW_MULTIPLIER, self.view_distance * 2 * C.LIGHT_VIEW_MULTIPLIER, (0, 0, 0, 128))
 
         self.game_manager.guards.append(self)
         self.path = []
@@ -209,7 +209,7 @@ class Guard(arcade.Sprite):
 
         # Update View Distance
         if self.game_manager.player_in_light:
-            self.view_distance = C.GUARD_VIEW_DISTANCE * 2
+            self.view_distance = C.GUARD_VIEW_DISTANCE * C.LIGHT_VIEW_MULTIPLIER
         else:
             self.view_distance = C.GUARD_VIEW_DISTANCE
 
