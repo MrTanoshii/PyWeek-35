@@ -4,6 +4,15 @@ import arcade
 
 
 class MusicManager:
+    """Base class for the game manager.
+Singleton."""
+    instance = None
+
+    def __new__(cls, *args, **kwargs):
+        if not cls.instance:  # :=
+            cls.instance = super(MusicManager, cls).__new__(cls)  # :=
+        return cls.instance  # :=
+
     def __init__(self):
         self.music = None
         self.music_list = {}
