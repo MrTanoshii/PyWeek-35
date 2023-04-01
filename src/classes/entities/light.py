@@ -12,15 +12,15 @@ class Light(arcade.Sprite):
         self.light_radius = radius * 3.75
         self.enabled = True
         self.reset_time = 5
-        self.timer = randint(0, 5)
+        self.timer = 0 # randint(0, 5)
         self.hit_box_algorithm = "Simple"
 
     def on_update(self, dt):
-        # if not self.enabled:
-        self.timer += dt
-        if self.timer >= self.reset_time:
-            self.toggle()
-            self.timer = 0
+        if not self.enabled:
+            self.timer += dt
+            if self.timer >= self.reset_time:
+                self.toggle()
+                self.timer = 0
 
     def draw(self):
         if not self.enabled:
