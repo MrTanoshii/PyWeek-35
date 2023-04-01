@@ -84,7 +84,7 @@ class GameView(arcade.View):
 
         # Safe
         for safe in self.world.safes:
-            safe_obj= Safe()
+            safe_obj=Safe()
             safe_obj.center_x = (safe.coordinates.x + safe.size.width / 2) * C.WORLD_SCALE
             safe_obj.center_y = (
                                             self.world.height * self.world.tile_size - safe.coordinates.y -
@@ -108,7 +108,15 @@ class GameView(arcade.View):
         self.player.center_y = (C.SCREEN_HEIGHT - coords.y - 96) * C.WORLD_SCALE
         self.game_manager.set_player(self.player)
         self.hud = HUD()
+        self.game_manager.hud = self.hud
         self.game_manager.music_manager = music_manager
+
+        if self.level == 2:
+            self.hud.set_story_line(self.game_manager.story_manager.play_story_if_not_played("level_2"))
+        elif self.level == 3:
+            self.hud.set_story_line(self.game_manager.story_manager.play_story_if_not_played("level_3"))
+        elif self.level == 4:
+            self.hud.set_story_line(self.game_manager.story_manager.play_story_if_not_played("level_4"))
 
     def on_show_view(self):
         """Called when switching to this view."""
@@ -206,6 +214,8 @@ class GameView(arcade.View):
 
         for safe in self.game_manager.safes:
             safe.on_key_release(key, modifiers)
+
+        self.hud.on_key_release(key, modifiers)
 
     def on_resize(self, width: int, height: int):
         self.light.on_resize(width, height)

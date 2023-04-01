@@ -2,6 +2,7 @@ import arcade
 
 from src.classes.managers.game_manager import GameManager
 from src.classes.managers.music_manager import MusicManager
+from src.classes.story_manager import StoryManager
 from src.classes.views.game_view import GameView
 from src.classes.views.ingame_menu_view import IngameMenuView
 from src.classes.views.mainmenu_view import MainMenuView
@@ -23,10 +24,11 @@ class GameWindow(arcade.Window):
         arcade.set_background_color(arcade.color.ARMY_GREEN)
         self.game_manager = None
         self.music_manager = MusicManager()
+        self.story_manager = StoryManager()
 
     def setup(self, stop_outro: bool = False):
         # Set up the game manager
-        game_manager = GameManager(self)
+        game_manager = GameManager(self.story_manager, self)
         self.game_manager = game_manager
         self.game_manager.keyboard = self.keyboard
         game_manager.music_manager = self.music_manager
