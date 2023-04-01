@@ -221,6 +221,9 @@ class Guard(arcade.Sprite):
                 self.chase_target_last_pos = None
 
         else:
+            if self.is_chasing:
+                if self.game_manager.music_manager.get_current_key() != "main":
+                    self.game_manager.music_manager.end_chase()
             self.is_chasing = False
             self.is_patrolling = True
             self.chase_target = None
