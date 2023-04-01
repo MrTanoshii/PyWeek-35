@@ -4,6 +4,7 @@ from src.classes.managers.game_manager import GameManager
 from src.classes.managers.music_manager import MusicManager
 from src.classes.views.game_view import GameView
 from src.classes.views.ingame_menu_view import IngameMenuView
+from src.classes.views.mainmenu_view import MainMenuView
 from src.classes.views.score_view import ScoreView
 
 
@@ -31,7 +32,7 @@ class GameWindow(arcade.Window):
         game_manager.music_manager = self.music_manager
 
         # Setup views
-        self.game_view = GameView()
+        self.game_view = MainMenuView()
         self.ingame_menu_view = IngameMenuView(self.game_view)
         # TODO: Might need to move this somewhere else and trigger it accordingly
         self.score_view = None
