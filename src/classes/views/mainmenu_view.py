@@ -17,8 +17,8 @@ class MainMenuView(arcade.View):
         self.manager.add(
             arcade.gui.UIAnchorWidget(
                 child=arcade.gui.UILabel(
-                    text="Select the level", font_size=18
-                ).with_space_around(top=20),
+                    text="Select the Level", font_size=32
+                ).with_space_around(top=64),
                 anchor_x="center_x",
                 anchor_y="top",
             )
@@ -26,13 +26,13 @@ class MainMenuView(arcade.View):
 
         for level in range(3):
             level_button = Preview(name="example.tilemap", label=f"Level {level + 1}")
-            level_label = arcade.gui.UILabel(text=f"Level {level + 1}", font_size=32, color=arcade.color.WHITE)
+            level_label = arcade.gui.UILabel(text=f"Level {level + 1}", font_size=24, color=arcade.color.WHITE)
 
             level_button.event("on_click")(self.create_on_click(level))
 
             self.levels_box.add(level_button)
 
-            self.levels_label_box.add(level_label.with_space_around(0, 125, 330, 125))
+            self.levels_label_box.add(level_label.with_space_around(0, 150, 330, 150))
 
         self.manager.add(self.levels_box.center_on_screen())
         self.manager.add(self.levels_label_box.center_on_screen())

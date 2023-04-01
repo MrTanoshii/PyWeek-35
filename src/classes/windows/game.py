@@ -41,8 +41,7 @@ class GameWindow(arcade.Window):
         self.show_view(self.mainmenu_view)
 
         # Music
-        if stop_outro:
-            self.music_manager.stop_outro()
+        self.music_manager.stop()
 
         self.music_manager.play_main()
         self.game_manager.music_manager = self.music_manager
