@@ -246,15 +246,19 @@ class Guard(arcade.Sprite):
                     self.get_distance_from_player() * math.sin(self.get_radians_from_player()),
                     self.get_distance_from_player() * math.cos(self.get_radians_from_player()),
                 ],])
-            if self.fov.collides_with_sprite(self.game_manager.player):
-                if self.get_distance_from_player() < self.killing_distance:
+            stopped = False
+            
+            if self.fov.collides_with_list(self.game_manager.walls):
+                stopped = True
+            
+            if self.get_distance_from_player() < self.killing_distance:
                     # Open Main Menu
                     self.game_manager.game_over = True
                     MusicManager.instance.end_chase()
                     # Load Score Screen
 
                 # if the guard is not colliding with a wall
-                if not self.is_colliding:
+            if not self.is_colliding and not stopped:
                     # set the guard to chase the player
                     self.is_chasing = True
                     self.is_patrolling = False
@@ -265,19 +269,12 @@ class Guard(arcade.Sprite):
                     )
 
             # if the guard is colliding with a wall
-                else:
+            else:
                     # set the guard to patrol
                     self.is_chasing = False
                     self.is_patrolling = True
                     self.chase_target = None
                     self.chase_target_last_pos = None
-            else:
-                # set the guard to patrol
-                self.is_chasing = False
-                self.is_patrolling = True
-                self.chase_target = None
-                self.chase_target_last_pos = None
-
         else:
             self.is_chasing = False
             self.is_patrolling = True
