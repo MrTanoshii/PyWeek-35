@@ -1,4 +1,5 @@
 import arcade
+from src.classes.entities.guard import Guard
 
 from src.classes.managers.game_manager import GameManager
 from src.constants import CONSTANTS as C
@@ -64,4 +65,5 @@ class ScoreView(arcade.View):
         if key == arcade.key.ESCAPE:
             arcade.exit()
         else:
+            Guard.roster = None
             self.window.setup(stop_outro=True)
