@@ -17,6 +17,8 @@ class World:
         self.player_spawn: list[Rectangle] = list(filter(lambda x: x.class_ == "player", self.spawns.tiled_objects))
         self.guard_spawn: list[Rectangle] = list(filter(lambda x: x.class_ == "guard", self.spawns.tiled_objects))
 
+        self.servers = self.map.get_tilemap_layer("server")
+
         self.paths = self.map.get_tilemap_layer("path")
         self.guards_path: list[Rectangle] = list(filter(lambda x: x.class_ == "guard", self.paths.tiled_objects))
         self.guards: list[Rectangle] = list(filter(lambda x: x.class_ == "guard", self.paths.tiled_objects))
