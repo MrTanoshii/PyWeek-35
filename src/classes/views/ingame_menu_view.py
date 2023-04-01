@@ -55,11 +55,7 @@ class IngameMenuView(arcade.View):
             arcade.exit()
 
         # Create a widget to hold the v_box widget, that will center the buttons
-        self.manager.add(
-            GUI.UIAnchorWidget(
-                anchor_x="center_x", anchor_y="center_y", child=self.v_box
-            )
-        )
+        self.manager.add(GUI.UIAnchorWidget(anchor_x="center_x", anchor_y="center_y", child=self.v_box))
 
     def on_show_view(self):
         """Called when switching to this view"""

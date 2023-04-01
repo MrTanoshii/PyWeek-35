@@ -9,15 +9,9 @@ class DoorSwitchMini(arcade.View):
     def __init__(self):
         super().__init__()
         # self.window.show_view(self)
-        self.blue_wire = arcade.Sprite(
-            "./src/assets/art/door_switch/doorswitch_mini_blue.png"
-        )
-        self.orange_wire = arcade.Sprite(
-            "./src/assets/art/door_switch/doorswitch_mini_orange.png"
-        )
-        self.green_wire = arcade.Sprite(
-            "./src/assets/art/door_switch/doorswitch_mini_green.png"
-        )
+        self.blue_wire = arcade.Sprite("./src/assets/art/door_switch/doorswitch_mini_blue.png")
+        self.orange_wire = arcade.Sprite("./src/assets/art/door_switch/doorswitch_mini_orange.png")
+        self.green_wire = arcade.Sprite("./src/assets/art/door_switch/doorswitch_mini_green.png")
         for sprite in [self.blue_wire, self.orange_wire, self.green_wire]:
             sprite.center_x = C.SCREEN_WIDTH / 2
             sprite.center_y = C.SCREEN_HEIGHT / 2

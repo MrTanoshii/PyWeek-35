@@ -16,9 +16,7 @@ class GameWindow(arcade.Window):
         self.score_view = None
         self.keyboard = {
             x: 0
-            for x in [chr(y) for y in range(65, 91)]
-            + [chr(z) for z in range(48, 58)]
-            + ["LEFT", "RIGHT", "DOWN", "UP"]
+            for x in [chr(y) for y in range(65, 91)] + [chr(z) for z in range(48, 58)] + ["LEFT", "RIGHT", "DOWN", "UP"]
         }
         arcade.set_background_color(arcade.color.ARMY_GREEN)
         self.game_manager = None
