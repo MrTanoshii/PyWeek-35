@@ -71,7 +71,7 @@ class LightSwitch(Interactable):
         else:
             self.turn_on()
 
-        # self.update_texture()
+        self.update_texture()
 
     def update_texture(self):
         """Update the texture of the light switch."""
