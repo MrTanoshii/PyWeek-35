@@ -4,6 +4,15 @@ import arcade
 
 
 class MusicManager:
+    """Base class for the game manager.
+Singleton."""
+    instance = None
+
+    def __new__(cls, *args, **kwargs):
+        if not cls.instance:  # :=
+            cls.instance = super(MusicManager, cls).__new__(cls)  # :=
+        return cls.instance  # :=
+
     def __init__(self):
         self.music = None
         self.music_list = {}
@@ -28,10 +37,6 @@ class MusicManager:
         if self.music:
             self.music.stop(self.current)
 
-    def resume(self):
-        if self.music:
-            self.music.resume()
-
     def play_outro(self):
         self.music = self.music_list["outro"]
         self.current = self.music.play(0.5)
@@ -48,7 +53,7 @@ class MusicManager:
     def end_chase(self):
         self.stop()
         self.music = self.music_list["main"]
-        self.music.resume()
+        self.current = self.music.play(0.5)
 
     def play_outro(self):
         self.stop()
