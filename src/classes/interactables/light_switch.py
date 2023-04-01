@@ -64,7 +64,7 @@ class LightSwitch(Interactable):
         Overrides the parent class method.
         """
         if self.check_lights():
-            MiniGame(LightSwitchMini())
+            # MiniGame(LightSwitchMini())
             self.turn_off()
         else:
             self.turn_on()
