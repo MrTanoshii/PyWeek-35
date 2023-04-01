@@ -79,13 +79,13 @@
  <tile id="90">
   <image width="32" height="32" source="../tiles/z4.png"/>
  </tile>
- <tile id="96">
-  <image width="64" height="96" source="../../../../../Documents/server_fixed.png"/>
+ <tile id="99">
+  <image width="64" height="96" source="../tiles/server_fixed.png"/>
  </tile>
- <tile id="97">
-  <image width="32" height="32" source="../../../../../Documents/safe_32.png"/>
+ <tile id="100">
+  <image width="32" height="32" source="../tiles/safe_32.png"/>
  </tile>
- <tile id="98">
-  <image width="64" height="96" source="../../../../../Documents/server_wall_fixed.png"/>
+ <tile id="101">
+  <image width="64" height="96" source="../tiles/server_wall_fixed.png"/>
  </tile>
 </tileset>
