@@ -19,7 +19,7 @@ class World:
         self.walls: list[Rectangle] = list(filter(lambda x: x.class_ == "wall", self.collision.tiled_objects))
 
         self.grid = np.full((int(self.map.width), int(self.map.height)), 0)
-        print(self.grid.shape)
+        # print(self.grid.shape)
         for wall in self.walls:
             x, y = self.screen_to_tile(*map(int, self.tiled_to_screen(int(wall.coordinates.x), int(wall.coordinates.y))))
             for i in range(int(wall.size.width) // int(self.map.tile_width)):
@@ -28,7 +28,7 @@ class World:
                         self.grid[x + i, int(self.map.height) - (y - j)] = 1
                     except IndexError:
                         print(x + i, y - j)
-        print(self.grid.T)
+        # print(self.grid.T)
 
         self.spawns = self.map.get_tilemap_layer("spawner")
         self.player_spawn: list[Rectangle] = list(filter(lambda x: x.class_ == "player", self.spawns.tiled_objects))

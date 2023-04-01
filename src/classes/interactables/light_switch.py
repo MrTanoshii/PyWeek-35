@@ -84,17 +84,17 @@ class LightSwitch(Interactable):
             if not light.enabled:
                 light.toggle()
                 arcade.Sound("./src/assets/light_sfx/SwitchOn.ogg").play()
-        print(f"{self.name} turned on.")
+        # print(f"{self.name} turned on.")
 
     def turn_off(self):
         """Turn off the light switch."""
         for light in self.lights:
-            print(light, light.enabled)
+            # print(light, light.enabled)
             if light.enabled:
-                print("turning off")
+                # print("turning off")
                 light.toggle()
-                print(light.enabled)
-        print(f"{self.name} turned off.")
+                # print(light.enabled)
+        # print(f"{self.name} turned off.")
 
     def on_update(self, delta_time: float = 1 / 60):
         """Update the light switch."""
