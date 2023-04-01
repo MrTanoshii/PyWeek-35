@@ -3,6 +3,7 @@ import os
 import arcade
 
 from src.constants import CONSTANTS as C
+from src.classes.managers.game_manager import GameManager
 
 
 class HUD:
@@ -25,7 +26,7 @@ class HUD:
             )
             sprite.color = (5, 5, 5)
             self.inventory.append(sprite)
-        self.inventory[2].color = (255, 255, 255)
+        # self.inventory[2].color = (255, 255, 255)
 
     def draw(self):
         self.camera.use()
@@ -49,3 +50,10 @@ class HUD:
         )
 
         self.inventory.draw()
+
+    def on_update(self, delta_time: float):
+        for index, safe in enumerate(self.inventory):
+            if index in GameManager.instance.player_safes:
+                safe.color = (255, 255, 255)
+            else:
+                safe.color = (5, 5, 5)

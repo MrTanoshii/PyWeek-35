@@ -1,4 +1,5 @@
 import arcade
+import math
 
 
 class GameManager(object):
@@ -38,10 +39,12 @@ class GameManager(object):
         self.lights = arcade.SpriteList()
         self.light_switches = arcade.SpriteList()
         self.safes = arcade.SpriteList()
+        self.total_safes_in_level = 0
 
         self.player_in_light = False
 
         self.music_manager = None
+        self.player_safes = []
 
     def set_player(self, player):
         self.player = player
@@ -54,3 +57,23 @@ class GameManager(object):
 
     def get_game_view(self):
         return self.game_view
+
+    def calculate_score(self):
+        """Calculate the score."""
+
+        self.score = 0
+        for _ in self.player_safes:
+            self.score += 1000
+
+        decay = self.log_decline(self.time)
+        self.score = self.score * decay
+
+    def log_decline(self, number):
+        # check if the number is between 1 and 3600
+        if number < 1 or number > 3500:
+            return 0.01
+        # calculate the logarithmic decline using the formula y = -log(x/3600)/log(10)
+        else:
+            y = -math.log(number / 3600) / math.log(10)
+            # return the result rounded to two decimal places
+            return round(y, 2)
