@@ -1,6 +1,7 @@
 import arcade
 
 from src.classes.managers.game_manager import GameManager
+from src.classes.managers.music_manager import MusicManager
 from src.classes.views.game_view import GameView
 from src.classes.views.ingame_menu_view import IngameMenuView
 from src.classes.views.score_view import ScoreView
@@ -16,18 +17,18 @@ class GameWindow(arcade.Window):
         self.score_view = None
         self.keyboard = {
             x: 0
-            for x in [chr(y) for y in range(65, 91)]
-            + [chr(z) for z in range(48, 58)]
-            + ["LEFT", "RIGHT", "DOWN", "UP"]
+            for x in [chr(y) for y in range(65, 91)] + [chr(z) for z in range(48, 58)] + ["LEFT", "RIGHT", "DOWN", "UP"]
         }
         arcade.set_background_color(arcade.color.ARMY_GREEN)
         self.game_manager = None
+        self.music_manager = MusicManager()
 
-    def setup(self):
+    def setup(self, stop_outro: bool = False):
         # Set up the game manager
         game_manager = GameManager(self)
         self.game_manager = game_manager
         self.game_manager.keyboard = self.keyboard
+
         # Setup views
         self.game_view = GameView()
         self.ingame_menu_view = IngameMenuView(self.game_view)
@@ -37,9 +38,16 @@ class GameWindow(arcade.Window):
         # Set the initial view
         self.show_view(self.game_view)
 
+        if stop_outro:
+            self.music_manager.stop_outro()
+
+        self.music_manager.play_main()
+        self.game_manager.music_manager = self.music_manager
+
     def on_update(self, delta_time: float):
         if GameManager.instance.game_over:
             if self.score_view is None:
+                self.music_manager.play_outro()
                 self.score_view = ScoreView(self.game_view, self)
             self.show_view(self.score_view)
 
