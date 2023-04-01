@@ -67,3 +67,4 @@ class ScoreView(arcade.View):
         else:
             Guard.roster = None
             self.window.setup(stop_outro=True)
+            self.window.start_level(1)

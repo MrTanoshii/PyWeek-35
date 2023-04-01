@@ -32,7 +32,7 @@ class MainMenuView(arcade.View):
 
             self.levels_box.add(level_button)
 
-            self.levels_label_box.add(level_label.with_space_around(0, 150, 333, 150))
+            self.levels_label_box.add(level_label.with_space_around(0, 125, 330, 125))
 
         self.manager.add(self.levels_box.center_on_screen())
         self.manager.add(self.levels_label_box.center_on_screen())
