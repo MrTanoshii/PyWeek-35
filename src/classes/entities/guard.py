@@ -3,6 +3,7 @@ import arcade
 import os.path
 
 from src.classes.managers.game_manager import GameManager
+from src.classes.managers.music_manager import MusicManager
 from src.constants import CONSTANTS as C
 
 
@@ -55,6 +56,40 @@ def get_direction_from_angle(angle):
 
 
 class Guard(arcade.Sprite):
+    
+    roster = None
+    # how long after the chase to wait to play the normal music (keeps the glitching to a minimum)
+    cooldown = .2
+    timer = 0
+    delta = 0
+
+    @classmethod
+    def num_guards_chasing(cls):
+        total = 0
+        for guard in cls.roster:
+            total += guard.is_chasing
+        return total
+
+    @classmethod
+    def any_guards_chasing(cls):
+        for guard in cls.roster:
+            if guard.is_chasing:
+                return True
+        return False
+
+    @classmethod
+    def start_chase(cls):
+        cls.timer = 0
+        if MusicManager.instance.get_current_key() != 'chase':
+            MusicManager.instance.play_chase()
+
+    @classmethod
+    def end_chase(cls):
+        if MusicManager.instance.get_current_key() != 'main':
+            cls.timer += cls.delta
+            if cls.timer > cls.cooldown:
+                MusicManager.instance.end_chase()
+
     def __init__(self):
         # Inherit parent class
         super().__init__()
@@ -103,6 +138,9 @@ class Guard(arcade.Sprite):
         self.game_manager = GameManager.instance
 
         self.path = None
+
+        if self.roster is None:
+            Guard.roster = self.game_manager.guards
 
         # Setup
         self.setup()
@@ -160,6 +198,8 @@ class Guard(arcade.Sprite):
                 self.fov.draw_hit_box((255, 255, 0, 255))
 
     def on_update(self, dt):
+        if Guard.delta != dt:
+            Guard.delta = dt
         if self.game_manager.game_over:
             return
 
@@ -199,23 +239,38 @@ class Guard(arcade.Sprite):
 
         # Determine if the guard sees the player
         if self.fov.collides_with_sprite(self.game_manager.player):
-            if self.get_distance_from_player() < self.killing_distance:
-                # Open Main Menu
-                self.game_manager.game_over = True
-                # Load Score Screen
+            self.fov.set_hit_box([
+                [ self.killing_distance * math.sin(self.get_radians_from_player()),
+                    self.killing_distance * math.cos(self.get_radians_from_player()),],
+                [
+                    self.get_distance_from_player() * math.sin(self.get_radians_from_player()),
+                    self.get_distance_from_player() * math.cos(self.get_radians_from_player()),
+                ],])
+            if self.fov.collides_with_sprite(self.game_manager.player):
+                if self.get_distance_from_player() < self.killing_distance:
+                    # Open Main Menu
+                    self.game_manager.game_over = True
+                    MusicManager.instance.end_chase()
+                    # Load Score Screen
 
-            # if the guard is not colliding with a wall
-            if not self.is_colliding:
-                # set the guard to chase the player
-                self.is_chasing = True
-                self.is_patrolling = False
-                self.chase_target = self.game_manager.player
-                self.chase_target_last_pos = (
-                    self.chase_target.center_x,
-                    self.chase_target.center_y,
-                )
+                # if the guard is not colliding with a wall
+                if not self.is_colliding:
+                    # set the guard to chase the player
+                    self.is_chasing = True
+                    self.is_patrolling = False
+                    self.chase_target = self.game_manager.player
+                    self.chase_target_last_pos = (
+                        self.chase_target.center_x,
+                        self.chase_target.center_y,
+                    )
 
             # if the guard is colliding with a wall
+                else:
+                    # set the guard to patrol
+                    self.is_chasing = False
+                    self.is_patrolling = True
+                    self.chase_target = None
+                    self.chase_target_last_pos = None
             else:
                 # set the guard to patrol
                 self.is_chasing = False
@@ -228,9 +283,7 @@ class Guard(arcade.Sprite):
             self.is_patrolling = True
             self.chase_target = None
             self.chase_target_last_pos = None
-        if self.is_chasing:
-            if self.game_manager.music_manager.get_current_key() != "chase":
-                self.game_manager.music_manager.play_chase()
+
         # If the guard is patrolling
         if self.is_patrolling:
             self.patrol()
@@ -355,3 +408,21 @@ class Guard(arcade.Sprite):
             self.game_manager.player.center_x,
             self.game_manager.player.center_y,
         )
+    def get_degrees_from_player(self):
+        """Get the distance between the player and the guard"""
+        return arcade.get_angle_degrees(
+            self.center_x,
+            self.center_y,
+            self.game_manager.player.center_x,
+            self.game_manager.player.center_y,
+        )
+    def get_radians_from_player(self):
+        """Get the distance between the player and the guard"""
+        return arcade.get_angle_radians(
+            self.center_x,
+            self.center_y,
+            self.game_manager.player.center_x,
+            self.game_manager.player.center_y,
+        )
+    
+
