@@ -101,6 +101,7 @@ class SafeMini(arcade.View):
             arcade.draw_rectangle_filled(
                 C.SCREEN_WIDTH / 2, C.SCREEN_HEIGHT / 2, 300, 450, arcade.color.WHITE
             )
+            self.draw_text(f"Attempts left: {5 - self.tries}", (0, 300), arcade.color.WHITE, 20, ("center","baseline"))
             self.draw_text(f"{self.input}", (-130, 140), arcade.color.BLUE, 30, ("left","center"))
             self.draw_text(f"{self.value1} + {self.value2} =", (-130, 200), arcade.color.BLACK, 15, ("left","center"))
             self.draw_text("Press Enter to validate answer", (0, -350), arcade.color.WHITE, 30, ("center","baseline"))
