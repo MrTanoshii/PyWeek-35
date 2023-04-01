@@ -25,3 +25,9 @@ python3 run_game.py
 - [Important icons created by Creatype - Flaticon](https://www.flaticon.com/free-icons/important)
 - [Question mark icons created by Creatype - Flaticon](https://www.flaticon.com/free-icons/question-mark)
 - [guard](src/assets/animations/guard/readme.md)
+
+### Music
+
+- [outro](https://pixabay.com/music/introoutro-dark-short-intro-138018/)
+- [main](https://pixabay.com/music/horror-scene-scary-and-creepy-cinematic-background-143156/)
+- [chase](https://pixabay.com/music/metal-surreal-131719/)
