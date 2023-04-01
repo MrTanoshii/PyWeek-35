@@ -27,7 +27,7 @@ class LightSwitchMini(arcade.View):
             sprite.center_x = C.SCREEN_WIDTH / 2
             sprite.center_y = C.SCREEN_HEIGHT / 2
 
-        self.is_pressed = False
+        self.is_pressed = None
 
         self.camera = arcade.Camera(C.SCREEN_WIDTH, C.SCREEN_HEIGHT)
 
@@ -82,7 +82,7 @@ class LightSwitchMini(arcade.View):
     def on_key_press(self, key, modifiers):
         """Handle key release events."""
 
-        if key == arcade.key.SPACE:
+        if key == arcade.key.SPACE and not self.is_pressed:
             self.off_sound.play()
             self.is_pressed = True
 
