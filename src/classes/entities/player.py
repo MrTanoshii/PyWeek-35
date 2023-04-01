@@ -125,8 +125,6 @@ class Player(arcade.Sprite):
             self.current_texture = self.texture_options[self.facing_left]
             self.last_facing = self.facing_left
 
-        # collisions = arcade.check_for_collision_with_list(self, self.game_manager.walls)
-        # for wall in collisions:
         # IDK which is more efficient or if there is a difference.
         for wall in self.game_manager.walls:
             if wall.collides_with_sprite(self):

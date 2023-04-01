@@ -71,8 +71,8 @@ class GameView(arcade.View):
 
         # Let's add the player
         self.player = Player()
+        self.player.scale = 0.3 * C.WORLD_SCALE
         coords = self.game_manager.world.player_spawn[0].coordinates
-        self.player.scale = 1
         self.player.center_x = coords.x * C.WORLD_SCALE
         self.player.center_y = (C.SCREEN_HEIGHT - coords.y - 96) * C.WORLD_SCALE
         self.game_manager.set_player(self.player)
@@ -126,13 +126,10 @@ class GameView(arcade.View):
     def on_update(self, delta_time: float):
         """Update the view."""
         GameManager.instance.time += delta_time
-        for engine in self.physics_engines:
-            engine.update()
         self.scene.update()
         self.player.on_update(delta_time=delta_time)
         self.game_manager.guards.on_update(delta_time)
         self.game_manager.lights.on_update(delta_time)
-
         self.camera.move_to(
             (
                 self.game_manager.player.center_x - C.SCREEN_WIDTH // 2,
