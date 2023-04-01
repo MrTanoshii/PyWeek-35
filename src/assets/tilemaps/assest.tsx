@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.10" tiledversion="1.10.0" name="assest" tilewidth="64" tileheight="96" tilecount="29" columns="0">
+<tileset version="1.8" tiledversion="1.9.1" name="assest" tilewidth="64" tileheight="96" tilecount="29" columns="0">
  <grid orientation="orthogonal" width="1" height="1"/>
  <tile id="57">
   <image width="32" height="32" source="../tiles/3.png"/>
@@ -67,18 +67,6 @@
  <tile id="82">
   <image width="32" height="32" source="../tiles/wall2.png"/>
  </tile>
- <tile id="87">
-  <image width="32" height="32" source="../tiles/z1.png"/>
- </tile>
- <tile id="88">
-  <image width="32" height="32" source="../tiles/z2.png"/>
- </tile>
- <tile id="89">
-  <image width="32" height="32" source="../tiles/z3.png"/>
- </tile>
- <tile id="90">
-  <image width="32" height="32" source="../tiles/z4.png"/>
- </tile>
  <tile id="99">
   <image width="64" height="96" source="../tiles/server_fixed.png"/>
  </tile>
@@ -87,5 +75,17 @@
  </tile>
  <tile id="101">
   <image width="64" height="96" source="../tiles/server_wall_fixed.png"/>
+ </tile>
+ <tile id="102">
+  <image width="32" height="32" source="../tiles/z1.png"/>
+ </tile>
+ <tile id="103">
+  <image width="32" height="32" source="../tiles/z2.png"/>
+ </tile>
+ <tile id="104">
+  <image width="32" height="32" source="../tiles/z3.png"/>
+ </tile>
+ <tile id="105">
+  <image width="32" height="32" source="../tiles/z4.png"/>
  </tile>
 </tileset>
