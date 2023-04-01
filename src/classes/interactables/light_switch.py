@@ -26,12 +26,8 @@ class LightSwitch(Interactable):
             name = f"{type(self).__name__} #{LightSwitch.index_count}"
             LightSwitch.index_count += 1
 
-        self.texture_on = load_texture(
-            "./src/assets/art/light_switch/light_switch_on.png"
-        )
-        self.texture_off = load_texture(
-            "./src/assets/art/light_switch/light_switch_off.png"
-        )
+        self.texture_on = load_texture("./src/assets/art/light_switch/light_switch_on.png")
+        self.texture_off = load_texture("./src/assets/art/light_switch/light_switch_off.png")
         self.is_on = False
 
         super().__init__(name, description, self, *args, **kwargs)

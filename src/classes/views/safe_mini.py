@@ -33,16 +33,12 @@ class SafeMini(arcade.View):
         # Create Buttons
         buttons = []
         for i in range(10):
-            buttons.append(
-                GUI.UIFlatButton(text=str(i), width=button_width, height=button_height)
-            )
+            buttons.append(GUI.UIFlatButton(text=str(i), width=button_width, height=button_height))
 
         # Add buttons to the boxes
         for i, button in enumerate(buttons[1:]):
             self.v_boxes[i % 3].add(button.with_space_around(bottom=button_bottom))
-        self.v_boxes[-2].add(
-            buttons[0].with_space_around(bottom=button_bottom)
-        )  # Add the zero button
+        self.v_boxes[-2].add(buttons[0].with_space_around(bottom=button_bottom))  # Add the zero button
 
         # Add functions to buttons when pressed
         def make_func(index):
@@ -98,12 +94,8 @@ class SafeMini(arcade.View):
     def on_draw(self):
         self.clear()
         if not self.is_ended:
-            arcade.draw_rectangle_filled(
-                C.SCREEN_WIDTH / 2, C.SCREEN_HEIGHT / 2, 300, 450, arcade.color.WHITE
-            )
-            self.draw_text(
-                f"{self.input}", (-130, 140), arcade.color.BLUE, 30, ("left", "center")
-            )
+            arcade.draw_rectangle_filled(C.SCREEN_WIDTH / 2, C.SCREEN_HEIGHT / 2, 300, 450, arcade.color.WHITE)
+            self.draw_text(f"{self.input}", (-130, 140), arcade.color.BLUE, 30, ("left", "center"))
             self.draw_text(
                 f"{self.value1} + {self.value2} =",
                 (-130, 200),

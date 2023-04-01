@@ -26,12 +26,8 @@ class DoorSwitch(Interactable):
             DoorSwitch.index_count += 1
 
         # TODO: change to door_switch_open.png/door_switch_close when asset available
-        self.texture_on = load_texture(
-            "./src/assets/art/light_switch/light_switch_on.png"
-        )
-        self.texture_off = load_texture(
-            "./src/assets/art/light_switch/light_switch_off.png"
-        )
+        self.texture_on = load_texture("./src/assets/art/light_switch/light_switch_on.png")
+        self.texture_off = load_texture("./src/assets/art/light_switch/light_switch_off.png")
         self.is_open = False
 
         super().__init__(name, description, self, *args, **kwargs)
