@@ -25,31 +25,41 @@ class LightSwitchMini(arcade.View):
             sprite.center_x = C.SCREEN_WIDTH / 2
             sprite.center_y = C.SCREEN_HEIGHT / 2
 
+        self.is_pressed = False
+
+        # self.clear()
+        # self.switch_off.draw()
+
+    # def on_show_view(self):
+    #     """Called when switching to this view"""
+    #     arcade.set_background_color(C.BACKGROUND_COLOR)
+    
+    def on_draw(self):
         self.clear()
-        self.switch_off.draw()
-
-    def on_show_view(self):
-        """Called when switching to this view"""
-        arcade.set_background_color(C.BACKGROUND_COLOR)
-
-    def on_mouse_press(self, _x, _y, _button, _modifiers):
-        """Handle mouse press events."""
-        pass
+        arcade.draw_text(
+            "Press q to exit",
+            C.SCREEN_WIDTH / 2,
+            C.SCREEN_HEIGHT / 2 - 250,
+            arcade.color.WHITE,
+            30,
+            anchor_x="center",
+        )
 
     def on_key_press(self, key, modifiers):
         """Handle key release events."""
 
         if key == arcade.key.SPACE:
-            self.clear()
-            self.switch_on.draw()
-            arcade.draw_text(
-                "Press q to exit",
-                C.SCREEN_WIDTH / 2,
-                C.SCREEN_HEIGHT / 2 - 250,
-                arcade.color.WHITE,
-                30,
-                anchor_x="center",
-            )
+            self.is_pressed = True
+        #     self.clear()
+        #     self.switch_on.draw()
+        #     arcade.draw_text(
+        #         "Press q to exit",
+        #         C.SCREEN_WIDTH / 2,
+        #         C.SCREEN_HEIGHT / 2 - 250,
+        #         arcade.color.WHITE,
+        #         30,
+        #         anchor_x="center",
+        #     )
 
         if key == arcade.key.Q:
             resume_game = GameManager.instance.get_game_view()

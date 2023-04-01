@@ -61,7 +61,7 @@ class LightSwitch(Interactable):
             self.turn_on()
             MiniGame(LightSwitchMini())
 
-        self.update_texture()
+        # self.update_texture()
 
     def update_texture(self):
         """Update the texture of the light switch."""
