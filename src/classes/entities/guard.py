@@ -30,7 +30,7 @@ def get_distance_between_coords(x1, y1, x2, y2):
     :param y2: y coordinate of point 2
     :return: distance between the two points
     """
-    return math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
+    return math.dist((x1, y1), (x2, y2))
 
 
 def get_direction_from_angle(angle):
@@ -137,6 +137,8 @@ class Guard(arcade.Sprite):
         self.angle = 0.0
         self.game_manager = GameManager.instance
 
+        self.path = None
+
         if self.roster is None:
             Guard.roster = self.game_manager.guards
 
@@ -181,6 +183,7 @@ class Guard(arcade.Sprite):
         self.fov = arcade.SpriteSolidColor(self.view_distance * 2, self.view_distance * 2, (0, 0, 0, 128))
 
         self.game_manager.guards.append(self)
+        self.path = []
 
         self.name = f"guard_{len(self.game_manager.get_guards())}"
 
@@ -232,7 +235,7 @@ class Guard(arcade.Sprite):
         self.fov.center_x = self.center_x
         self.fov.center_y = self.center_y
 
-        self.is_colliding = arcade.check_for_collision_with_list(self, self.collision_list)
+        self.is_colliding = False
 
         # Determine if the guard sees the player
         if self.fov.collides_with_sprite(self.game_manager.player):
@@ -340,12 +343,27 @@ class Guard(arcade.Sprite):
             self.chase_target.center_y,
         )
 
-        if not self.is_colliding:
-            # Move towards target
-            self.center_x += math.cos(self.angle) * self.speed * 3
-            self.center_y += math.sin(self.angle) * self.speed * 3
+        # if not self.is_colliding:
+        #     # Move towards target
+        #     self.center_x += math.cos(self.angle) * self.speed * 3
+        #     self.center_y += math.sin(self.angle) * self.speed * 3
 
         self.direction = get_direction_from_angle(self.angle)
+
+        self.path = self.game_manager.world.pathfinding((self.center_x, self.center_y),
+                                                        (self.chase_target.center_x, self.chase_target.center_y))
+        # print(self.path)
+        if self.path:
+            if len(self.path) > 1:
+                travel = self.path[1][0] - self.center_x, self.path[1][1] - self.center_y
+                travel = travel[0] / (travel[0] ** 2 + travel[1] ** 2) ** 0.5, travel[1] / (travel[0] ** 2 + travel[1] ** 2) ** 0.5,
+                self.center_x += travel[0] * self.speed * 3
+                self.center_y += travel[1] * self.speed * 3
+            else:
+                travel = self.path[0][0] - self.center_x, self.path[0][1] - self.center_y
+                travel = travel[0] / (travel[0] ** 2 + travel[1] ** 2) ** 0.5, travel[1] / (travel[0] ** 2 + travel[1] ** 2) ** 0.5,
+                self.center_x += travel[0] * self.speed * 3
+                self.center_y += travel[1] * self.speed * 3
 
         # If the guard is close enough to the target
         if (
