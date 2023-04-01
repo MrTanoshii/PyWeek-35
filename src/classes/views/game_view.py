@@ -99,7 +99,6 @@ class GameView(arcade.View):
             light.draw()
             if light.enabled:
                 lights.append(self.world.lights[idx])
-        print(len(lights))
         self.light.draw_shader(
             [
                 (
@@ -143,10 +142,8 @@ class GameView(arcade.View):
             1,
         )
         if Guard.num_guards_chasing() > 0:
-            print('chasing')
             Guard.start_chase()
         else:
-            print('not')
             Guard.end_chase()
     def on_mouse_press(self, _x, _y, _button, _modifiers):
         """Handle mouse press events."""
