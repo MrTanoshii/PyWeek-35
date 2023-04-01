@@ -8,6 +8,7 @@
 py run_game.py
 
 # Linux/macOS
+sudo apt install ffmpeg
 python3 run_game.py
 ```
 

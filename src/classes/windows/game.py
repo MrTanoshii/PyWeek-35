@@ -28,6 +28,7 @@ class GameWindow(arcade.Window):
         game_manager = GameManager(self)
         self.game_manager = game_manager
         self.game_manager.keyboard = self.keyboard
+        game_manager.music_manager = self.music_manager
 
         # Setup views
         self.game_view = GameView()
