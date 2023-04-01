@@ -66,7 +66,6 @@ class GameView(arcade.View):
                 self.world.height * self.world.tile_size - guard.coordinates.y - guard.size.height / 2
             ) * C.WORLD_SCALE
             self.physics_engines.append(arcade.PhysicsEngineSimple(new_guard, self.game_manager.walls))
-
         self.game_manager.world = self.world
 
         # Let's add the player
@@ -140,9 +139,15 @@ class GameView(arcade.View):
             ),
             1,
         )
-
+        if Guard.num_guards_chasing() > 0:
+            print('chasing')
+            Guard.start_chase()
+        else:
+            print('not')
+            Guard.end_chase()
     def on_mouse_press(self, _x, _y, _button, _modifiers):
         """Handle mouse press events."""
+        Guard.num_guards_chasing()
         pass
 
     def on_key_press(self, key, modifiers):
