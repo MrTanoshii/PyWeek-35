@@ -126,6 +126,8 @@ class GameView(arcade.View):
 
     def on_update(self, delta_time: float):
         """Update the view."""
+        if C.DEBUG and 1 / delta_time < 50:
+            print(f"LOW FPS: {int(1 / delta_time)}")
         GameManager.instance.time += delta_time
         for engine in self.physics_engines:
             engine.update()
