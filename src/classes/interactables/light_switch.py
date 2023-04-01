@@ -31,6 +31,7 @@ class LightSwitch(Interactable):
         self.is_on = False
         self.game_manager = GameManager.instance
         self.player_collides = False
+        self.lights = []
 
         super().__init__(name, description, self, *args, **kwargs)
 
@@ -39,8 +40,9 @@ class LightSwitch(Interactable):
 
         self.update_texture()
         LightSwitch.light_switch_list.append(self)
-
+        self.scale = .1
         super().setup()
+
 
     def remove(self):
         """Delete the object."""
@@ -49,17 +51,23 @@ class LightSwitch(Interactable):
 
         LightSwitch.light_switch_list.remove(self)
 
+    def check_lights(self):
+        for light in self.lights:
+            if light.enabled:
+                return True
+        return False
+
+
     def interact(self):
         """
         Interact with the light switch.
         Overrides the parent class method.
         """
-
-        if self.is_on:
+        if self.check_lights():
+            MiniGame(LightSwitchMini())
             self.turn_off()
         else:
             self.turn_on()
-            MiniGame(LightSwitchMini())
 
         # self.update_texture()
 
@@ -70,12 +78,19 @@ class LightSwitch(Interactable):
 
     def turn_on(self):
         """Turn on the light switch."""
-        self.is_on = True
+        for light in self.lights:
+            if not light.enabled:
+                light.toggle
         print(f"{self.name} turned on.")
 
     def turn_off(self):
         """Turn off the light switch."""
-        self.is_on = False
+        for light in self.lights:
+            print(light, light.enabled)
+            if light.enabled:
+                print('turning off')
+                light.toggle()
+                print(light.enabled)
         print(f"{self.name} turned off.")
 
     def on_update(self, delta_time: float = 1/60):
