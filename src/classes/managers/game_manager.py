@@ -25,6 +25,7 @@ class GameManager(object):
         self.collision = None
         self.score = 0
 
+        self.barks: arcade.SpriteList = arcade.SpriteList()
         self.guards = arcade.SpriteList()
         self.walls: arcade.SpriteList = arcade.SpriteList()
 

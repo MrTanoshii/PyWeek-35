@@ -120,6 +120,8 @@ class GameView(arcade.View):
         if C.DEBUG:
             self.player.draw_hit_box()
 
+        self.game_manager.barks.draw()
+
         self.hud.draw()
         self.camera.use()
 
@@ -129,6 +131,7 @@ class GameView(arcade.View):
         for engine in self.physics_engines:
             engine.update()
         self.scene.update()
+        self.game_manager.barks.on_update(delta_time)
         self.player.on_update(delta_time=delta_time)
         self.game_manager.guards.on_update(delta_time)
         self.game_manager.lights.on_update(delta_time)

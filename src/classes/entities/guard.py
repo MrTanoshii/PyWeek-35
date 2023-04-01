@@ -3,6 +3,8 @@ import arcade
 import os.path
 
 from src.classes.managers.game_manager import GameManager
+from src.classes.barks.alert import Alert
+from src.classes.barks.confusion import Confusion
 from src.constants import CONSTANTS as C
 
 
@@ -203,6 +205,10 @@ class Guard(arcade.Sprite):
 
             # if the guard is not colliding with a wall
             if not self.is_colliding:
+                # Display alert bark
+                if not self.is_chasing:
+                    Alert(self.center_x, self.center_y + self.height / 2)
+
                 # set the guard to chase the player
                 self.is_chasing = True
                 self.is_patrolling = False
@@ -221,6 +227,10 @@ class Guard(arcade.Sprite):
                 self.chase_target_last_pos = None
 
         else:
+            # Display confusion bark
+            if self.is_chasing:
+                Confusion(self.center_x, self.center_y + self.height / 2)
+
             self.is_chasing = False
             self.is_patrolling = True
             self.chase_target = None
