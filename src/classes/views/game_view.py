@@ -8,7 +8,7 @@ from src.classes.managers.light_manager import LightManager
 from src.classes.managers.game_manager import GameManager
 from src.classes.wall import Wall
 from src.classes.world import World
-from src.classes.guard import Guard
+from src.classes.entities.guard import Guard
 from src.classes.hud import HUD
 
 
