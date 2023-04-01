@@ -21,6 +21,8 @@ class LightSwitchMini(arcade.View):
             LightSwitchMini.SWITCH_SIZE,
         )
 
+        self.off_sound = arcade.Sound("./src/assets/light_sfx/SwitchOff.ogg")
+
         for sprite in [self.switch_on, self.switch_off]:
             sprite.center_x = C.SCREEN_WIDTH / 2
             sprite.center_y = C.SCREEN_HEIGHT / 2
@@ -81,6 +83,7 @@ class LightSwitchMini(arcade.View):
         """Handle key release events."""
 
         if key == arcade.key.SPACE:
+            self.off_sound.play()
             self.is_pressed = True
 
         if key == arcade.key.Q:
