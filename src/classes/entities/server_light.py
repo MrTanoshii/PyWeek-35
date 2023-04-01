@@ -13,7 +13,6 @@ class ServerLight(arcade.Sprite):
 
         base_path = "src/assets/server_lights"
         self.texture_list = [arcade.load_texture(f"{base_path}/{texture}", hit_box_algorithm=None) for texture in os.listdir(base_path)]
-        self.texture_list = self.texture_list + [arcade.load_texture(f"{base_path}/{texture}", hit_box_algorithm=None, flipped_horizontally=True) for texture in os.listdir(base_path)]
         self.change_texture()
         self.servers.append(self)
         self.center_x = 0
