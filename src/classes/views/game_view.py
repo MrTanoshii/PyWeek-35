@@ -69,7 +69,6 @@ class GameView(arcade.View):
             new_guard.center_y = (
                 self.world.height * self.world.tile_size - guard.coordinates.y - guard.size.height / 2
             ) * C.WORLD_SCALE
-            self.physics_engines.append(arcade.PhysicsEngineSimple(new_guard, self.game_manager.walls))
 
         # Light Switch
         for switch in self.world.light_switches:
@@ -162,11 +161,10 @@ class GameView(arcade.View):
 
     def on_update(self, delta_time: float):
         """Update the view."""
-        for engine in self.physics_engines:
-            engine.update()
-            
-        # if C.DEBUG and 1 / delta_time < 50:
-        #     print(f"LOW FPS: {int(1 / delta_time)}")
+        # for engine in self.physics_engines:
+        #     engine.update()
+        if C.DEBUG and 1 / delta_time < 50:
+            print(f"LOW FPS: {int(1 / delta_time)}")
         GameManager.instance.time += delta_time
         self.scene.update()
         self.player.on_update(delta_time=delta_time)
