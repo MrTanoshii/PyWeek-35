@@ -130,25 +130,13 @@ class Player(arcade.Sprite):
         # IDK which is more efficient or if there is a difference.
         for wall in self.game_manager.walls:
             if wall.collides_with_sprite(self):
-                if (
-                    self.right >= wall.left
-                    and self.right - wall.left < C.PLAYER_COLLISION_THRESHOLD
-                ):
+                if self.right >= wall.left and self.right - wall.left < C.PLAYER_COLLISION_THRESHOLD:
                     self.right = wall.left
-                elif (
-                    self.left <= wall.right
-                    and wall.right - self.left < C.PLAYER_COLLISION_THRESHOLD
-                ):
+                elif self.left <= wall.right and wall.right - self.left < C.PLAYER_COLLISION_THRESHOLD:
                     self.left = wall.right
-                if (
-                    self.top >= wall.bottom
-                    and self.top - wall.bottom < C.PLAYER_COLLISION_THRESHOLD
-                ):
+                if self.top >= wall.bottom and self.top - wall.bottom < C.PLAYER_COLLISION_THRESHOLD:
                     self.top = wall.bottom
-                elif (
-                    self.bottom <= wall.top
-                    and wall.top - self.bottom < C.PLAYER_COLLISION_THRESHOLD
-                ):
+                elif self.bottom <= wall.top and wall.top - self.bottom < C.PLAYER_COLLISION_THRESHOLD:
                     self.bottom = wall.top
         self.animation_counter += self.animation_speed
         if self.animation_counter > 1:
@@ -172,8 +160,6 @@ class Player(arcade.Sprite):
             # calculate if player is inside circle
             light_x = light.center_x
             light_y = light.center_y
-            if light.light_radius > math.sqrt(
-                (self.center_x - light_x) ** 2 + (self.center_y - light_y) ** 2
-            ):
+            if light.light_radius > math.sqrt((self.center_x - light_x) ** 2 + (self.center_y - light_y) ** 2):
                 return True
         return False
