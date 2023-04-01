@@ -13,6 +13,7 @@ class ServerLight(arcade.Sprite):
 
         base_path = "src/assets/server_lights"
         self.texture_list = [arcade.load_texture(f"{base_path}/{texture}", hit_box_algorithm=None) for texture in os.listdir(base_path)]
+        self.texture_list = self.texture_list + [arcade.load_texture(f"{base_path}/{texture}", hit_box_algorithm=None, flipped_horizontally=True) for texture in os.listdir(base_path)]
         self.change_texture()
         self.servers.append(self)
         self.center_x = 0
@@ -25,7 +26,7 @@ class ServerLight(arcade.Sprite):
         self.color = (randint(128,255), 0, 0) if randint(0, 1) else (0, randint(128,255), 0)
 
     def on_update(self, delta_time: float = 1 / 60):
-        if randint(0, 20) < 1:
+        if randint(0, 60) < 3:
             self.change_texture()
         return super().on_update(delta_time)
     
