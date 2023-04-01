@@ -28,6 +28,17 @@ class StoryManager:
             "lights_tutorial": {"played": False,
                                 "story": "You need to shut down the lights, so the guards won't see you. You can do that by pressing the E."
                                 },
+            "level_2": {"played": False,
+                                "story": "Great job Agent Whiskers. You have successfully passed the first level. But there is still more to do."
+                                },
+            "level_3": {"played": False,
+                                "story": "Great job Agent Whiskers. You have successfully passed the second level. But there is still more to do."
+                                },
+            "level_4": {"played": False,
+                                "story": "Great job Agent Whiskers. You have successfully passed the third level. But there is still more to do."
+                                },
+            "safes_tutorial": {"played": False, "story": "You can also use the E to open the safes. You can use the WASD keys to move. Okay then, good luck, Agent Whiskers."}
+
         }
         print("story manager initialized")
 
