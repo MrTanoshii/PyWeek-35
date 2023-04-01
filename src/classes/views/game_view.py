@@ -93,6 +93,7 @@ class GameView(arcade.View):
         self.player = Player()
         self.player.scale = 0.3 * C.WORLD_SCALE
         coords = self.game_manager.world.player_spawn[0].coordinates
+        self.player.scale = .2 * C.WORLD_SCALE
         self.player.center_x = coords.x * C.WORLD_SCALE
         self.player.center_y = (C.SCREEN_HEIGHT - coords.y - 96) * C.WORLD_SCALE
         self.game_manager.set_player(self.player)
@@ -110,11 +111,16 @@ class GameView(arcade.View):
         arcade.get_window().use()
         self.clear()
 
-        # Draw fragments which can be in the shadow:
+        # Draw fragments which can be in the shadow: 
         # Put here drawing interactables and guards
         self.scene.draw()
         self.game_manager.guards.draw()
 
+        lights = []
+        for idx, light in enumerate(self.game_manager.lights):
+            light.draw()
+            if light.enabled:
+                lights.append(self.world.lights[idx])
         self.light.draw_shader(
             [
                 (
@@ -123,16 +129,13 @@ class GameView(arcade.View):
                     - self.camera.position.y,  # :=
                     light.properties.get("radius", C.DEFAULT_LIGHT_RADIUS) * C.WORLD_SCALE,
                 )
-                for light in self.world.lights
+                for light in lights
             ],
             [self._wall_to_screen_coords(wall) for wall in self.world.walls],
         )
 
         self.world.map.sprite_lists["collision_tiles"].draw()  # to remove light from collision tiles
-
-        for light in self.game_manager.lights:
-            light.draw()
-
+        
         for guard in self.game_manager.guards:
             guard.draw()
 
@@ -145,6 +148,8 @@ class GameView(arcade.View):
 
     def on_update(self, delta_time: float):
         """Update the view."""
+        if C.DEBUG and 1 / delta_time < 50:
+            print(f"LOW FPS: {int(1 / delta_time)}")
         GameManager.instance.time += delta_time
         self.scene.update()
         self.player.on_update(delta_time=delta_time)
@@ -161,8 +166,13 @@ class GameView(arcade.View):
         self.game_manager.light_switches.on_update(delta_time)
         self.game_manager.safes.on_update(delta_time)
 
+        if Guard.num_guards_chasing() > 0:
+            Guard.start_chase()
+        else:
+            Guard.end_chase()
     def on_mouse_press(self, _x, _y, _button, _modifiers):
         """Handle mouse press events."""
+        Guard.num_guards_chasing()
         pass
 
     def on_key_press(self, key, modifiers):
