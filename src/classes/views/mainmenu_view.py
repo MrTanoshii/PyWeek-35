@@ -4,9 +4,9 @@ from src.constants import CONSTANTS as C
 
 
 class MainMenuView(arcade.View):
-    def __init__(self, *args, **kwargs):
+    def __init__(self, game, *args, **kwargs):
         super().__init__(*args, **kwargs)
-
+        self.game = game
         self.manager = arcade.gui.UIManager()
         self.manager.enable()
 
@@ -28,7 +28,7 @@ class MainMenuView(arcade.View):
             level_button = Preview(name="example.tilemap", label=f"Level {level + 1}")
             level_label = arcade.gui.UILabel(text=f"Level {level + 1}", font_size=32, color=arcade.color.WHITE)
 
-            # level_button.event("on_click")(self.create_on_click(map_name, label))
+            level_button.event("on_click")(self.create_on_click(level))
 
             self.levels_box.add(level_button)
 
@@ -37,9 +37,10 @@ class MainMenuView(arcade.View):
         self.manager.add(self.levels_box.center_on_screen())
         self.manager.add(self.levels_label_box.center_on_screen())
 
-    def create_on_click(self, map_name: str, label: str):
+    def create_on_click(self, level: int):
         def level_start_handler(_e):
             self.manager.disable()
+            self.game.start_level(level)
 
         return level_start_handler
 

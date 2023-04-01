@@ -32,19 +32,25 @@ class GameWindow(arcade.Window):
         game_manager.music_manager = self.music_manager
 
         # Setup views
-        self.game_view = MainMenuView()
-        self.ingame_menu_view = IngameMenuView(self.game_view)
-        # TODO: Might need to move this somewhere else and trigger it accordingly
+        self.mainmenu_view = MainMenuView(self)
         self.score_view = None
+        self.game_view = None
+        self.ingame_menu_view = None
 
         # Set the initial view
-        self.show_view(self.game_view)
+        self.show_view(self.mainmenu_view)
 
+        # Music
         if stop_outro:
             self.music_manager.stop_outro()
 
         self.music_manager.play_main()
         self.game_manager.music_manager = self.music_manager
+
+    def start_level(self, level):
+        self.game_view = GameView(level)
+        self.ingame_menu_view = IngameMenuView(self.game_view)
+        self.show_view(self.game_view)
 
     def on_update(self, delta_time: float):
         if GameManager.instance.game_over:
