@@ -182,6 +182,8 @@ class GameView(arcade.View):
             "collision_tiles"
         ].draw()  # to remove light from collision tiles
 
+        self.game_manager.safes.draw()
+
         for guard in self.game_manager.guards:
             guard.draw()
 

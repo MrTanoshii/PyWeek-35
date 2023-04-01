@@ -36,6 +36,7 @@ class Safe(Interactable):
         self.index = index
 
         super().__init__(name, description, self, *args, **kwargs)
+        self.scale = 0.1
 
     def setup(self):
         """Setup."""
@@ -63,12 +64,12 @@ class Safe(Interactable):
         """
         # First attempt
         if self.is_completed == None:
-            MiniGame(SafeMini(self))
+            MiniGame(SafeMini(self, self.index))
 
         # Lose but can continue
         elif not self.is_completed and self.game_manager.time >= self.interaction_time:
             print("You lost, but can continue")
-            MiniGame(SafeMini(self))
+            MiniGame(SafeMini(self, self.index))
 
         # Win
         elif self.is_completed:
