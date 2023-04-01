@@ -24,9 +24,7 @@ class Light(arcade.Sprite):
 
     def draw(self):
         if not self.enabled:
-            print('not enabled')
             return
-        print('enabled')
         super().draw()
 
         if C.DEBUG:
