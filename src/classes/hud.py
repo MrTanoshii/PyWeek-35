@@ -91,3 +91,7 @@ class HUD:
         if key == arcade.key.SPACE:
             story = GameManager.instance.story_manager
             self.story_line = story.next_story()
+
+    def set_story_line(self, story_line):
+        """Set story line immediately in game loop."""
+        self.story_line = story_line

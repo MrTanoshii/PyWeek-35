@@ -108,6 +108,7 @@ class GameView(arcade.View):
         self.player.center_y = (C.SCREEN_HEIGHT - coords.y - 96) * C.WORLD_SCALE
         self.game_manager.set_player(self.player)
         self.hud = HUD()
+        self.game_manager.hud = self.hud
         self.game_manager.music_manager = music_manager
 
     def on_show_view(self):
