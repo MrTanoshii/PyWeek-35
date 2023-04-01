@@ -157,6 +157,8 @@ class Guard(arcade.Sprite):
                 self.fov.draw_hit_box((255, 255, 0, 255))
 
     def on_update(self, dt):
+        if self.game_manager.game_over:
+            return
 
         # Ensure we have patrol points
         if not self.patrol_points:
@@ -236,7 +238,6 @@ class Guard(arcade.Sprite):
 
     def patrol(self):
         """Patrol between the patrol points"""
-
         # Calculate angle to patrol point
         self.angle = calculate_angle(
             self.center_x,

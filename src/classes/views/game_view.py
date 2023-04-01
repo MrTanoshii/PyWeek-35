@@ -35,14 +35,16 @@ class GameView(arcade.View):
         """Set up the view."""
         self.scene = arcade.Scene.from_tilemap(self.world.map)
 
-        
-
-
         # Create and append scaled Wall objects from self.world.walls to self.game_manager.walls
         for wall in [
             Wall(
                 (wall.coordinates.x + wall.size.width / 2) * C.WORLD_SCALE,
-                (self.world.height * self.world.tile_size - wall.coordinates.y - wall.size.height / 2) * C.WORLD_SCALE,
+                (
+                    self.world.height * self.world.tile_size
+                    - wall.coordinates.y
+                    - wall.size.height / 2
+                )
+                * C.WORLD_SCALE,
                 wall.size.width * C.WORLD_SCALE,
                 wall.size.height * C.WORLD_SCALE,
             )
@@ -53,23 +55,33 @@ class GameView(arcade.View):
         # Create and append scaled Light objects from self.world.Light to self.game_manager.Light
         for light in self.world.lights:
             new_light: Light = Light(light.properties["radius"])
-            new_light.center_x = (light.coordinates.x + light.size.width / 2) * C.WORLD_SCALE
+            new_light.center_x = (
+                light.coordinates.x + light.size.width / 2
+            ) * C.WORLD_SCALE
             new_light.center_y = (
-                self.world.height * self.world.tile_size - light.coordinates.y - light.size.height / 2
+                self.world.height * self.world.tile_size
+                - light.coordinates.y
+                - light.size.height / 2
             ) * C.WORLD_SCALE
             self.game_manager.lights.append(new_light)
 
         # Guard
         for guard in self.world.guard_spawn:
             new_guard: arcade.Sprite = Guard()
-            new_guard.center_x = (guard.coordinates.x + guard.size.width / 2) * C.WORLD_SCALE
-            new_guard.center_y = (
-                self.world.height * self.world.tile_size - guard.coordinates.y - guard.size.height / 2
+            new_guard.center_x = (
+                guard.coordinates.x + guard.size.width / 2
             ) * C.WORLD_SCALE
-            self.physics_engines.append(arcade.PhysicsEngineSimple(new_guard, self.game_manager.walls))
+            new_guard.center_y = (
+                self.world.height * self.world.tile_size
+                - guard.coordinates.y
+                - guard.size.height / 2
+            ) * C.WORLD_SCALE
+            self.physics_engines.append(
+                arcade.PhysicsEngineSimple(new_guard, self.game_manager.walls)
+            )
 
         self.game_manager.world = self.world
-        
+
         # Let's add the player
         self.player = Player()
         coords = self.game_manager.world.player_spawn[0].coordinates
@@ -98,21 +110,28 @@ class GameView(arcade.View):
         self.light.draw_shader(
             [
                 (
-                    self.world.tiled_to_screen(light.coordinates.x, light.coordinates.y)[0] - self.camera.position.x,
-                    self.world.tiled_to_screen(light.coordinates.x, light.coordinates.y)[1]
+                    self.world.tiled_to_screen(
+                        light.coordinates.x, light.coordinates.y
+                    )[0]
+                    - self.camera.position.x,
+                    self.world.tiled_to_screen(
+                        light.coordinates.x, light.coordinates.y
+                    )[1]
                     - self.camera.position.y,  # :=
-                    light.properties.get("radius", C.DEFAULT_LIGHT_RADIUS) * C.WORLD_SCALE,
+                    light.properties.get("radius", C.DEFAULT_LIGHT_RADIUS)
+                    * C.WORLD_SCALE,
                 )
                 for light in self.world.lights
             ],
             [self._wall_to_screen_coords(wall) for wall in self.world.walls],
         )
 
-        self.world.map.sprite_lists["collision_tiles"].draw()  # to remove light from collision tiles
+        self.world.map.sprite_lists[
+            "collision_tiles"
+        ].draw()  # to remove light from collision tiles
 
         for light in self.game_manager.lights:
             light.draw()
-
 
         for guard in self.game_manager.guards:
             guard.draw()
@@ -132,6 +151,7 @@ class GameView(arcade.View):
         self.scene.update()
         self.player.on_update(delta_time=delta_time)
         self.game_manager.guards.on_update(delta_time)
+        self.game_manager.lights.on_update(delta_time)
 
         self.camera.move_to(
             (
@@ -155,6 +175,9 @@ class GameView(arcade.View):
     def _wall_to_screen_coords(self, wall: Rectangle) -> tuple[int, int, int, int]:
         x_1, y_1 = self.world.tiled_to_screen(wall.coordinates.x, wall.coordinates.y)
         x_1, y_1 = [x_1 - self.camera.position.x, y_1 - self.camera.position.y]
-        x_2, y_2 = x_1 + wall.size.width * C.WORLD_SCALE, y_1 - wall.size.height * C.WORLD_SCALE
+        x_2, y_2 = (
+            x_1 + wall.size.width * C.WORLD_SCALE,
+            y_1 - wall.size.height * C.WORLD_SCALE,
+        )
 
         return x_1, y_1, x_2, y_2

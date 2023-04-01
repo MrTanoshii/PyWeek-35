@@ -7,9 +7,10 @@ from src.constants import CONSTANTS as C
 class ScoreView(arcade.View):
     STAR_SIZE = 0.085
 
-    def __init__(self, game_view):
+    def __init__(self, game_view, window):
         """Base class for the 'score' view."""
         super().__init__()
+        self.window = window
         self.game_view = game_view
         self.sprite_lst = arcade.SpriteList()
         self.camera = arcade.Camera(C.SCREEN_WIDTH, C.SCREEN_HEIGHT)
@@ -67,5 +68,4 @@ class ScoreView(arcade.View):
         if key == arcade.key.ESCAPE:
             arcade.exit()
         else:
-            self.game_view.setup()
-            self.window.show_view(self.game_view)
+            self.window.setup()
