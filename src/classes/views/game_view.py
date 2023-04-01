@@ -20,8 +20,9 @@ from src.classes.hud import HUD
 class GameView(arcade.View):
     """Base class for the 'game' view."""
 
-    def __init__(self):
+    def __init__(self, level):
         super().__init__()
+        self.level = level
         self.music_manager = None
         self.scene = None
         self.world = World.load("example.tilemap.json")

@@ -26,10 +26,11 @@ class IngameMenuView(arcade.View):
 
         # Create buttons
         resume_button = GUI.UIFlatButton(text="Resume", width=button_width)
+        main_menu_button = GUI.UIFlatButton(text="Main Menu", width=button_width)
         credits_button = GUI.UIFlatButton(text="Credits", width=button_width)
         quit_button = GUI.UIFlatButton(text="Quit", width=button_width)
 
-        button_lst = [resume_button, credits_button, quit_button]
+        button_lst = [resume_button, main_menu_button, credits_button, quit_button]
         for button in button_lst:
             self.v_box.add(button.with_space_around(bottom=button_bottom))
 
@@ -39,6 +40,10 @@ class IngameMenuView(arcade.View):
         @resume_button.event("on_click")
         def on_click_resume(event):
             self.window.show_view(game_view)
+
+        @main_menu_button.event("on_click")
+        def on_click_resume(event):
+            self.window.setup(stop_outro=False)
 
         @credits_button.event("on_click")
         def on_click_credits(event):

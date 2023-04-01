@@ -4,6 +4,7 @@ from src.classes.managers.game_manager import GameManager
 from src.classes.managers.music_manager import MusicManager
 from src.classes.views.game_view import GameView
 from src.classes.views.ingame_menu_view import IngameMenuView
+from src.classes.views.mainmenu_view import MainMenuView
 from src.classes.views.score_view import ScoreView
 
 
@@ -31,19 +32,24 @@ class GameWindow(arcade.Window):
         game_manager.music_manager = self.music_manager
 
         # Setup views
-        self.game_view = GameView()
-        self.ingame_menu_view = IngameMenuView(self.game_view)
-        # TODO: Might need to move this somewhere else and trigger it accordingly
+        self.mainmenu_view = MainMenuView(self)
         self.score_view = None
+        self.game_view = None
+        self.ingame_menu_view = None
 
         # Set the initial view
-        self.show_view(self.game_view)
+        self.show_view(self.mainmenu_view)
 
-        if stop_outro:
-            self.music_manager.stop_outro()
+        # Music
+        self.music_manager.stop()
 
         self.music_manager.play_main()
         self.game_manager.music_manager = self.music_manager
+
+    def start_level(self, level):
+        self.game_view = GameView(level)
+        self.ingame_menu_view = IngameMenuView(self.game_view)
+        self.show_view(self.game_view)
 
     def on_update(self, delta_time: float):
         if GameManager.instance.game_over:
