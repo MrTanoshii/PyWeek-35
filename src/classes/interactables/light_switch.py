@@ -1,4 +1,3 @@
-
 import arcade
 from arcade import load_texture
 

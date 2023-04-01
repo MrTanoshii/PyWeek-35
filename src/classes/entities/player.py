@@ -59,21 +59,30 @@ class Player(arcade.Sprite):
         ]
 
         self.texture_list_right = [
-            arcade.load_texture(f"{base_path}/{texture}", hit_box_algorithm="Simple", flipped_horizontally=True)
+            arcade.load_texture(
+                f"{base_path}/{texture}",
+                hit_box_algorithm="Simple",
+                flipped_horizontally=True,
+            )
             for texture in os.listdir(base_path)
         ]
 
         self.texture_list_up = [
             arcade.load_texture(f"{base_path}2/{texture}", hit_box_algorithm="Simple")
-            for texture in os.listdir(base_path+"2")
+            for texture in os.listdir(base_path + "2")
         ]
 
         self.texture_list_down = [
             arcade.load_texture(f"{base_path}3/{texture}", hit_box_algorithm="Simple")
-            for texture in os.listdir(base_path+"3")
+            for texture in os.listdir(base_path + "3")
         ]
 
-        self.texture_options = [self.texture_list_left, self.texture_list_right, self.texture_list_up, self.texture_list_down]
+        self.texture_options = [
+            self.texture_list_left,
+            self.texture_list_right,
+            self.texture_list_up,
+            self.texture_list_down,
+        ]
         self.texture = self.texture_list_left[0]
 
         self.current_texture = self.texture_list_left
@@ -83,7 +92,6 @@ class Player(arcade.Sprite):
         self.scale = 0.5 * C.WORLD_SCALE
 
     def on_update(self, delta_time):
-
         move_x = ((self.keyboard["D"] | self.keyboard["RIGHT"]) * C.MOVEMENT_SPEED) - (
             (self.keyboard["A"] | self.keyboard["LEFT"]) * C.MOVEMENT_SPEED
         )
@@ -107,7 +115,7 @@ class Player(arcade.Sprite):
         if not move_y and not move_x:
             self.animation_speed = 0
         else:
-            self.animation_speed = 40/60
+            self.animation_speed = 40 / 60
 
         # This is to prevent the player from flipping back and forth
         if self.last_facing == self.facing_left:
@@ -122,13 +130,25 @@ class Player(arcade.Sprite):
         # IDK which is more efficient or if there is a difference.
         for wall in self.game_manager.walls:
             if wall.collides_with_sprite(self):
-                if self.right >= wall.left and self.right - wall.left < C.PLAYER_COLLISION_THRESHOLD:
+                if (
+                    self.right >= wall.left
+                    and self.right - wall.left < C.PLAYER_COLLISION_THRESHOLD
+                ):
                     self.right = wall.left
-                elif self.left <= wall.right and wall.right - self.left < C.PLAYER_COLLISION_THRESHOLD:
+                elif (
+                    self.left <= wall.right
+                    and wall.right - self.left < C.PLAYER_COLLISION_THRESHOLD
+                ):
                     self.left = wall.right
-                if self.top >= wall.bottom and self.top - wall.bottom < C.PLAYER_COLLISION_THRESHOLD:
+                if (
+                    self.top >= wall.bottom
+                    and self.top - wall.bottom < C.PLAYER_COLLISION_THRESHOLD
+                ):
                     self.top = wall.bottom
-                elif self.bottom <= wall.top and wall.top - self.bottom < C.PLAYER_COLLISION_THRESHOLD:
+                elif (
+                    self.bottom <= wall.top
+                    and wall.top - self.bottom < C.PLAYER_COLLISION_THRESHOLD
+                ):
                     self.bottom = wall.top
         self.animation_counter += self.animation_speed
         if self.animation_counter > 1:
@@ -152,7 +172,8 @@ class Player(arcade.Sprite):
             # calculate if player is inside circle
             light_x = light.center_x
             light_y = light.center_y
-            if light.light_radius > math.sqrt((self.center_x - light_x)**2 + (self.center_y - light_y)**2):
+            if light.light_radius > math.sqrt(
+                (self.center_x - light_x) ** 2 + (self.center_y - light_y) ** 2
+            ):
                 return True
         return False
-

@@ -51,7 +51,9 @@ class ScoreView(arcade.View):
         # Whitespace in front of first character required to center text properly
         # and avoid weird spacing
         self._draw_centered_text(f" {GameManager.instance.score}", 22, -40, "left")
-        self._draw_centered_text(f" {GameManager.instance.time:.2f} s", 22, -100, "left")
+        self._draw_centered_text(
+            f" {GameManager.instance.time:.2f} s", 22, -100, "left"
+        )
 
         self._draw_centered_text("Press any key to restart", 12, -250)
         self._draw_centered_text("Press ESC to exit", 12, -300)

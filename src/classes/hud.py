@@ -18,18 +18,24 @@ class HUD:
     def setup(self):
         for idx, asset in enumerate(os.listdir(self.asset_path)):
             sprite = arcade.Sprite(
-                    f"{self.asset_path}/{asset}",
-                    hit_box_algorithm="Simple",
-                    center_y=C.SCREEN_HEIGHT - 50,
-                    center_x=idx * 90 + 50,
-                )
+                f"{self.asset_path}/{asset}",
+                hit_box_algorithm="Simple",
+                center_y=C.SCREEN_HEIGHT - 50,
+                center_x=idx * 90 + 50,
+            )
             sprite.color = (5, 5, 5)
             self.inventory.append(sprite)
         self.inventory[2].color = (255, 255, 255)
 
     def draw(self):
         self.camera.use()
-        arcade.draw_rectangle_filled(C.SCREEN_WIDTH / 2, C.SCREEN_HEIGHT - 30, C.SCREEN_WIDTH // 4, 60, (0, 0, 0, 200))
+        arcade.draw_rectangle_filled(
+            C.SCREEN_WIDTH / 2,
+            C.SCREEN_HEIGHT - 30,
+            C.SCREEN_WIDTH // 4,
+            60,
+            (0, 0, 0, 200),
+        )
 
         arcade.draw_text(
             "Files retrieved: 0/0",

@@ -30,10 +30,7 @@ class Light(arcade.Sprite):
         if C.DEBUG:
             # Draw border
             arcade.draw_circle_outline(
-                self.center_x,
-                self.center_y,
-                self.light_radius,
-                (255, 255, 0, 255)
+                self.center_x, self.center_y, self.light_radius, (255, 255, 0, 255)
             )
 
     def toggle(self):

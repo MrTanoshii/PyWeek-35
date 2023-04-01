@@ -24,7 +24,7 @@ class LightSwitchMini(arcade.View):
         for sprite in [self.switch_on, self.switch_off]:
             sprite.center_x = C.SCREEN_WIDTH / 2
             sprite.center_y = C.SCREEN_HEIGHT / 2
-            
+
         self.clear()
         self.switch_off.draw()
 
@@ -50,8 +50,7 @@ class LightSwitchMini(arcade.View):
                 30,
                 anchor_x="center",
             )
-        
-        # TODO: Go back to previous view instead of closing the window 
+
         if key == arcade.key.Q:
             resume_game = GameManager.instance.get_game_view()
             self.window.show_view(resume_game)
