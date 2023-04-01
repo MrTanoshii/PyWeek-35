@@ -38,10 +38,17 @@ class GameWindow(arcade.Window):
             if self.score_view is None:
                 self.score_view = ScoreView(self.game_view)
             if self.game_manager is not None:
-                self.game_manager.lights.clear()
-                self.game_manager.walls.clear()
-                self.game_view = None
+                for light in self.game_manager.lights:
+                    del(light)
+                
+                for wall in self.game_manager.walls:
+                    del(wall)
+                
+                for guard in self.game_manager.guards:
+                    del(guard)
                 del(self.game_manager.player)
+                
+                self.game_view = None
                 self.game_manager = None
 
             self.show_view(self.score_view)
