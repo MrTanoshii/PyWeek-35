@@ -1,8 +1,10 @@
+from random import randint
 import arcade
 from pytiled_parser.tiled_object import Rectangle
 
 from src.classes.entities.light import Light
 from src.classes.entities.player import Player
+from src.classes.entities.server_light import ServerLight
 from src.classes.interactables.light_switch import LightSwitch
 from src.classes.interactables.safe import Safe
 from src.classes.managers.music_manager import MusicManager
@@ -88,6 +90,12 @@ class GameView(arcade.View):
                                             safe.size.height / 2) * C.WORLD_SCALE
             self.game_manager.safes.append(safe_obj)
 
+        for server in self.world.servers.tiled_objects:
+            for _ in range(randint(1,12)):
+                serverlight = ServerLight()
+                serverlight.center_x = (server.coordinates.x + server.size.width / 2) * C.WORLD_SCALE
+                serverlight.center_y = (self.world.height * self.world.tile_size - server.coordinates.y - server.size.height / 2) * C.WORLD_SCALE
+
         self.game_manager.world = self.world
 
         # Let's add the player
@@ -146,14 +154,15 @@ class GameView(arcade.View):
         for lightswitch in GameManager.instance.light_switches:
             lightswitch.draw()
             lightswitch.draw_hit_box()
-
+        for serverlight in ServerLight.servers:
+            serverlight.draw()
         self.hud.draw()
         self.camera.use()
 
     def on_update(self, delta_time: float):
         """Update the view."""
-        for engine in self.physics_engines:
-            engine.update()
+        # for engine in self.physics_engines:
+        #     engine.update()
         if C.DEBUG and 1 / delta_time < 50:
             print(f"LOW FPS: {int(1 / delta_time)}")
         GameManager.instance.time += delta_time
@@ -168,6 +177,9 @@ class GameView(arcade.View):
             ),
             1,
         )
+
+        for server in ServerLight.servers:
+            server.on_update(delta_time)
 
         self.game_manager.light_switches.on_update(delta_time)
         self.game_manager.safes.on_update(delta_time)
