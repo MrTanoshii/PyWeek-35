@@ -1,5 +1,6 @@
 import arcade
 from src.constants import CONSTANTS as C
+from random import randint
 
 
 class Light(arcade.Sprite):
@@ -11,20 +12,21 @@ class Light(arcade.Sprite):
         self.light_radius = radius * 3.75
         self.enabled = True
         self.reset_time = 5
-        self.timer = 0
+        self.timer = randint(0, 5)
         self.hit_box_algorithm = "Simple"
 
     def on_update(self, dt):
-        if not self.enabled:
-            self.timer += dt
-            if self.timer >= self.reset_time:
-                self.enabled = True
-                self.timer = 0
+        # if not self.enabled:
+        self.timer += dt
+        if self.timer >= self.reset_time:
+            self.toggle()
+            self.timer = 0
 
     def draw(self):
         if not self.enabled:
+            print('not enabled')
             return
-
+        print('enabled')
         super().draw()
 
         if C.DEBUG:
