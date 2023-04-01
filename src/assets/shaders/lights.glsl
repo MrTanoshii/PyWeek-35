@@ -56,7 +56,7 @@ float computeLight(vec3 light, vec2 pixelPosition)
 
     for (int i = 0; i < obstaclesCount; ++i)
         if (segmentRectangleIntersection(segment, obstacles[i].xyzw))
-            return 0;
+            return 0.0;
 
     return 1.0 - smoothstep(0.0, light.z, _distance / 2);
 }

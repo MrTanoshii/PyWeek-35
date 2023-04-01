@@ -3,6 +3,8 @@ from pytiled_parser.tiled_object import Rectangle
 
 from src.classes.entities.light import Light
 from src.classes.entities.player import Player
+from src.classes.interactables.light_switch import LightSwitch
+from src.classes.interactables.safe import Safe
 from src.classes.managers.music_manager import MusicManager
 from src.constants import CONSTANTS as C
 from src.classes.managers.light_manager import LightManager
@@ -66,10 +68,32 @@ class GameView(arcade.View):
                 self.world.height * self.world.tile_size - guard.coordinates.y - guard.size.height / 2
             ) * C.WORLD_SCALE
             self.physics_engines.append(arcade.PhysicsEngineSimple(new_guard, self.game_manager.walls))
+
+        # Light Switch
+        for switch in self.world.light_switches:
+            light_switch = LightSwitch()
+            light_switch.center_x = (switch.coordinates.x + switch.size.width / 2) * C.WORLD_SCALE
+            light_switch.center_y = (
+                                            self.world.height * self.world.tile_size - switch.coordinates.y -
+                                            switch.size.height / 2) * C.WORLD_SCALE
+            self.game_manager.light_switches.append(light_switch)
+            for light in self.game_manager.lights:
+                light_switch.lights.append(light)
+
+        # Safe
+        for safe in self.world.safes:
+            safe_obj= Safe()
+            safe_obj.center_x = (safe.coordinates.x + safe.size.width / 2) * C.WORLD_SCALE
+            safe_obj.center_y = (
+                                            self.world.height * self.world.tile_size - safe.coordinates.y -
+                                            safe.size.height / 2) * C.WORLD_SCALE
+            self.game_manager.safes.append(safe_obj)
+
         self.game_manager.world = self.world
 
         # Let's add the player
         self.player = Player()
+        self.player.scale = 0.3 * C.WORLD_SCALE
         coords = self.game_manager.world.player_spawn[0].coordinates
         self.player.scale = .2 * C.WORLD_SCALE
         self.player.center_x = coords.x * C.WORLD_SCALE
@@ -120,6 +144,9 @@ class GameView(arcade.View):
         self.player.draw()
         if C.DEBUG:
             self.player.draw_hit_box()
+        for lightswitch in GameManager.instance.light_switches:
+            lightswitch.draw()
+            lightswitch.draw_hit_box()
 
         self.hud.draw()
         self.camera.use()
@@ -129,13 +156,10 @@ class GameView(arcade.View):
         if C.DEBUG and 1 / delta_time < 50:
             print(f"LOW FPS: {int(1 / delta_time)}")
         GameManager.instance.time += delta_time
-        for engine in self.physics_engines:
-            engine.update()
         self.scene.update()
         self.player.on_update(delta_time=delta_time)
         self.game_manager.guards.on_update(delta_time)
         self.game_manager.lights.on_update(delta_time)
-
         self.camera.move_to(
             (
                 self.game_manager.player.center_x - C.SCREEN_WIDTH // 2,
@@ -143,6 +167,10 @@ class GameView(arcade.View):
             ),
             1,
         )
+
+        self.game_manager.light_switches.on_update(delta_time)
+        self.game_manager.safes.on_update(delta_time)
+
         if Guard.num_guards_chasing() > 0:
             Guard.start_chase()
         else:
@@ -155,6 +183,15 @@ class GameView(arcade.View):
     def on_key_press(self, key, modifiers):
         """Handle key press events."""
         pass
+
+    def on_key_release(self, key, modifiers):
+        """Handle key press events."""
+        GameManager.instance.save_game_view(self)
+        for light_switch in self.game_manager.light_switches:
+            light_switch.on_key_release(key, modifiers)
+
+        for safe in self.game_manager.safes:
+            safe.on_key_release(key, modifiers)
 
     def on_resize(self, width: int, height: int):
         self.light.on_resize(width, height)

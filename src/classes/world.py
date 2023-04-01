@@ -28,6 +28,14 @@ class World:
         )
         self.guard_patrol_points: list[Point] = list(filter(lambda x: x.class_ == "point", self.paths.tiled_objects))
 
+        # Interactables
+        self.interactable_layer = self.map.get_tilemap_layer("interactable")
+        self.safes: list[Rectangle] = list(filter(lambda x: x.class_ == "safe", self.interactable_layer.tiled_objects))
+        self.light_switches: list[Rectangle] = list(filter(lambda x: x.class_ == "light_switch", self.interactable_layer.tiled_objects))
+        
+        # print(self.light_switches)
+        # print(self.safes)
+
     @classmethod
     def load(cls, map_name: str):
         return cls(

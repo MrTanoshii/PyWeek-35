@@ -101,43 +101,44 @@
          "name":"interactable",
          "objects":[
                 {
-                 "class":"switch",
                  "height":32,
-                 "id":17,
-                 "name":"light_switch_1",
+                 "id":110,
+                 "name":"Safe 1",
+                 "rotation":0,
+                 "type":"safe",
+                 "visible":true,
+                 "width":32,
+                 "x":480,
+                 "y":416
+                }, 
+                {
+                 "height":32,
+                 "id":111,
+                 "name":"Light Switch 1",
                  "properties":[
                         {
                          "name":"light",
                          "type":"object",
-                         "value":80
+                         "value":77
                         }],
                  "rotation":0,
+                 "type":"light_switch",
                  "visible":true,
                  "width":32,
-                 "x":608,
-                 "y":256
+                 "x":320,
+                 "y":192
                 }, 
                 {
-                 "class":"switch",
+                 "gid":243,
                  "height":32,
-                 "id":18,
-                 "name":"light_switch_2",
+                 "id":115,
+                 "name":"",
                  "rotation":0,
+                 "type":"",
                  "visible":true,
                  "width":32,
-                 "x":608,
-                 "y":384
-                }, 
-                {
-                 "class":"treasure",
-                 "height":32,
-                 "id":42,
-                 "name":"treasure",
-                 "rotation":0,
-                 "visible":true,
-                 "width":32,
-                 "x":832,
-                 "y":512
+                 "x":479.5,
+                 "y":453
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -151,40 +152,39 @@
          "name":"path",
          "objects":[
                 {
-                 "class":"guard",
                  "height":32,
                  "id":27,
                  "name":"guard_1",
                  "rotation":0,
+                 "type":"guard",
                  "visible":true,
                  "width":509,
                  "x":257,
                  "y":129
                 }, 
                 {
-                 "class":"guard",
                  "height":159,
                  "id":28,
                  "name":"guard_2",
                  "rotation":0,
+                 "type":"guard",
                  "visible":true,
                  "width":32,
                  "x":832,
                  "y":160
                 }, 
                 {
-                 "class":"guard",
                  "height":32,
                  "id":29,
                  "name":"guard_3",
                  "rotation":0,
+                 "type":"guard",
                  "visible":true,
                  "width":383,
                  "x":288,
                  "y":319
                 }, 
                 {
-                 "class":"point",
                  "height":0,
                  "id":81,
                  "name":"guard_1",
@@ -196,13 +196,13 @@
                          "value":82
                         }],
                  "rotation":0,
+                 "type":"point",
                  "visible":true,
                  "width":0,
                  "x":256,
                  "y":160
                 }, 
                 {
-                 "class":"point",
                  "height":0,
                  "id":82,
                  "name":"guard_1",
@@ -214,13 +214,13 @@
                          "value":0
                         }],
                  "rotation":0,
+                 "type":"point",
                  "visible":true,
                  "width":0,
                  "x":768,
                  "y":160
                 }, 
                 {
-                 "class":"point",
                  "height":0,
                  "id":85,
                  "name":"guard_2",
@@ -232,13 +232,13 @@
                          "value":87
                         }],
                  "rotation":0,
+                 "type":"point",
                  "visible":true,
                  "width":0,
                  "x":845,
                  "y":157
                 }, 
                 {
-                 "class":"point",
                  "height":0,
                  "id":87,
                  "name":"guard_2",
@@ -250,78 +250,79 @@
                          "value":0
                         }],
                  "rotation":0,
+                 "type":"point",
                  "visible":true,
                  "width":0,
                  "x":848,
                  "y":316
                 }, 
                 {
-                 "class":"point",
                  "height":0,
                  "id":88,
                  "name":"guard_3",
                  "point":true,
                  "rotation":0,
+                 "type":"point",
                  "visible":true,
                  "width":0,
                  "x":302.666666666667,
                  "y":321.333333333333
                 }, 
                 {
-                 "class":"point",
                  "height":0,
                  "id":89,
                  "name":"guard_3",
                  "point":true,
                  "rotation":0,
+                 "type":"point",
                  "visible":true,
                  "width":0,
                  "x":288,
                  "y":512
                 }, 
                 {
-                 "class":"point",
                  "height":0,
                  "id":90,
                  "name":"guard_3",
                  "point":true,
                  "rotation":0,
+                 "type":"point",
                  "visible":true,
                  "width":0,
                  "x":672,
                  "y":512
                 }, 
                 {
-                 "class":"point",
                  "height":0,
                  "id":91,
                  "name":"guard_3",
                  "point":true,
                  "rotation":0,
+                 "type":"point",
                  "visible":true,
                  "width":0,
                  "x":640,
                  "y":352
                 }, 
                 {
-                 "class":"point",
                  "height":0,
                  "id":97,
                  "name":"guard_4",
                  "point":true,
                  "rotation":0,
+                 "type":"point",
                  "visible":true,
                  "width":0,
                  "x":848.333333333333,
                  "y":351.333333333333
                 }, 
                 {
-                 "class":"point",
                  "height":0,
                  "id":98,
                  "name":"guard_4",
                  "point":true,
                  "rotation":0,
+                 "type":"point",
                  "visible":true,
                  "width":0,
                  "x":848.333333333333,
@@ -339,110 +340,110 @@
          "name":"collision",
          "objects":[
                 {
-                 "class":"wall",
                  "height":96,
                  "id":9,
                  "name":"",
                  "rotation":0,
+                 "type":"wall",
                  "visible":true,
                  "width":64,
                  "x":544,
                  "y":384
                 }, 
                 {
-                 "class":"wall",
                  "height":96,
                  "id":10,
                  "name":"",
                  "rotation":0,
+                 "type":"wall",
                  "visible":true,
                  "width":64,
                  "x":544,
                  "y":224
                 }, 
                 {
-                 "class":"wall",
                  "height":515,
                  "id":22,
                  "name":"",
                  "rotation":0,
+                 "type":"wall",
                  "visible":true,
                  "width":37,
                  "x":187,
                  "y":32
                 }, 
                 {
-                 "class":"wall",
                  "height":95.0909090909091,
                  "id":23,
                  "name":"",
                  "rotation":0,
+                 "type":"wall",
                  "visible":true,
                  "width":726.666666666667,
                  "x":192,
                  "y":32
                 }, 
                 {
-                 "class":"wall",
                  "height":522,
                  "id":24,
                  "name":"",
                  "rotation":0,
+                 "type":"wall",
                  "visible":true,
                  "width":32,
                  "x":896,
                  "y":32
                 }, 
                 {
-                 "class":"wall",
                  "height":33.75,
                  "id":25,
                  "name":"",
                  "rotation":0,
+                 "type":"wall",
                  "visible":true,
                  "width":742,
                  "x":192,
                  "y":544.25
                 }, 
                 {
-                 "class":"wall",
                  "height":95.5,
                  "id":66,
                  "name":"collision",
                  "rotation":0,
+                 "type":"wall",
                  "visible":true,
                  "width":64,
                  "x":704,
                  "y":192.25
                 }, 
                 {
-                 "class":"wall",
                  "height":96,
                  "id":70,
                  "name":"",
                  "rotation":0,
+                 "type":"wall",
                  "visible":true,
                  "width":63.75,
                  "x":704,
                  "y":352
                 }, 
                 {
-                 "class":"wall",
                  "height":96,
                  "id":72,
                  "name":"",
                  "rotation":0,
+                 "type":"wall",
                  "visible":true,
                  "width":63.75,
                  "x":383.458333333333,
                  "y":192
                 }, 
                 {
-                 "class":"wall",
                  "height":96,
                  "id":73,
                  "name":"",
                  "rotation":0,
+                 "type":"wall",
                  "visible":true,
                  "width":63.75,
                  "x":384.375,
@@ -460,55 +461,55 @@
          "name":"spawner",
          "objects":[
                 {
-                 "class":"player",
                  "height":32,
                  "id":30,
                  "name":"player_spawner",
                  "rotation":0,
+                 "type":"player",
                  "visible":true,
                  "width":32,
                  "x":256,
                  "y":128
                 }, 
                 {
-                 "class":"guard",
                  "height":32,
                  "id":31,
                  "name":"",
                  "rotation":0,
+                 "type":"guard",
                  "visible":true,
                  "width":32,
                  "x":736,
                  "y":128
                 }, 
                 {
-                 "class":"guard",
                  "height":32,
                  "id":33,
                  "name":"",
                  "rotation":0,
+                 "type":"guard",
                  "visible":true,
                  "width":32,
                  "x":832.333333333333,
                  "y":160.333333333333
                 }, 
                 {
-                 "class":"guard",
                  "height":32,
                  "id":36,
                  "name":"",
                  "rotation":0,
+                 "type":"guard",
                  "visible":true,
                  "width":32,
                  "x":352,
                  "y":320
                 }, 
                 {
-                 "class":"guard",
                  "height":32,
                  "id":99,
                  "name":"",
                  "rotation":0,
+                 "type":"guard",
                  "visible":true,
                  "width":32,
                  "x":832,
@@ -526,7 +527,6 @@
          "name":"lights",
          "objects":[
                 {
-                 "class":"light",
                  "height":0,
                  "id":77,
                  "name":"",
@@ -538,13 +538,13 @@
                          "value":100
                         }],
                  "rotation":0,
+                 "type":"light",
                  "visible":true,
                  "width":0,
-                 "x":401,
-                 "y":335
+                 "x":337.666666666667,
+                 "y":207.666666666667
                 }, 
                 {
-                 "class":"light",
                  "height":0,
                  "id":107,
                  "name":"",
@@ -556,13 +556,13 @@
                          "value":100
                         }],
                  "rotation":0,
+                 "type":"light",
                  "visible":true,
                  "width":0,
                  "x":648,
                  "y":207
                 }, 
                 {
-                 "class":"light",
                  "height":0,
                  "id":108,
                  "name":"",
@@ -574,10 +574,23 @@
                          "value":100
                         }],
                  "rotation":0,
+                 "type":"light",
                  "visible":true,
                  "width":0,
                  "x":744,
                  "y":495
+                }, 
+                {
+                 "gid":241,
+                 "height":32,
+                 "id":114,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":32,
+                 "x":322,
+                 "y":226.25
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -585,11 +598,11 @@
          "x":0,
          "y":0
         }],
- "nextlayerid":13,
- "nextobjectid":110,
+ "nextlayerid":17,
+ "nextobjectid":116,
  "orientation":"orthogonal",
  "renderorder":"right-down",
- "tiledversion":"1.9.1",
+ "tiledversion":"1.10.0",
  "tileheight":32,
  "tilesets":[
         {
@@ -602,6 +615,6 @@
         }],
  "tilewidth":32,
  "type":"map",
- "version":"1.9",
+ "version":"1.10",
  "width":30
 }

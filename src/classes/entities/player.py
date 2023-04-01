@@ -125,8 +125,6 @@ class Player(arcade.Sprite):
             self.current_texture = self.texture_options[self.facing_left]
             self.last_facing = self.facing_left
 
-        # collisions = arcade.check_for_collision_with_list(self, self.game_manager.walls)
-        # for wall in collisions:
         # IDK which is more efficient or if there is a difference.
         for wall in self.game_manager.walls:
             if wall.collides_with_sprite(self):
@@ -158,8 +156,9 @@ class Player(arcade.Sprite):
         """Check if player is in light"""
         for light in self.game_manager.lights:
             # calculate if player is inside circle
-            light_x = light.center_x
-            light_y = light.center_y
-            if light.light_radius > math.sqrt((self.center_x - light_x) ** 2 + (self.center_y - light_y) ** 2):
-                return True
+            if light.enabled:
+                light_x = light.center_x
+                light_y = light.center_y
+                if light.light_radius > math.sqrt((self.center_x - light_x) ** 2 + (self.center_y - light_y) ** 2):
+                    return True
         return False
