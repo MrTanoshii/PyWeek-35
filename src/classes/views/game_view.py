@@ -77,6 +77,8 @@ class GameView(arcade.View):
                                             self.world.height * self.world.tile_size - switch.coordinates.y -
                                             switch.size.height / 2) * C.WORLD_SCALE
             self.game_manager.light_switches.append(light_switch)
+            for light in self.game_manager.lights:
+                light_switch.lights.append(light)
 
         # Safe
         for safe in self.world.safes:
@@ -142,6 +144,9 @@ class GameView(arcade.View):
         self.player.draw()
         if C.DEBUG:
             self.player.draw_hit_box()
+        for lightswitch in GameManager.instance.light_switches:
+            lightswitch.draw()
+            lightswitch.draw_hit_box()
 
         self.hud.draw()
         self.camera.use()
