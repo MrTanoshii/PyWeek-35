@@ -11,22 +11,41 @@ class World:
         self.map_name = map_name
 
         self.collision = self.map.get_tilemap_layer("collision")
-        self.walls: list[Rectangle] = list(filter(lambda x: x.class_ == "wall", self.collision.tiled_objects))
+        self.walls: list[Rectangle] = list(
+            filter(lambda x: x.class_ == "wall", self.collision.tiled_objects)
+        )
 
         self.spawns = self.map.get_tilemap_layer("spawner")
-        self.player_spawn: list[Rectangle] = list(filter(lambda x: x.class_ == "player", self.spawns.tiled_objects))
-        self.guard_spawn: list[Rectangle] = list(filter(lambda x: x.class_ == "guard", self.spawns.tiled_objects))
+        self.player_spawn: list[Rectangle] = list(
+            filter(lambda x: x.class_ == "player", self.spawns.tiled_objects)
+        )
+        self.guard_spawn: list[Rectangle] = list(
+            filter(lambda x: x.class_ == "guard", self.spawns.tiled_objects)
+        )
 
         self.paths = self.map.get_tilemap_layer("path")
-        self.guards_path: list[Rectangle] = list(filter(lambda x: x.class_ == "guard", self.paths.tiled_objects))
-        self.guards: list[Rectangle] = list(filter(lambda x: x.class_ == "guard", self.paths.tiled_objects))
-        self.lights = list(filter(lambda x: x.class_ == "light", self.map.get_tilemap_layer("lights").tiled_objects))
-        self.guard_patrol_points: list[Point] = list(filter(lambda x: x.class_ == "point", self.paths.tiled_objects))
+        self.guards_path: list[Rectangle] = list(
+            filter(lambda x: x.class_ == "guard", self.paths.tiled_objects)
+        )
+        self.guards: list[Rectangle] = list(
+            filter(lambda x: x.class_ == "guard", self.paths.tiled_objects)
+        )
+        self.lights = list(
+            filter(
+                lambda x: x.class_ == "light",
+                self.map.get_tilemap_layer("lights").tiled_objects,
+            )
+        )
+        self.guard_patrol_points: list[Point] = list(
+            filter(lambda x: x.class_ == "point", self.paths.tiled_objects)
+        )
 
     @classmethod
     def load(cls, map_name: str):
         return cls(
-            arcade.load_tilemap(Path("src/assets") / "tilemaps" / map_name, scaling=C.WORLD_SCALE),
+            arcade.load_tilemap(
+                Path("src/assets") / "tilemaps" / map_name, scaling=C.WORLD_SCALE
+            ),
             map_name=map_name.split(".")[0],  # :=
         )
 

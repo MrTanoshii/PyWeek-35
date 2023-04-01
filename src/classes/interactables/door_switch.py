@@ -51,7 +51,7 @@ class DoorSwitch(Interactable):
         super().remove()
 
         DoorSwitch.door_switch_list.remove(self)
-    
+
     def interact(self):
         """
         Interact with the door switch.
@@ -65,7 +65,7 @@ class DoorSwitch(Interactable):
             self.open_door()
 
         self.update_texture()
-    
+
     def update_texture(self):
         """Update the texture of the door switch."""
         self.texture = self.texture_on if self.is_open else self.texture_off
@@ -79,6 +79,3 @@ class DoorSwitch(Interactable):
         """Close the door."""
         self.is_open = False
         print(f"{self.name} is closed.")
-
-        
-    

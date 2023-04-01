@@ -47,11 +47,9 @@ class Safe(Interactable):
     def set_texture(self):
         self.texture = self.safe_texture
 
-
     def interact(self):
         """
         Interact with the light switch.
         Overrides the parent class method.
         """
         MiniGame(SafeMini())
-        

@@ -7,7 +7,7 @@ from src.constants import CONSTANTS as C
 
 class IngameMenuView(arcade.View):
     """Base class for the 'ingame menu' view."""
-    
+
     def __init__(self, game_view):
         super().__init__()
 
@@ -34,7 +34,7 @@ class IngameMenuView(arcade.View):
             self.v_box.add(button.with_space_around(bottom=button_bottom))
 
         # User decorators to handle on_click events
-        
+
         # Return to game
         @resume_button.event("on_click")
         def on_click_resume(event):
