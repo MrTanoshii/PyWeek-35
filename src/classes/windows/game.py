@@ -37,6 +37,13 @@ class GameWindow(arcade.Window):
         if GameManager.instance.game_over:
             if self.score_view is None:
                 self.score_view = ScoreView(self.game_view)
+            if self.game_manager is not None:
+                self.game_manager.lights.clear()
+                self.game_manager.walls.clear()
+                self.game_view = None
+                del(self.game_manager.player)
+                self.game_manager = None
+
             self.show_view(self.score_view)
         else:
             pass
