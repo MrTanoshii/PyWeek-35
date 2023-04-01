@@ -94,9 +94,6 @@ class GameView(arcade.View):
         self.scene.draw()
         self.game_manager.guards.draw()
 
-
-
-        self.world.map.sprite_lists["collision_tiles"].draw()  # to remove light from collision tiles
         lights = []
         for idx, light in enumerate(self.game_manager.lights):
             light.draw()
@@ -115,6 +112,9 @@ class GameView(arcade.View):
             ],
             [self._wall_to_screen_coords(wall) for wall in self.world.walls],
         )
+
+        self.world.map.sprite_lists["collision_tiles"].draw()  # to remove light from collision tiles
+        
         for guard in self.game_manager.guards:
             guard.draw()
 
