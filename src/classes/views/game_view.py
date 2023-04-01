@@ -118,6 +118,7 @@ class GameView(arcade.View):
         self.scene.update()
         self.player.on_update(delta_time=delta_time)
         self.game_manager.guards.on_update(delta_time)
+        self.game_manager.lights.on_update(delta_time)
 
         self.camera.move_to(
             (
