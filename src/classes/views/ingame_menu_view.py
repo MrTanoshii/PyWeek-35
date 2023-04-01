@@ -3,6 +3,7 @@ import arcade
 import arcade.gui as GUI
 
 from src.constants import CONSTANTS as C
+from src.classes.views.credits_view import CreditsView
 
 
 class IngameMenuView(arcade.View):
@@ -26,11 +27,10 @@ class IngameMenuView(arcade.View):
         # Create buttons
         resume_button = GUI.UIFlatButton(text="Resume", width=button_width)
         main_menu_button = GUI.UIFlatButton(text="Main Menu", width=button_width)
-        options_button = GUI.UIFlatButton(text="Options", width=button_width)
         credits_button = GUI.UIFlatButton(text="Credits", width=button_width)
         quit_button = GUI.UIFlatButton(text="Quit", width=button_width)
 
-        button_lst = [resume_button, main_menu_button, options_button, credits_button, quit_button]
+        button_lst = [resume_button, main_menu_button, credits_button, quit_button]
         for button in button_lst:
             self.v_box.add(button.with_space_around(bottom=button_bottom))
 
@@ -45,13 +45,9 @@ class IngameMenuView(arcade.View):
         def on_click_resume(event):
             self.window.setup(stop_outro=False)
 
-        @options_button.event("on_click")
-        def on_click_options(event):
-            print("Options button clicked: ", event)
-
         @credits_button.event("on_click")
         def on_click_credits(event):
-            print("Credits button clicked: ", event)
+            self.window.show_view(CreditsView(self))
 
         # Exit the game
         @quit_button.event("on_click")
@@ -60,7 +56,11 @@ class IngameMenuView(arcade.View):
             arcade.exit()
 
         # Create a widget to hold the v_box widget, that will center the buttons
-        self.manager.add(GUI.UIAnchorWidget(anchor_x="center_x", anchor_y="center_y", child=self.v_box))
+        self.manager.add(
+            GUI.UIAnchorWidget(
+                anchor_x="center_x", anchor_y="center_y", child=self.v_box
+            )
+        )
 
     def on_show_view(self):
         """Called when switching to this view"""
