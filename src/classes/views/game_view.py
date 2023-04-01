@@ -89,7 +89,7 @@ class GameView(arcade.View):
         arcade.get_window().use()
         self.clear()
 
-        # Draw fragments which can be in the shadow:
+        # Draw fragments which can be in the shadow: 
         # Put here drawing interactables and guards
         self.scene.draw()
         self.game_manager.guards.draw()
