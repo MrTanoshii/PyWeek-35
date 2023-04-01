@@ -97,6 +97,9 @@ class World:
     @lru_cache()
     def pathfinding(self, start: tuple[int, int], destination: tuple[int, int]) -> list[tuple[int, int]] | None:
         """
+        A* algorithm realization
+        Uses manhattan distance as heuristics
+
         :param start: tuple of absolute coordinates of start position
         :param destination: tuple of absolute coordinates of destination position
         :return: list of absolute coordinates or None if path not found
@@ -104,8 +107,6 @@ class World:
 
         start_tile = self.screen_to_tile(*start)
         destination_tile = self.screen_to_tile(*destination)
-        print(self.grid[destination_tile])
-        print(destination_tile)
 
         lengths = np.full((int(self.map.width), int(self.map.height)), -1)
         lengths[start_tile] = 0
