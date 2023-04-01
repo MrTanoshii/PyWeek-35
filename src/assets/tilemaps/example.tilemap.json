@@ -101,43 +101,38 @@
          "name":"interactable",
          "objects":[
                 {
-                 "class":"switch",
+                 "class":"safe",
                  "height":32,
-                 "id":17,
-                 "name":"light_switch_1",
+                 "id":110,
+                 "name":"",
                  "properties":[
                         {
-                         "name":"light",
-                         "type":"object",
-                         "value":80
+                         "name":"loot",
+                         "type":"string",
+                         "value":"hard_drive"
                         }],
                  "rotation":0,
                  "visible":true,
                  "width":32,
-                 "x":608,
-                 "y":256
+                 "x":480,
+                 "y":416
                 }, 
                 {
-                 "class":"switch",
+                 "class":"light_switch",
                  "height":32,
-                 "id":18,
-                 "name":"light_switch_2",
+                 "id":111,
+                 "name":"Light Switch 1",
+                 "properties":[
+                        {
+                         "name":"light",
+                         "type":"object",
+                         "value":77
+                        }],
                  "rotation":0,
                  "visible":true,
                  "width":32,
-                 "x":608,
-                 "y":384
-                }, 
-                {
-                 "class":"treasure",
-                 "height":32,
-                 "id":42,
-                 "name":"treasure",
-                 "rotation":0,
-                 "visible":true,
-                 "width":32,
-                 "x":832,
-                 "y":512
+                 "x":448,
+                 "y":224
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -585,8 +580,8 @@
          "x":0,
          "y":0
         }],
- "nextlayerid":13,
- "nextobjectid":110,
+ "nextlayerid":14,
+ "nextobjectid":112,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.9.1",

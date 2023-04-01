@@ -29,6 +29,8 @@ class LightSwitch(Interactable):
         self.texture_on = load_texture("./src/assets/art/light_switch/light_switch_on.png")
         self.texture_off = load_texture("./src/assets/art/light_switch/light_switch_off.png")
         self.is_on = False
+        self.game_manager = GameManager.instance
+        self.player_collides = False
 
         super().__init__(name, description, self, *args, **kwargs)
 
@@ -75,3 +77,19 @@ class LightSwitch(Interactable):
         """Turn off the light switch."""
         self.is_on = False
         print(f"{self.name} turned off.")
+
+    def on_update(self, delta_time: float = 1/60):
+        """Update the light switch."""
+        player = self.game_manager.player
+
+        # Check collision
+        if arcade.check_for_collision(self, player):
+            self.player_collides = True
+        else:
+            self.player_collides = False
+
+    def on_key_release(self, key, modifiers):
+        """Handle key release events."""
+        if key == arcade.key.E:
+            if self.player_collides:
+                self.interact()

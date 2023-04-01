@@ -36,6 +36,7 @@ class GameManager(object):
         self.keyboard = None
 
         self.lights = arcade.SpriteList()
+        self.light_switches = arcade.SpriteList()
 
         self.player_in_light = False
 

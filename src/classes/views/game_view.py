@@ -3,6 +3,7 @@ from pytiled_parser.tiled_object import Rectangle
 
 from src.classes.entities.light import Light
 from src.classes.entities.player import Player
+from src.classes.interactables.light_switch import LightSwitch
 from src.classes.managers.music_manager import MusicManager
 from src.constants import CONSTANTS as C
 from src.classes.managers.light_manager import LightManager
@@ -66,6 +67,15 @@ class GameView(arcade.View):
                 self.world.height * self.world.tile_size - guard.coordinates.y - guard.size.height / 2
             ) * C.WORLD_SCALE
             self.physics_engines.append(arcade.PhysicsEngineSimple(new_guard, self.game_manager.walls))
+
+        # Light Switch
+        for switch in self.world.light_switches:
+            light_switch = LightSwitch()
+            light_switch.center_x = (switch.coordinates.x + switch.size.width / 2) * C.WORLD_SCALE
+            light_switch.center_y = (
+                                            self.world.height * self.world.tile_size - switch.coordinates.y -
+                                            switch.size.height / 2) * C.WORLD_SCALE
+            self.game_manager.light_switches.append(light_switch)
 
         self.game_manager.world = self.world
 
@@ -138,6 +148,8 @@ class GameView(arcade.View):
             1,
         )
 
+        self.game_manager.light_switches.on_update(delta_time)
+
     def on_mouse_press(self, _x, _y, _button, _modifiers):
         """Handle mouse press events."""
         pass
@@ -145,6 +157,11 @@ class GameView(arcade.View):
     def on_key_press(self, key, modifiers):
         """Handle key press events."""
         pass
+
+    def on_key_release(self, key, modifiers):
+        """Handle key press events."""
+        for light_switch in self.game_manager.light_switches:
+            light_switch.on_key_release(key, modifiers)
 
     def on_resize(self, width: int, height: int):
         self.light.on_resize(width, height)
