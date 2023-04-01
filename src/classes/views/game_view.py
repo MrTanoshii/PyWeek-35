@@ -71,7 +71,7 @@ class GameView(arcade.View):
         # Let's add the player
         self.player = Player()
         coords = self.game_manager.world.player_spawn[0].coordinates
-        self.player.scale = 1
+        self.player.scale = .2 * C.WORLD_SCALE
         self.player.center_x = coords.x * C.WORLD_SCALE
         self.player.center_y = (C.SCREEN_HEIGHT - coords.y - 96) * C.WORLD_SCALE
         self.game_manager.set_player(self.player)
