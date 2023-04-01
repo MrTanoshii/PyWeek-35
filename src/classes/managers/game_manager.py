@@ -39,6 +39,8 @@ class GameManager(object):
 
         self.player_in_light = False
 
+        self.music_manager = None
+
     def set_player(self, player):
         self.player = player
 

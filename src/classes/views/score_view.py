@@ -19,9 +19,7 @@ class ScoreView(arcade.View):
         self.rating = 3
 
         for _ in range(self.rating):
-            self.sprite_lst.append(
-                arcade.Sprite("src/assets/art/star.png", self.STAR_SIZE)
-            )
+            self.sprite_lst.append(arcade.Sprite("src/assets/art/star.png", self.STAR_SIZE))
 
         for sprite in self.sprite_lst:
             sprite.center_y = C.SCREEN_HEIGHT / 2 + 60
@@ -51,16 +49,12 @@ class ScoreView(arcade.View):
         # Whitespace in front of first character required to center text properly
         # and avoid weird spacing
         self._draw_centered_text(f" {GameManager.instance.score}", 22, -40, "left")
-        self._draw_centered_text(
-            f" {GameManager.instance.time:.2f} s", 22, -100, "left"
-        )
+        self._draw_centered_text(f" {GameManager.instance.time:.2f} s", 22, -100, "left")
 
         self._draw_centered_text("Press any key to restart", 12, -250)
         self._draw_centered_text("Press ESC to exit", 12, -300)
 
-    def _draw_centered_text(
-        self, text: str, font_size: int, y_offset: int, anchor: str = "center"
-    ):
+    def _draw_centered_text(self, text: str, font_size: int, y_offset: int, anchor: str = "center"):
         """Helper function to draw text centered on the screen"""
         x = C.SCREEN_WIDTH / 2
         y = C.SCREEN_HEIGHT / 2 + y_offset
@@ -70,4 +64,4 @@ class ScoreView(arcade.View):
         if key == arcade.key.ESCAPE:
             arcade.exit()
         else:
-            self.window.setup()
+            self.window.setup(stop_outro=True)

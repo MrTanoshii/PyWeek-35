@@ -113,9 +113,7 @@ class Guard(arcade.Sprite):
 
         # Load animation textures
         self.texture_list = [
-            arcade.load_texture(
-                f"{self.animation_path}/{texture}", hit_box_algorithm="Simple"
-            )
+            arcade.load_texture(f"{self.animation_path}/{texture}", hit_box_algorithm="Simple")
             for texture in os.listdir(self.animation_path)
         ]
 
@@ -142,9 +140,7 @@ class Guard(arcade.Sprite):
         # Configure AI
         self.is_patrolling = True
         self.view_distance = C.GUARD_VIEW_DISTANCE
-        self.fov = arcade.SpriteSolidColor(
-            self.view_distance * 2, self.view_distance * 2, (0, 0, 0, 128)
-        )
+        self.fov = arcade.SpriteSolidColor(self.view_distance * 2, self.view_distance * 2, (0, 0, 0, 128))
 
         self.game_manager.guards.append(self)
 
@@ -196,10 +192,9 @@ class Guard(arcade.Sprite):
         self.fov.center_x = self.center_x
         self.fov.center_y = self.center_y
 
-        self.is_colliding = arcade.check_for_collision_with_list(
-            self, self.collision_list
-        )
+        self.is_colliding = arcade.check_for_collision_with_list(self, self.collision_list)
 
+        # Determine if the guard sees the player
         if self.fov.collides_with_sprite(self.game_manager.player):
             if self.get_distance_from_player() < self.killing_distance:
                 # Open Main Menu
@@ -230,7 +225,9 @@ class Guard(arcade.Sprite):
             self.is_patrolling = True
             self.chase_target = None
             self.chase_target_last_pos = None
-
+        if self.is_chasing:
+            if self.game_manager.music_manager.get_current_key() != "chase":
+                self.game_manager.music_manager.play_chase()
         # If the guard is patrolling
         if self.is_patrolling:
             self.patrol()
@@ -241,9 +238,7 @@ class Guard(arcade.Sprite):
 
     def update_animation(self):
         """Update the animated texture"""
-        self.texture = self.next_item(
-            self.animation_map[self.direction], self.current_texture_index
-        )
+        self.texture = self.next_item(self.animation_map[self.direction], self.current_texture_index)
 
     def next_item(self, lst: list[arcade.Texture], idx: int):
         """Get the next item in a looping list"""
