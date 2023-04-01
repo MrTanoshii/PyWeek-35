@@ -27,6 +27,7 @@ class MusicManager:
     def stop(self):
         if self.music:
             self.music.stop(self.current)
+
     def play_outro(self):
         self.music = self.music_list["outro"]
         self.current = self.music.play(0.5)
@@ -43,7 +44,7 @@ class MusicManager:
     def end_chase(self):
         self.stop()
         self.music = self.music_list["main"]
-        self.current = self.music.play()
+        self.current = self.music.play(0.5)
 
     def play_outro(self):
         self.stop()
