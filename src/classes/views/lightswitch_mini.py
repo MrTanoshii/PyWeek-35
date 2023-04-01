@@ -27,17 +27,43 @@ class LightSwitchMini(arcade.View):
 
         self.is_pressed = False
 
-        # self.clear()
-        # self.switch_off.draw()
+        self.camera = arcade.Camera(C.SCREEN_WIDTH, C.SCREEN_HEIGHT)
 
-    # def on_show_view(self):
-    #     """Called when switching to this view"""
-    #     arcade.set_background_color(C.BACKGROUND_COLOR)
-    
+    def on_show_view(self):
+        """Called when switching to this view"""
+        arcade.set_background_color(C.BACKGROUND_COLOR)
+
     def on_draw(self):
+        self.camera.use()
         self.clear()
+
+        # Draw status of light
+        light_status = "ON"
+        if self.is_pressed:
+            light_status = "OFF"
         arcade.draw_text(
-            "Press q to exit",
+            f"Lights are {light_status}",
+            C.SCREEN_WIDTH / 2,
+            C.SCREEN_HEIGHT / 2 + 200,
+            arcade.color.WHITE,
+            30,
+            anchor_x="center",
+        )
+
+        # Draw instructions
+        if not self.is_pressed:
+            arcade.draw_text(
+                "Press 'Space' to turn off the lights",
+                C.SCREEN_WIDTH / 2,
+                C.SCREEN_HEIGHT / 2 - 200,
+                arcade.color.WHITE,
+                30,
+                anchor_x="center",
+            )
+
+        # Draw exit instructions
+        arcade.draw_text(
+            "Press 'q' to exit",
             C.SCREEN_WIDTH / 2,
             C.SCREEN_HEIGHT / 2 - 250,
             arcade.color.WHITE,
@@ -45,21 +71,17 @@ class LightSwitchMini(arcade.View):
             anchor_x="center",
         )
 
+        # Draw switch
+        if self.is_pressed:
+            self.switch_off.draw()
+        else:
+            self.switch_on.draw()
+
     def on_key_press(self, key, modifiers):
         """Handle key release events."""
 
         if key == arcade.key.SPACE:
             self.is_pressed = True
-        #     self.clear()
-        #     self.switch_on.draw()
-        #     arcade.draw_text(
-        #         "Press q to exit",
-        #         C.SCREEN_WIDTH / 2,
-        #         C.SCREEN_HEIGHT / 2 - 250,
-        #         arcade.color.WHITE,
-        #         30,
-        #         anchor_x="center",
-        #     )
 
         if key == arcade.key.Q:
             resume_game = GameManager.instance.get_game_view()
