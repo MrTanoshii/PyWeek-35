@@ -265,11 +265,13 @@ class Guard(arcade.Sprite):
             if self.fov.collides_with_list(self.game_manager.walls):
                 stopped = True
 
+            # Guade catches player
             if self.get_distance_from_player() < self.killing_distance:
                 # Open Main Menu
                 self.game_manager.game_over = True
                 MusicManager.instance.end_chase()
                 self.game_manager.is_caught_by_guard = True
+                self.game_manager.player_safes = set()
                 # Load Score Screen
 
             # if the guard is not colliding with a wall

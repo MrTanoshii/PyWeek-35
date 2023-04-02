@@ -15,7 +15,7 @@ class GameManager(object):
             cls.instance = super(GameManager, cls).__new__(cls)  # :=
         return cls.instance  # :=
 
-    def __init__(self, story_manager, game_window=None):
+    def __init__(self, story_manager, game_window=None, player_safes=set()):
         """
         Constructor.
 
@@ -47,7 +47,7 @@ class GameManager(object):
         self.player_in_light = False
 
         self.music_manager = None
-        self.player_safes = []
+        self.player_safes = player_safes.copy()
         self.is_caught_by_guard = False
         self.hud = None
 
@@ -66,9 +66,7 @@ class GameManager(object):
     def calculate_score(self):
         """Calculate the score."""
 
-        self.score = 0
-        for _ in self.player_safes:
-            self.score += 1000
+        self.score = 1000 * len(self.player_safes)
 
         decay = self.log_decline(self.time)
         self.score = self.score * decay
