@@ -19,4 +19,4 @@ class CONSTANTS:
 
 
 arcade.load_font("src/assets/fonts/pixel.ttf")  # MODERN WARFARE
-arcade.load_font("src/assets/fonts/font.ttf")  # Minecraft
+arcade.load_font("src/assets/fonts/font.ttf")  # Minecraft 
