@@ -1,7 +1,6 @@
 import arcade
 import arcade.gui as GUI
 from src.classes.managers.game_manager import GameManager
-from src.classes.managers.interactables_manager import InteractablesManager
 import random
 
 from src.constants import CONSTANTS as C
@@ -29,6 +28,7 @@ class SafeMini(arcade.View):
         self.safe_index = safe_index
 
         self.manager = GUI.UIManager()
+        self.game_manager = GameManager.instance
         self.manager.enable()
 
         self.v_boxes = [GUI.UIBoxLayout(), GUI.UIBoxLayout(), GUI.UIBoxLayout()]
@@ -36,16 +36,12 @@ class SafeMini(arcade.View):
         # Create Buttons
         buttons = []
         for i in range(10):
-            buttons.append(
-                GUI.UIFlatButton(text=str(i), width=button_width, height=button_height)
-            )
+            buttons.append(GUI.UIFlatButton(text=str(i), width=button_width, height=button_height))
 
         # Add buttons to the boxes
         for i, button in enumerate(buttons[1:]):
             self.v_boxes[i % 3].add(button.with_space_around(bottom=button_bottom))
-        self.v_boxes[-2].add(
-            buttons[0].with_space_around(bottom=button_bottom)
-        )  # Add the zero button
+        self.v_boxes[-2].add(buttons[0].with_space_around(bottom=button_bottom))  # Add the zero button
 
         # Add functions to buttons when pressed
         def make_func(index):
@@ -79,21 +75,26 @@ class SafeMini(arcade.View):
             self.input += chr(self.key)
             self.is_not_full = not len(self.input) == 5
 
-        elif self.key == arcade.key.ENTER:
+        elif self.key == arcade.key.ENTER or self.key == arcade.key.SPACE:
             if not self.is_ended:
                 if self.tries >= 4:  # when no attempt left
-                    self.game_outcome = "YOU LOSE!"
+                    self.game_outcome = "YOU FAILED: KEYPAD LOCKED FOR 5 SECONDS"
                     self.is_ended = True
                     self.parent.is_completed = False
                     self.parent.interaction_time = 5 + GameManager.instance.time
                 else:
                     try:  # Winning
                         if int(self.input) == self.value1 + self.value2:
-                            self.game_outcome = "YOU WIN!"
+                            self.game_outcome = "YOU FOUND A STORAGE DEVICE!"
                             GameManager.instance.score += 1
                             self.is_ended = True
                             self.parent.is_completed = True
                             GameManager.instance.player_safes.append(self.safe_index)
+                            text = GameManager.instance.story_manager.play_story(
+                                f"safe_{self.safe_index}"
+                            )
+                            if text:
+                                self.game_manager.hud.set_story_line(text)
                     except ValueError:
                         pass
 
@@ -106,9 +107,7 @@ class SafeMini(arcade.View):
     def on_draw(self):
         self.clear()
         if not self.is_ended:
-            arcade.draw_rectangle_filled(
-                C.SCREEN_WIDTH / 2, C.SCREEN_HEIGHT / 2, 300, 450, arcade.color.WHITE
-            )
+            arcade.draw_rectangle_filled(C.SCREEN_WIDTH / 2, C.SCREEN_HEIGHT / 2, 300, 450, arcade.color.WHITE)
             self.draw_text(
                 f"Attempts left: {5 - self.tries}",
                 (0, 300),
@@ -116,9 +115,7 @@ class SafeMini(arcade.View):
                 20,
                 ("center", "baseline"),
             )
-            self.draw_text(
-                f"{self.input}", (-130, 140), arcade.color.BLUE, 30, ("left", "center")
-            )
+            self.draw_text(f"{self.input}", (-130, 140), arcade.color.BLUE, 30, ("left", "center"))
             self.draw_text(
                 f"{self.value1} + {self.value2} =",
                 (-130, 200),
@@ -127,8 +124,8 @@ class SafeMini(arcade.View):
                 ("left", "center"),
             )
             self.draw_text(
-                "Press Enter to validate answer",
-                (0, -350),
+                "Press SPACE to Validate Answer",
+                (0, -320),
                 arcade.color.WHITE,
                 30,
                 ("center", "baseline"),
@@ -136,21 +133,14 @@ class SafeMini(arcade.View):
             self.manager.draw()  # Draw buttons
         else:
             self.draw_text(
-                f"MINIGAME COMPLETED",
+                f"{self.game_outcome}",
                 (0, 0),
                 arcade.color.WHITE,
-                30,
+                32,
                 ("center", "baseline"),
             )
             self.draw_text(
-                f"{self.game_outcome}",
-                (0, -50),
-                arcade.color.WHITE,
-                30,
-                ("center", "baseline"),
-            )
-            self.draw_text(
-                "Press Enter to exit",
+                "Press SPACE to Continue",
                 (0, -300),
                 arcade.color.WHITE,
                 20,

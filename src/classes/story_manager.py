@@ -10,37 +10,60 @@ class StoryManager:
 
     def __init__(self):
         self.story = [
-            "Oh, Hello Player, Welcome to the game. Press SPACE to continue.",
-            "You have to steal the missing data from the datacenter of our rival company.",
-            "The datacenter is located in the basement of the building.",
-            "You have to get there undetected.",
-            "Good luck, Agent Whiskers.",
-
-            "You need to shut down the lights, so the guards won't see you.",
-            "You can do that by pressing the E.",
-
-            "You can also use the E to open the safes.",
-            "You can use the WASD keys to move.",
-            "Okay then, good luck, Agent Whiskers."
+            "Oh, Hello Player, Welcome to the Secret Mission. Press SPACE to Continue.",
+            "You are Agent Whiskers, and you are on a mission to Destroy the embarrassing videos uploaded to Facebook servers.",
+            "But the mission is not that easy. You need to find the safe containing the videos.",
+            "Oh did I mention that the safe is guarded by a bunch of guards?",
+            "Don't worry, just shut down the lights and the stupid human guards won't see very well in the dark",
+            "You can use the WASD keys to move. Okay then, good luck, Agent Whiskers.",
         ]
         self.current_story_index = -1
         self.special_story = {
-            "lights_tutorial": {"played": False,
-                                "story": "You need to shut down the lights, so the guards won't see you. You can do that by pressing the E."
-                                },
-            "level_2": {"played": False,
-                                "story": "Great job Agent Whiskers. You have successfully passed the first level. But there is still more to do."
-                                },
-            "level_3": {"played": False,
-                                "story": "Great job Agent Whiskers. You have successfully passed the second level. But there is still more to do."
-                                },
-            "level_4": {"played": False,
-                                "story": "Great job Agent Whiskers. You have successfully passed the third level. But there is still more to do."
-                                },
-            "safes_tutorial": {"played": False, "story": "You can also use the E to open the safes. You can use the WASD keys to move. Okay then, good luck, Agent Whiskers."}
-
+            "lights_tutorial": {
+                "played": False,
+                "story": "You find light switch. Press E to turn interact with it. But be careful, the lights won't be off that long.",
+            },
+            "safe_tutorial": {
+                "played": False,
+                "story": "You find the first safe. Use E to interact with it. The safes are protected with a puzzle.",
+            },
+            "level_2": {
+                "played": False,
+                "story": "Great job Agent Whiskers. You have successfully passed the first level. But there is still more to do.",
+            },
+            "level_3": {
+                "played": False,
+                "story": "Great job Agent Whiskers. You have successfully passed the second level. But there is still more to do.",
+            },
+            "level_4": {
+                "played": False,
+                "story": "Great job Agent Whiskers. You have successfully passed the third level. But there is still more to do.",
+            },
+            "safes_tutorial": {
+                "played": False,
+                "story": "You can also use the E to open the safes. You can use the WASD keys to move. Okay then, good luck, Agent Whiskers.",
+            },
+            "safe_0": {
+                "played": False,
+                "story": 'You found old floppy diskette labeled "Windows 95 - 7/24", Now find exit to the next room.',
+            },
+            "safe_1": {
+                "played": False,
+                "story": "You found a vinyl record containing an unreleased album from a Michael Jordan. Go to next level.",
+            },
+            "safe_2": {
+                "played": False,
+                "story": "You found an SD card containing Hunter Biden's Laptop backup. Keep searching",
+            },
+            "safe_3": {
+                "played": False,
+                "story": "You found a memory stick containing a hundreds of Bitcoins. You’re getting closer, keep looking",
+            },
+            "safe_4": {
+                "played": False,
+                "story": "You found Hard Drive with your embarrassing cat video. Now find the exit from the building",
+            },
         }
-        print("story manager initialized")
 
     def next_story(self):
         if self.current_story_index + 1 >= len(self.story):
@@ -61,4 +84,9 @@ class StoryManager:
             if not self.special_story[story]["played"]:
                 self.special_story[story]["played"] = True
                 return self.special_story[story]["story"]
+        return None
+
+    def play_story(self, story):
+        if self.special_story.get(story):
+            return self.special_story[story]["story"]
         return None
