@@ -25,7 +25,7 @@ class GameView(arcade.View):
         self.level = level
         self.music_manager = None
         self.scene = None
-        self.world = World.load("example.tilemap.json")
+        self.world = None
         self.guard = None
         self.hud = None
         self.light = LightManager()
@@ -40,6 +40,10 @@ class GameView(arcade.View):
 
     def setup(self, music_manager: MusicManager = None):
         """Set up the view."""
+        if self.level == 0:
+            self.world = World.load("tutorial.tilemap.json")
+        else:
+            self.world = World.load("example.tilemap.json")
         self.scene = arcade.Scene.from_tilemap(self.world.map)
 
         # Create and append scaled Wall objects from self.world.walls to self.game_manager.walls
@@ -104,8 +108,8 @@ class GameView(arcade.View):
         self.player.scale = 0.3 * C.WORLD_SCALE
         coords = self.game_manager.world.player_spawn[0].coordinates
         self.player.scale = .2 * C.WORLD_SCALE
-        self.player.center_x = coords.x * C.WORLD_SCALE
-        self.player.center_y = (C.SCREEN_HEIGHT - coords.y - 96) * C.WORLD_SCALE
+        self.player.center_x = coords.x * C.WORLD_SCALE + self.player.width / 2
+        self.player.center_y = (self.world.height * self.world.tile_size - coords.y) * C.WORLD_SCALE - self.player.height / 2
         self.game_manager.set_player(self.player)
         self.hud = HUD()
         self.game_manager.hud = self.hud
