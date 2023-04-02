@@ -199,6 +199,7 @@ class GameView(arcade.View):
         self.player.draw()
         if C.DEBUG:
             self.player.draw_hit_box()
+            self.player.player_laser.draw_hit_box()
         for lightswitch in GameManager.instance.light_switches:
             lightswitch.draw()
             lightswitch.draw_hit_box()
