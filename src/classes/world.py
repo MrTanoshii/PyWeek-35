@@ -47,6 +47,9 @@ class World:
         self.guard_spawn: list[Rectangle] = list(
             filter(lambda x: x.class_ == "guard", self.spawns.tiled_objects)
         )
+        self.exits: list[Rectangle] = list(
+            filter(lambda x: x.class_ == "exit", self.spawns.tiled_objects)
+        )
 
         self.servers = self.map.get_tilemap_layer("server")
 

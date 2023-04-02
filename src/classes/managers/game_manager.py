@@ -43,6 +43,7 @@ class GameManager(object):
         self.light_switches = arcade.SpriteList()
         self.safes = arcade.SpriteList()
         self.total_safes_in_level = 0
+        self.level_completed = False
 
         self.player_in_light = False
 

@@ -2,6 +2,7 @@ from random import randint
 import arcade
 from pytiled_parser.tiled_object import Rectangle
 
+from src.classes.entities.exit import ExitSprite
 from src.classes.entities.light import Light
 from src.classes.entities.player import Player
 from src.classes.entities.server_light import ServerLight
@@ -22,6 +23,7 @@ class GameView(arcade.View):
 
     def __init__(self, level):
         super().__init__()
+        self.exit = None
         self.level = level - 1
         self.music_manager = None
         self.scene = None
@@ -91,10 +93,11 @@ class GameView(arcade.View):
                 self.world.height * self.world.tile_size - safe.coordinates.y - safe.size.height / 2
             ) * C.WORLD_SCALE
             self.game_manager.safes.append(safe_obj)
-        ServerLight.servers.clear()
 
         self.game_manager.total_safes_in_level = len(self.game_manager.safes)
 
+        # Server Lights
+        ServerLight.servers.clear()
         for server in self.world.servers.tiled_objects:
             for _ in range(randint(1, 12)):
                 serverlight = ServerLight()
@@ -102,6 +105,14 @@ class GameView(arcade.View):
                 serverlight.center_y = (
                     self.world.height * self.world.tile_size - server.coordinates.y - server.size.height / 2
                 ) * C.WORLD_SCALE
+
+        # Exits
+        _exit = self.world.exits[0]
+        self.exit = ExitSprite()
+        self.exit.center_x = (_exit.coordinates.x + _exit.size.width / 2) * C.WORLD_SCALE
+        self.exit.center_y = (
+            self.world.height * self.world.tile_size - _exit.coordinates.y - _exit.size.height / 2
+        ) * C.WORLD_SCALE
 
         self.game_manager.world = self.world
 
@@ -174,6 +185,7 @@ class GameView(arcade.View):
             lightswitch.draw_hit_box()
         for serverlight in ServerLight.servers:
             serverlight.draw()
+        self.exit.draw()
         self.hud.draw()
         self.camera.use()
 
@@ -207,6 +219,12 @@ class GameView(arcade.View):
             Guard.start_chase()
         else:
             Guard.end_chase()
+
+        # Exit level if safe is open
+        if self.game_manager.safes[0].is_completed:
+            if arcade.check_for_collision(self.exit, self.player):
+                self.game_manager.level_completed = True
+                self.game_manager.game_over = True
 
     def on_mouse_press(self, _x, _y, _button, _modifiers):
         """Handle mouse press events."""
