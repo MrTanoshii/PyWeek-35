@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.0" orientation="orthogonal" renderorder="right-down" width="30" height="20" tilewidth="32" tileheight="32" infinite="0" nextlayerid="19" nextobjectid="53">
+<map version="1.10" tiledversion="1.10.0" orientation="orthogonal" renderorder="right-down" width="30" height="20" tilewidth="32" tileheight="32" infinite="0" nextlayerid="25" nextobjectid="66">
  <editorsettings>
   <export target="example.tilemap.json" format="json"/>
  </editorsettings>
@@ -48,11 +48,81 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,627,627,627,627,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,627,627,627,627,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,627,627,627,627,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,627,627,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,627,627,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,627,627,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <objectgroup id="17" name="Treasure">
+  <object id="63" name="Treasure 1" x="459.078" y="48.0323">
+   <point/>
+  </object>
+  <object id="64" name="Treasure 2" x="303.897" y="169.037">
+   <point/>
+  </object>
+  <object id="65" name="Treasure 3" x="605.023" y="236.467">
+   <point/>
+  </object>
+ </objectgroup>
+ <objectgroup id="21" name="Guard Vision"/>
+ <objectgroup id="22" name="Guards">
+  <object id="57" name="Guard 1" x="607.794" y="155.181">
+   <point/>
+  </object>
+  <object id="58" name="Guard 2" x="354.7" y="395.343">
+   <point/>
+  </object>
+ </objectgroup>
+ <objectgroup id="23" name="Pathing">
+  <object id="59" name="Guard2Path" x="352.853" y="382.411" width="253.093" height="31.4058"/>
+  <object id="60" name="Guard Path1" x="342.692" y="140.402" width="259.559" height="38.7953"/>
+ </objectgroup>
+ <objectgroup id="20" name="PlayerStartPosition">
+  <object id="54" name="PlayerStartPos" x="478.476" y="508.958">
+   <point/>
+  </object>
+ </objectgroup>
+ <objectgroup id="19" name="Light">
+  <object id="55" name="Light1" x="355.624" y="182.892">
+   <properties>
+    <property name="radius" type="int" value="200"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="56" type="Light2" x="605.946" y="279.881">
+   <properties>
+    <property name="radius" type="int" value="200"/>
+   </properties>
+   <point/>
+  </object>
+ </objectgroup>
+ <layer id="24" name="Inner Wall" width="30" height="20">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,666,643,643,665,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,624,0,0,623,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,624,0,0,623,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,624,660,0,623,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,663,626,626,664,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,660,0,660,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <objectgroup id="17" name="Treasure"/>
- <objectgroup id="18" name="Switch"/>
+ <objectgroup id="18" name="Switch">
+  <object id="62" name="Level Light Switch" x="492.331" y="47.1086">
+   <point/>
+  </object>
+ </objectgroup>
 </map>
