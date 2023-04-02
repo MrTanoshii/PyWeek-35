@@ -10,36 +10,51 @@ class MainMenuView(arcade.View):
         self.manager = arcade.gui.UIManager()
         self.manager.enable()
 
-        self.levels_box = arcade.gui.UIBoxLayout(vertical=False)  # grid layout
-        self.levels_label_box = arcade.gui.UIBoxLayout(vertical=False)  # grid layout
+        self.levels_box1 = arcade.gui.UIBoxLayout(vertical=False)  # grid layout
+        self.levels_box2 = arcade.gui.UIBoxLayout(vertical=False)  # grid layout
+        self.levels_label_box1 = arcade.gui.UIBoxLayout(vertical=False)  # grid layout
+        self.levels_label_box2 = arcade.gui.UIBoxLayout(vertical=False)  # grid layout
         self.bg = arcade.load_texture("src/assets/art/bg.png")
 
         self.manager.add(
             arcade.gui.UIAnchorWidget(
                 child=arcade.gui.UILabel(
                     text="Select the Level", font_size=32
-                ).with_space_around(top=64),
+                ).with_space_around(top=48),
                 anchor_x="center_x",
                 anchor_y="top",
             )
         )
 
-        for level in range(3):
-            if level == 0:
+        for level in range(1, 4):
+            if level == 1:
                 name = "tutorial"
             else:
                 name = "example"
-            level_button = Preview(name=f"{name}.tilemap", label=f"Level {level + 1}")
-            level_label = arcade.gui.UILabel(text=f"Level {level + 1}", font_size=24, color=arcade.color.WHITE)
+            level_button = Preview(name=f"{name}.tilemap", label=f"Level {level}")
+            level_label = arcade.gui.UILabel(text=f"Level {level}", font_size=24, color=arcade.color.WHITE)
 
             level_button.event("on_click")(self.create_on_click(level))
 
-            self.levels_box.add(level_button.with_space_around(0, 50, 0, 50))
+            self.levels_box1.add(level_button.with_space_around(0, 50, 125, 50))
 
-            self.levels_label_box.add(level_label.with_space_around(0, 150, 330, 150))
+            self.levels_label_box1.add(level_label.with_space_around(0, 150, 400, 150))
 
-        self.manager.add(self.levels_box.center_on_screen())
-        self.manager.add(self.levels_label_box.center_on_screen())
+        for level in range(4, 6):
+            name = "example"
+            level_button = Preview(name=f"{name}.tilemap", label=f"Level {level}")
+            level_label = arcade.gui.UILabel(text=f"Level {level}", font_size=24, color=arcade.color.WHITE)
+
+            level_button.event("on_click")(self.create_on_click(level))
+
+            self.levels_box2.add(level_button.with_space_around(425, 50, 0, 50))
+
+            self.levels_label_box2.add(level_label.with_space_around(150, 150, 0, 150))
+
+        self.manager.add(self.levels_box1.center_on_screen())
+        self.manager.add(self.levels_box2.center_on_screen())
+        self.manager.add(self.levels_label_box1.center_on_screen())
+        self.manager.add(self.levels_label_box2.center_on_screen())
 
     def create_on_click(self, level: int):
         def level_start_handler(_e):

@@ -269,6 +269,12 @@
                  "height":32,
                  "id":26,
                  "name":"Safe 1",
+                 "properties":[
+                        {
+                         "name":"index",
+                         "type":"int",
+                         "value":0
+                        }],
                  "rotation":0,
                  "type":"safe",
                  "visible":true,
@@ -660,7 +666,7 @@
  "nextobjectid":56,
  "orientation":"orthogonal",
  "renderorder":"right-down",
- "tiledversion":"1.10.0",
+ "tiledversion":"1.9.1",
  "tileheight":32,
  "tilesets":[
         {
@@ -669,6 +675,6 @@
         }],
  "tilewidth":32,
  "type":"map",
- "version":"1.10",
+ "version":"1.8",
  "width":40
 }

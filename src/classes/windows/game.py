@@ -21,12 +21,13 @@ class GameWindow(arcade.Window):
             x: 0
             for x in [chr(y) for y in range(65, 91)] + [chr(z) for z in range(48, 58)] + ["LEFT", "RIGHT", "DOWN", "UP"]
         }
+        self.level = 1
         arcade.set_background_color(arcade.color.ARMY_GREEN)
         self.game_manager = None
         self.music_manager = MusicManager()
         self.story_manager = StoryManager()
 
-    def setup(self, stop_outro: bool = False):
+    def setup(self, stop_outro: bool = False, level: int = 0):
         # Set up the game manager
         game_manager = GameManager(self.story_manager, self)
         self.game_manager = game_manager
@@ -49,7 +50,8 @@ class GameWindow(arcade.Window):
         self.game_manager.music_manager = self.music_manager
 
     def start_level(self, level):
-        self.game_view = GameView(level)
+        self.level = level
+        self.game_view = GameView(level + 1)
         self.ingame_menu_view = IngameMenuView(self.game_view)
         self.show_view(self.game_view)
 
@@ -57,7 +59,7 @@ class GameWindow(arcade.Window):
         if GameManager.instance.game_over:
             if self.score_view is None:
                 self.music_manager.play_outro()
-                self.score_view = ScoreView(self.game_view, self)
+                self.score_view = ScoreView(self.game_view, self, self.level)
             self.show_view(self.score_view)
 
         return super().on_update(delta_time)
