@@ -40,10 +40,7 @@ class GameView(arcade.View):
 
     def setup(self, music_manager: MusicManager = None):
         """Set up the view."""
-        if self.level == 0:
-            self.world = World.load("tutorial.tilemap.json")
-        else:
-            self.world = World.load("example.tilemap.json")
+        self.world = World.load(f"level_{self.level}.tilemap.json")
         self.scene = arcade.Scene.from_tilemap(self.world.map)
 
         # Create and append scaled Wall objects from self.world.walls to self.game_manager.walls
@@ -145,12 +142,10 @@ class GameView(arcade.View):
         self.game_manager.hud = self.hud
         self.game_manager.music_manager = music_manager
 
-        if self.level == 2:
-            self.hud.set_story_line(self.game_manager.story_manager.play_story_if_not_played("level_2"))
-        elif self.level == 3:
-            self.hud.set_story_line(self.game_manager.story_manager.play_story_if_not_played("level_3"))
-        elif self.level == 4:
-            self.hud.set_story_line(self.game_manager.story_manager.play_story_if_not_played("level_4"))
+        # Level specific story
+        custom_story = self.game_manager.story_manager.play_story_if_not_played(f"level_{self.level}")
+        if custom_story:
+            self.hud.set_story_line(custom_story)
 
     def on_show_view(self):
         """Called when switching to this view."""

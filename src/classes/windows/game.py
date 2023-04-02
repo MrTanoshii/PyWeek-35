@@ -49,7 +49,7 @@ class GameWindow(arcade.Window):
         self.game_manager.music_manager = self.music_manager
 
     def start_level(self, level):
-        self.game_view = GameView(level)
+        self.game_view = GameView(level + 1)
         self.ingame_menu_view = IngameMenuView(self.game_view)
         self.show_view(self.game_view)
 
