@@ -108,8 +108,8 @@ class GameView(arcade.View):
         self.player.scale = 0.3 * C.WORLD_SCALE
         coords = self.game_manager.world.player_spawn[0].coordinates
         self.player.scale = .2 * C.WORLD_SCALE
-        self.player.center_x = coords.x * C.WORLD_SCALE
-        self.player.center_y = (C.SCREEN_HEIGHT - coords.y - 96) * C.WORLD_SCALE
+        self.player.center_x = coords.x * C.WORLD_SCALE + self.player.width / 2
+        self.player.center_y = (self.world.height * self.world.tile_size - coords.y) * C.WORLD_SCALE - self.player.height / 2
         self.game_manager.set_player(self.player)
         self.hud = HUD()
         self.game_manager.music_manager = music_manager
