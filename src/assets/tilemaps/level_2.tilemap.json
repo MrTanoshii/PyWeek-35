@@ -323,10 +323,6 @@
  "tilesets":[
         {
          "firstgid":1,
-         "source":"example_tileset.tsx"
-        }, 
-        {
-         "firstgid":1,
          "source":"assest.tsx"
         }],
  "tilewidth":32,
