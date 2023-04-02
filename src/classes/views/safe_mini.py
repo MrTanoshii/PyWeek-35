@@ -1,7 +1,6 @@
 import arcade
 import arcade.gui as GUI
 from src.classes.managers.game_manager import GameManager
-from src.classes.managers.interactables_manager import InteractablesManager
 import random
 
 from src.constants import CONSTANTS as C
@@ -29,6 +28,7 @@ class SafeMini(arcade.View):
         self.safe_index = safe_index
 
         self.manager = GUI.UIManager()
+        self.game_manager = GameManager.instance
         self.manager.enable()
 
         self.v_boxes = [GUI.UIBoxLayout(), GUI.UIBoxLayout(), GUI.UIBoxLayout()]
@@ -36,16 +36,12 @@ class SafeMini(arcade.View):
         # Create Buttons
         buttons = []
         for i in range(10):
-            buttons.append(
-                GUI.UIFlatButton(text=str(i), width=button_width, height=button_height)
-            )
+            buttons.append(GUI.UIFlatButton(text=str(i), width=button_width, height=button_height))
 
         # Add buttons to the boxes
         for i, button in enumerate(buttons[1:]):
             self.v_boxes[i % 3].add(button.with_space_around(bottom=button_bottom))
-        self.v_boxes[-2].add(
-            buttons[0].with_space_around(bottom=button_bottom)
-        )  # Add the zero button
+        self.v_boxes[-2].add(buttons[0].with_space_around(bottom=button_bottom))  # Add the zero button
 
         # Add functions to buttons when pressed
         def make_func(index):
@@ -94,6 +90,11 @@ class SafeMini(arcade.View):
                             self.is_ended = True
                             self.parent.is_completed = True
                             GameManager.instance.player_safes.append(self.safe_index)
+                            text = GameManager.instance.story_manager.play_story_if_not_played(
+                                f"safe_{self.safe_index}"
+                            )
+                            if text:
+                                self.game_manager.hud.set_story_line(text)
                     except ValueError:
                         pass
 
@@ -106,9 +107,7 @@ class SafeMini(arcade.View):
     def on_draw(self):
         self.clear()
         if not self.is_ended:
-            arcade.draw_rectangle_filled(
-                C.SCREEN_WIDTH / 2, C.SCREEN_HEIGHT / 2, 300, 450, arcade.color.WHITE
-            )
+            arcade.draw_rectangle_filled(C.SCREEN_WIDTH / 2, C.SCREEN_HEIGHT / 2, 300, 450, arcade.color.WHITE)
             self.draw_text(
                 f"Attempts left: {5 - self.tries}",
                 (0, 300),
@@ -116,9 +115,7 @@ class SafeMini(arcade.View):
                 20,
                 ("center", "baseline"),
             )
-            self.draw_text(
-                f"{self.input}", (-130, 140), arcade.color.BLUE, 30, ("left", "center")
-            )
+            self.draw_text(f"{self.input}", (-130, 140), arcade.color.BLUE, 30, ("left", "center"))
             self.draw_text(
                 f"{self.value1} + {self.value2} =",
                 (-130, 200),

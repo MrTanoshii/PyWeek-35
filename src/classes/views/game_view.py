@@ -22,7 +22,7 @@ class GameView(arcade.View):
 
     def __init__(self, level):
         super().__init__()
-        self.level = level
+        self.level = level - 1
         self.music_manager = None
         self.scene = None
         self.world = None
@@ -40,19 +40,14 @@ class GameView(arcade.View):
 
     def setup(self, music_manager: MusicManager = None):
         """Set up the view."""
-        self.world = World.load(f"level_{self.level - 1}.tilemap.json")
+        self.world = World.load(f"level_{self.level}.tilemap.json")
         self.scene = arcade.Scene.from_tilemap(self.world.map)
 
         # Create and append scaled Wall objects from self.world.walls to self.game_manager.walls
         for wall in [
             Wall(
                 (wall.coordinates.x + wall.size.width / 2) * C.WORLD_SCALE,
-                (
-                    self.world.height * self.world.tile_size
-                    - wall.coordinates.y
-                    - wall.size.height / 2
-                )
-                * C.WORLD_SCALE,
+                (self.world.height * self.world.tile_size - wall.coordinates.y - wall.size.height / 2) * C.WORLD_SCALE,
                 wall.size.width * C.WORLD_SCALE,
                 wall.size.height * C.WORLD_SCALE,
             )
@@ -63,38 +58,26 @@ class GameView(arcade.View):
         # Create and append scaled Light objects from self.world.Light to self.game_manager.Light
         for light in self.world.lights:
             new_light: Light = Light(light.properties["radius"])
-            new_light.center_x = (
-                light.coordinates.x + light.size.width / 2
-            ) * C.WORLD_SCALE
+            new_light.center_x = (light.coordinates.x + light.size.width / 2) * C.WORLD_SCALE
             new_light.center_y = (
-                self.world.height * self.world.tile_size
-                - light.coordinates.y
-                - light.size.height / 2
+                self.world.height * self.world.tile_size - light.coordinates.y - light.size.height / 2
             ) * C.WORLD_SCALE
             self.game_manager.lights.append(new_light)
 
         # Guard
         for guard in self.world.guard_spawn:
             new_guard: arcade.Sprite = Guard()
-            new_guard.center_x = (
-                guard.coordinates.x + guard.size.width / 2
-            ) * C.WORLD_SCALE
+            new_guard.center_x = (guard.coordinates.x + guard.size.width / 2) * C.WORLD_SCALE
             new_guard.center_y = (
-                self.world.height * self.world.tile_size
-                - guard.coordinates.y
-                - guard.size.height / 2
+                self.world.height * self.world.tile_size - guard.coordinates.y - guard.size.height / 2
             ) * C.WORLD_SCALE
 
         # Light Switch
         for switch in self.world.light_switches:
             light_switch = LightSwitch()
-            light_switch.center_x = (
-                switch.coordinates.x + switch.size.width / 2
-            ) * C.WORLD_SCALE
+            light_switch.center_x = (switch.coordinates.x + switch.size.width / 2) * C.WORLD_SCALE
             light_switch.center_y = (
-                self.world.height * self.world.tile_size
-                - switch.coordinates.y
-                - switch.size.height / 2
+                self.world.height * self.world.tile_size - switch.coordinates.y - switch.size.height / 2
             ) * C.WORLD_SCALE
             self.game_manager.light_switches.append(light_switch)
             for light in self.game_manager.lights:
@@ -103,13 +86,9 @@ class GameView(arcade.View):
         # Safe
         for safe in self.world.safes:
             safe_obj = Safe(safe.properties["index"])
-            safe_obj.center_x = (
-                safe.coordinates.x + safe.size.width / 2
-            ) * C.WORLD_SCALE
+            safe_obj.center_x = (safe.coordinates.x + safe.size.width / 2) * C.WORLD_SCALE
             safe_obj.center_y = (
-                self.world.height * self.world.tile_size
-                - safe.coordinates.y
-                - safe.size.height / 2
+                self.world.height * self.world.tile_size - safe.coordinates.y - safe.size.height / 2
             ) * C.WORLD_SCALE
             self.game_manager.safes.append(safe_obj)
         ServerLight.servers.clear()
@@ -119,13 +98,9 @@ class GameView(arcade.View):
         for server in self.world.servers.tiled_objects:
             for _ in range(randint(1, 12)):
                 serverlight = ServerLight()
-                serverlight.center_x = (
-                    server.coordinates.x + server.size.width / 2
-                ) * C.WORLD_SCALE
+                serverlight.center_x = (server.coordinates.x + server.size.width / 2) * C.WORLD_SCALE
                 serverlight.center_y = (
-                    self.world.height * self.world.tile_size
-                    - server.coordinates.y
-                    - server.size.height / 2
+                    self.world.height * self.world.tile_size - server.coordinates.y - server.size.height / 2
                 ) * C.WORLD_SCALE
 
         self.game_manager.world = self.world
@@ -134,9 +109,11 @@ class GameView(arcade.View):
         self.player = Player()
         self.player.scale = 0.3 * C.WORLD_SCALE
         coords = self.game_manager.world.player_spawn[0].coordinates
-        self.player.scale = .2 * C.WORLD_SCALE
+        self.player.scale = 0.2 * C.WORLD_SCALE
         self.player.center_x = coords.x * C.WORLD_SCALE + self.player.width / 2
-        self.player.center_y = (self.world.height * self.world.tile_size - coords.y) * C.WORLD_SCALE - self.player.height / 2
+        self.player.center_y = (
+            self.world.height * self.world.tile_size - coords.y
+        ) * C.WORLD_SCALE - self.player.height / 2
         self.game_manager.set_player(self.player)
         self.hud = HUD()
         self.game_manager.hud = self.hud
@@ -171,25 +148,17 @@ class GameView(arcade.View):
         self.light.draw_shader(
             [
                 (
-                    self.world.tiled_to_screen(
-                        light.coordinates.x, light.coordinates.y
-                    )[0]
-                    - self.camera.position.x,
-                    self.world.tiled_to_screen(
-                        light.coordinates.x, light.coordinates.y
-                    )[1]
+                    self.world.tiled_to_screen(light.coordinates.x, light.coordinates.y)[0] - self.camera.position.x,
+                    self.world.tiled_to_screen(light.coordinates.x, light.coordinates.y)[1]
                     - self.camera.position.y,  # :=
-                    light.properties.get("radius", C.DEFAULT_LIGHT_RADIUS)
-                    * C.WORLD_SCALE,
+                    light.properties.get("radius", C.DEFAULT_LIGHT_RADIUS) * C.WORLD_SCALE,
                 )
                 for light in lights
             ],
             [self._wall_to_screen_coords(wall) for wall in self.world.walls],
         )
 
-        self.world.map.sprite_lists[
-            "collision_tiles"
-        ].draw()  # to remove light from collision tiles
+        self.world.map.sprite_lists["collision_tiles"].draw()  # to remove light from collision tiles
 
         self.game_manager.safes.draw()
 
@@ -256,6 +225,7 @@ class GameView(arcade.View):
         for safe in self.game_manager.safes:
             safe.on_key_release(key, modifiers)
 
+        self.hud.on_key_release(key, modifiers)
         self.hud.on_key_release(key, modifiers)
 
     def on_resize(self, width: int, height: int):
