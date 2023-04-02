@@ -75,17 +75,17 @@ class SafeMini(arcade.View):
             self.input += chr(self.key)
             self.is_not_full = not len(self.input) == 5
 
-        elif self.key == arcade.key.ENTER:
+        elif self.key == arcade.key.ENTER or self.key == arcade.key.SPACE:
             if not self.is_ended:
                 if self.tries >= 4:  # when no attempt left
-                    self.game_outcome = "YOU LOSE!"
+                    self.game_outcome = "YOU FAILED: KEYPAD LOCKED FOR 5 SECONDS"
                     self.is_ended = True
                     self.parent.is_completed = False
                     self.parent.interaction_time = 5 + GameManager.instance.time
                 else:
                     try:  # Winning
                         if int(self.input) == self.value1 + self.value2:
-                            self.game_outcome = "YOU WIN!"
+                            self.game_outcome = "YOU FOUND A STORAGE DEVICE!"
                             GameManager.instance.score += 1
                             self.is_ended = True
                             self.parent.is_completed = True
@@ -124,8 +124,8 @@ class SafeMini(arcade.View):
                 ("left", "center"),
             )
             self.draw_text(
-                "Press Enter to validate answer",
-                (0, -350),
+                "Press SPACE to Validate Answer",
+                (0, -320),
                 arcade.color.WHITE,
                 30,
                 ("center", "baseline"),
@@ -133,21 +133,14 @@ class SafeMini(arcade.View):
             self.manager.draw()  # Draw buttons
         else:
             self.draw_text(
-                f"MINIGAME COMPLETED",
+                f"{self.game_outcome}",
                 (0, 0),
                 arcade.color.WHITE,
-                30,
+                32,
                 ("center", "baseline"),
             )
             self.draw_text(
-                f"{self.game_outcome}",
-                (0, -50),
-                arcade.color.WHITE,
-                30,
-                ("center", "baseline"),
-            )
-            self.draw_text(
-                "Press Enter to exit",
+                "Press SPACE to Continue",
                 (0, -300),
                 arcade.color.WHITE,
                 20,

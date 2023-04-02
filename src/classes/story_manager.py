@@ -11,12 +11,21 @@ class StoryManager:
     def __init__(self):
         self.story = [
             "Oh, Hello Player, Welcome to the Secret Mission. Press SPACE to Continue.",
+            "You are Agent Whiskers, and you are on a mission to Destroy the embarrassing videos uploaded to Facebook servers.",
+            "But the mission is not that easy. You need to find the safe containing the videos.",
+            "Oh did I mention that the safe is guarded by a bunch of guards?",
+            "Don't worry, just shut down the lights and the stupid human guards won't see very well in the dark",
+            "You can use the WASD keys to move. Okay then, good luck, Agent Whiskers.",
         ]
         self.current_story_index = -1
         self.special_story = {
             "lights_tutorial": {
                 "played": False,
-                "story": "You need to shut down the lights, so the guards won't see you. You can do that by pressing the E.",
+                "story": "You find light switch. Press E to turn interact with it. But be careful, the lights won't be off that long.",
+            },
+            "safe_tutorial": {
+                "played": False,
+                "story": "You find the first safe. Use E to interact with it. The safes are protected with a puzzle.",
             },
             "level_2": {
                 "played": False,

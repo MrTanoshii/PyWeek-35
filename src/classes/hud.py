@@ -95,7 +95,7 @@ class HUD:
 
     def on_key_release(self, key, modifiers):
         """Handle key release events."""
-        if key == arcade.key.SPACE:
+        if key == arcade.key.SPACE or key == arcade.key.E:
             story = GameManager.instance.story_manager
             self.story_line = story.next_story()
 
