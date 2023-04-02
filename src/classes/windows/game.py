@@ -63,7 +63,7 @@ class GameWindow(arcade.Window):
         if GameManager.instance.game_over:
             if self.score_view is None:
                 self.music_manager.play_outro()
-                self.score_view = ScoreView(self.game_view, self, self.level, GameManager.instance.level_completed)
+                self.score_view = ScoreView(self.game_view, self, self.level, GameManager.instance.level_completed, GameManager.instance.player_safes)
             self.show_view(self.score_view)
 
         return super().on_update(delta_time)

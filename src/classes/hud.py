@@ -101,5 +101,4 @@ class HUD:
 
     def set_story_line(self, story_line):
         """Set story line immediately in game loop."""
-        GameManager.instance.story_manager.current_story_index -= 1
         self.story_line = story_line
