@@ -57,7 +57,7 @@ class StoryManager:
         self.story.append(story)
 
     def play_story_if_not_played(self, story):
-        if self.special_story[story]:
+        if self.special_story.get(story):
             if not self.special_story[story]["played"]:
                 self.special_story[story]["played"] = True
                 return self.special_story[story]["story"]
