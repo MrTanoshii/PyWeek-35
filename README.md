@@ -5,10 +5,12 @@
 
 ```bash
 # Windows
+py -m pip install -r requirements.txt
 py run_game.py
 
 # Linux/macOS
 sudo apt install ffmpeg
+python3 -m pip install -r requirements.txt
 python3 run_game.py
 ```
 
