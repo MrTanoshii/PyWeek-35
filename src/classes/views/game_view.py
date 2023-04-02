@@ -94,6 +94,7 @@ class GameView(arcade.View):
                                             self.world.height * self.world.tile_size - safe.coordinates.y -
                                             safe.size.height / 2) * C.WORLD_SCALE
             self.game_manager.safes.append(safe_obj)
+        ServerLight.servers.clear()
 
         for server in self.world.servers.tiled_objects:
             for _ in range(randint(1,12)):
