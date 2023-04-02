@@ -87,6 +87,9 @@ class Safe(Interactable):
         # Check collision
         if arcade.check_for_collision(self, player):
             self.player_collides = True
+            text = GameManager.instance.story_manager.play_story_if_not_played("safe_tutorial")
+            if text:
+                self.game_manager.hud.set_story_line(text)
         else:
             self.player_collides = False
 
