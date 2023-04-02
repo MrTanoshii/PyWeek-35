@@ -83,7 +83,7 @@ class LightSwitchMini(arcade.View):
         """Handle key release events."""
 
         if key == arcade.key.SPACE and not self.is_pressed:
-            self.off_sound.play()
+            # self.off_sound.play()
             self.is_pressed = True
 
         if key == arcade.key.Q:
