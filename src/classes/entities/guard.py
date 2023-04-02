@@ -271,7 +271,10 @@ class Guard(arcade.Sprite):
                 self.game_manager.game_over = True
                 MusicManager.instance.end_chase()
                 self.game_manager.is_caught_by_guard = True
-                self.game_manager.player_safes = set()
+
+                # Reset safes present in this level
+                for safe in self.game_manager.safes:
+                    self.game_manager.player_safes.discard(safe.index)
                 # Load Score Screen
 
             # if the guard is not colliding with a wall

@@ -93,6 +93,9 @@ class GameView(arcade.View):
                 self.world.height * self.world.tile_size - safe.coordinates.y - safe.size.height / 2
             ) * C.WORLD_SCALE
             self.game_manager.safes.append(safe_obj)
+            
+            # Reset the safes present in this level
+            self.game_manager.player_safes.discard(safe.properties["index"])
 
         self.game_manager.total_safes_in_level = len(self.game_manager.safes)
 
