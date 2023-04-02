@@ -1,3 +1,2 @@
 arcade~=2.6
-black
 numpy
