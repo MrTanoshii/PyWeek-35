@@ -40,7 +40,7 @@ class GameView(arcade.View):
 
     def setup(self, music_manager: MusicManager = None):
         """Set up the view."""
-        self.world = World.load(f"level_{self.level}.tilemap.json")
+        self.world = World.load(f"level_{self.level - 1}.tilemap.json")
         self.scene = arcade.Scene.from_tilemap(self.world.map)
 
         # Create and append scaled Wall objects from self.world.walls to self.game_manager.walls
