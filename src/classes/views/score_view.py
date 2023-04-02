@@ -9,7 +9,7 @@ from src.constants import CONSTANTS as C
 class ScoreView(arcade.View):
     STAR_SIZE = 0.085
 
-    def __init__(self, game_view, window, level):
+    def __init__(self, game_view, window, level, completed):
         """Base class for the 'score' view."""
         super().__init__()
         self.level = level
@@ -17,6 +17,7 @@ class ScoreView(arcade.View):
         self.game_view = game_view
         self.sprite_lst = arcade.SpriteList()
         self.camera = arcade.Camera(C.SCREEN_WIDTH, C.SCREEN_HEIGHT)
+        self.completed = completed
 
         # TODO: Need to replace this with a rating system
 
@@ -56,7 +57,10 @@ class ScoreView(arcade.View):
     def on_draw(self):
         """Draw the game over screen"""
         self.clear()
-        self._draw_centered_text("Game Over", 54, 200)
+        text = "Game Over"
+        if self.completed:
+            text = "Level Completed"
+        self._draw_centered_text(text, 54, 200)
         self._draw_centered_text(f"Rating", 38, 100)
         self.sprite_lst.draw()
         self._draw_centered_text(f"Score:", 22, -40, "right")
@@ -68,8 +72,10 @@ class ScoreView(arcade.View):
         self._draw_centered_text(
             f" {GameManager.instance.time:.2f} s", 22, -100, "left"
         )
-
-        self._draw_centered_text("Press any key to restart", 12, -250)
+        text = "Press any key to restart"
+        if self.completed:
+            text = "Press any key to Continue"
+        self._draw_centered_text(text, 12, -250)
         self._draw_centered_text("Press ESC to exit", 12, -300)
 
     def _draw_centered_text(
@@ -86,4 +92,5 @@ class ScoreView(arcade.View):
         else:
             Guard.roster = None
             self.window.setup(stop_outro=True)
-            self.window.start_level(self.level)
+            if not self.completed:
+                self.window.start_level(self.level)
