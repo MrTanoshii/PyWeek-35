@@ -250,7 +250,6 @@ class GameView(arcade.View):
             safe.on_key_release(key, modifiers)
 
         self.hud.on_key_release(key, modifiers)
-        self.hud.on_key_release(key, modifiers)
 
     def on_resize(self, width: int, height: int):
         self.light.on_resize(width, height)
