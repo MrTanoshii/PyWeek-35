@@ -10,72 +10,74 @@ class StoryManager:
 
     def __init__(self):
         self.story = [
-            "Oh, Hello Player, Welcome to the Secret Mission. Press SPACE to Continue.",
-            "You are Agent Whiskers, and you are on a mission to Destroy the embarrassing videos uploaded to Facebook servers.",
-            "But the mission is not that easy. You need to find the safe containing the videos.",
-            "Oh did I mention that the safe is guarded by a bunch of guards?",
-            "Don't worry, just shut down the lights and the stupid human guards won't see very well in the dark",
-            "You can use the WASD keys to move. Okay then, good luck, Agent Whiskers.",
+            "Press `Space` to continue the story.",
+            "[PLAYER], it is another splendid Mewoment with you here. I hope we can do well together on this mission!",
+            "I am Agent Purupuru Queen.",
+            "Some embawassing videos meowight have found their way onto the metabook servers.",
+            "Just like with all good 'treasure', the videos are stored across the rooms of Metaman HQ.",
+            "And if things weren't tense enough we have guards patrolling during our little midnight stroll.",
+            "They're only human however so turn of the lights with the `E` key at switches and this cat should be just fine.",
+            "Control me with the `WASD` Keys to move. The operation begins partner. We've got this!",
         ]
         self.current_story_index = -1
         self.special_story = {
             "lights_tutorial": {
                 "played": False,
-                "story": "You find light switch. Press E to turn interact with it. But be careful, the lights won't be off that long.",
+                "story": "You found a light switch. Press `E` to turn interact with it. But be careful, the lights won't be off that long.",
             },
             "safe_tutorial": {
                 "played": False,
-                "story": "You find the first safe. Use E to interact with it. The safes are protected with a puzzle.",
+                "story": "First safe! We'll use the `E` to interact with it and crack it's puzzle!",
             },
             "level_2": {
                 "played": False,
-                "story": "Great job Agent Whiskers. You have successfully passed the first level. But there is still more to do.",
+                "story": "Meowstirful Stealth tactics partner. It only gets more difficult from here on, so stay on your paws!",
             },
             "level_3": {
                 "played": False,
-                "story": "Great job Agent Whiskers. You have successfully passed the second level. But there is still more to do.",
+                "story": "Like a shadow on the wall partner! We make a great team as always. Get yourself a cup of milk. You've earned it! ",
             },
             "level_4": {
                 "played": False,
-                "story": "Great job Agent Whiskers. You have successfully passed the third level. But there is still more to do.",
+                "story": "We're on a hot streak partner. It's only gonna get harder! I'll let you use my scratching post as a reward.",
             },
             "level_5": {
                 "played": False,
-                "story": "Great job Agent Whiskers. You have successfully passed the forth level. This will be your Final Mission.",
+                "story": "Great job! We've secured the videos and now we can get back to the catnip. I'll be waiting for you at HQ.",
             },
             "safes_tutorial": {
                 "played": False,
-                "story": "You can also use the E to open the safes. You can use the WASD keys to move. Okay then, good luck, Agent Whiskers.",
+                "story": "`E` can also be used to interact with safes. So many handy functions for a simple button. I'd say it's `E`xcellent!",
             },
             "safe_0": {
                 "played": False,
-                "story": 'You found old floppy diskette labeled "Windows 95 - 7/24", Now find exit to the next room.',
+                "story": "An old floppy disc labelled 'Doors 95'. It's just an animation of 100 doors. Modern Art is weird partner...",
             },
             "safe_1": {
                 "played": False,
-                "story": "You found a vinyl record containing an unreleased album from a Michael Jordan. Go to next level.",
+                "story": "A vinyl record of my favorite jazz titled 'A Cruel Catastrophy' I'll let you listen to it some time!",
             },
             "safe_2": {
                 "played": False,
-                "story": "You found an SD card containing Hunter Biden's Laptop backup. Keep searching",
+                "story": "An SD card with the movie 'Gangster Cats Come to Paris' this one really got snubbed at the Oscars!",
             },
             "safe_3": {
                 "played": False,
-                "story": "You found a memory stick containing a hundreds of Bitcoins. You’re getting closer, keep looking",
+                "story": "Oh god it's a memory stick with NFT's on it. I'll make sure we properly dispose of this on the way home.",
             },
             "safe_4": {
                 "played": False,
-                "story": "You found Hard Drive with your embarrassing cat video. Now find the exit from the building",
+                "story": "Hard Drive with all my videos from OnlyCats. Thank the cats above I got this one back.",
             },
             "safe_5": {
                 "played": False,
-                "story": "Oh, it was just a broken CD. There should be another safe somewhere in this room. Keep looking",
+                "story": "Oh, it was just a broken CD. DISAPPOINTED!!! Oh well, there should be another safe somewhere in this room. Keep looking...",
             },
         }
 
     def next_story(self):
         if self.current_story_index + 1 >= len(self.story):
-            print("no more story")
+            # print("no more story")
             return None
         self.current_story_index += 1
         return self.story[self.current_story_index]
