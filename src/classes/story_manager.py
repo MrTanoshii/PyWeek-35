@@ -39,6 +39,10 @@ class StoryManager:
                 "played": False,
                 "story": "Great job Agent Whiskers. You have successfully passed the third level. But there is still more to do.",
             },
+            "level_5": {
+                "played": False,
+                "story": "Great job Agent Whiskers. You have successfully passed the forth level. This will be your Final Mission.",
+            },
             "safes_tutorial": {
                 "played": False,
                 "story": "You can also use the E to open the safes. You can use the WASD keys to move. Okay then, good luck, Agent Whiskers.",
@@ -62,6 +66,10 @@ class StoryManager:
             "safe_4": {
                 "played": False,
                 "story": "You found Hard Drive with your embarrassing cat video. Now find the exit from the building",
+            },
+            "safe_5": {
+                "played": False,
+                "story": "Oh, it was just a broken CD. There should be another safe somewhere in this room. Keep looking",
             },
         }
 
