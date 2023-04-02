@@ -45,6 +45,7 @@ class GameManager(object):
 
         self.music_manager = None
         self.player_safes = []
+        self.is_caught_by_guard = False
 
     def set_player(self, player):
         self.player = player
@@ -67,6 +68,11 @@ class GameManager(object):
 
         decay = self.log_decline(self.time)
         self.score = self.score * decay
+
+        if self.is_caught_by_guard:
+            self.score *= 0.67
+
+        self.score = int(self.score)
 
     def log_decline(self, number):
         # check if the number is between 1 and 3600

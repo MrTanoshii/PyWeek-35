@@ -1,4 +1,5 @@
 import arcade
+import math
 from src.classes.entities.guard import Guard
 
 from src.classes.managers.game_manager import GameManager
@@ -27,6 +28,8 @@ class ScoreView(arcade.View):
             )
             * (30 / GameManager.instance.time)
         )
+        # Clamp the rating between 1 and 5
+        self.rating = max(min(self.rating, 5), 1)
 
         for _ in range(self.rating):
             self.sprite_lst.append(
