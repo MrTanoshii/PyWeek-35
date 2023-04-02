@@ -11,13 +11,12 @@ class StoryManager:
     def __init__(self):
         self.story = [
             "Press `Space` to continue the story.",
-            "[PLAYER], it is another splendid Mewoment with you here. I hope we can do well together on this mission!",
-            "I am Agent Purupuru Queen.",
+            "Greetings, it is another splendid Meowoment with you here. I hope you can guide me through this mission!",
             "Some embawassing videos meowight have found their way onto the metabook servers.",
             "Just like with all good 'treasure', the videos are stored across the rooms of Metaman HQ.",
             "And if things weren't tense enough we have guards patrolling during our little midnight stroll.",
-            "They're only human however so turn of the lights with the `E` key at switches and this cat should be just fine.",
-            "Control me with the `WASD` Keys to move. The operation begins partner. We've got this!",
+            "They're only human, so turn off the lights with the `E` key at switches and we'll be just fine.",
+            "Control me with the `WASD` or arrow keys. The operation begins.",
         ]
         self.current_story_index = -1
         self.special_story = {
@@ -51,7 +50,7 @@ class StoryManager:
             },
             "safe_0": {
                 "played": False,
-                "story": "An old floppy disc labelled 'Doors 95'. It's just an animation of 100 doors. Modern Art is weird partner...",
+                "story": "An old floppy disc labelled 'Windows 95 Install Disk #7 / 213'.",
             },
             "safe_1": {
                 "played": False,
@@ -63,11 +62,11 @@ class StoryManager:
             },
             "safe_3": {
                 "played": False,
-                "story": "Oh god it's a memory stick with NFT's on it. I'll make sure we properly dispose of this on the way home.",
+                "story": "Oh god it's a memory stick with 62 bitcoin on it. That's about $12 in the bank.",
             },
             "safe_4": {
                 "played": False,
-                "story": "Hard Drive with all my videos from OnlyCats. Thank the cats above I got this one back.",
+                "story": "Hard Drive with all my embarassing videos. Wonder if that's everything.",
             },
             "safe_5": {
                 "played": False,
