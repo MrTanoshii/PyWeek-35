@@ -13,7 +13,9 @@ class Safe(Interactable):
     index_count = 1
     safe_list = []
 
-    def __init__(self, name: str = "", description: str = "", *args, **kwargs):
+    def __init__(
+        self, index: int = None, name: str = "", description: str = "", *args, **kwargs
+    ):
         """
         Constructor.
 
@@ -31,8 +33,10 @@ class Safe(Interactable):
         self.game_manager = GameManager.instance
         self.player_collides = False
         self.interaction_time = None
+        self.index = index
 
         super().__init__(name, description, self, *args, **kwargs)
+        self.scale = 0.1
 
     def setup(self):
         """Setup."""
@@ -60,23 +64,23 @@ class Safe(Interactable):
         """
         # First attempt
         if self.is_completed == None:
-            MiniGame(SafeMini(self))
+            MiniGame(SafeMini(self, self.index))
 
         # Lose but can continue
         elif not self.is_completed and self.game_manager.time >= self.interaction_time:
             print("You lost, but can continue")
-            MiniGame(SafeMini(self))
-        
+            MiniGame(SafeMini(self, self.index))
+
         # Win
         elif self.is_completed:
             print("You already won")
-            
-        # TODO: Remove the sprite and add to inventory list 
+
+        # TODO: Remove the sprite and add to inventory list
         else:
             print(self.game_manager.time, self.interaction_time)
             # print("WIN")
-    
-    def on_update(self, delta_time: float = 1/60):
+
+    def on_update(self, delta_time: float = 1 / 60):
         """Update the safe."""
         player = self.game_manager.player
 
@@ -87,8 +91,8 @@ class Safe(Interactable):
             self.player_collides = False
 
     def on_key_release(self, key, modifiers):
-            """Handle key release events."""
-            if key == arcade.key.E:
-                if self.player_collides:
-                    # print("collided with safe!")
-                    self.interact()
+        """Handle key release events."""
+        if key == arcade.key.E:
+            if self.player_collides:
+                # print("collided with safe!")
+                self.interact()
