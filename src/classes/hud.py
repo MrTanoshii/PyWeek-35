@@ -91,7 +91,7 @@ class HUD:
             if index in GameManager.instance.player_safes:
                 safe.color = (255, 255, 255)
             else:
-                safe.color = (255, 255, 5)
+                safe.color = (5, 5, 5)
 
     def on_key_release(self, key, modifiers):
         """Handle key release events."""
