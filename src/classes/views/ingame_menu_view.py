@@ -53,7 +53,7 @@ class IngameMenuView(arcade.View):
         # Exit the game
         @quit_button.event("on_click")
         def on_click_quit(event):
-            print("Quit button clicked: ", event)
+            # print("Quit button clicked: ", event)
             arcade.exit()
 
         # Create a widget to hold the v_box widget, that will center the buttons

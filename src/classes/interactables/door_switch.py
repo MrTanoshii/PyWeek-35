@@ -69,9 +69,9 @@ class DoorSwitch(Interactable):
     def open_door(self):
         """Open the door."""
         self.is_open = True
-        print(f"{self.name} is open.")
+        # print(f"{self.name} is open.")
 
     def close_door(self):
         """Close the door."""
         self.is_open = False
-        print(f"{self.name} is closed.")
+        # print(f"{self.name} is closed.")

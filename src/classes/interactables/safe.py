@@ -68,16 +68,16 @@ class Safe(Interactable):
 
         # Lose but can continue
         elif not self.is_completed and self.game_manager.time >= self.interaction_time:
-            print("You lost, but can continue")
+            # print("You lost, but can continue")
             MiniGame(SafeMini(self, self.index))
 
         # Win
-        elif self.is_completed:
-            print("You already won")
+        # elif self.is_completed:
+            # print("You already won")
 
         # TODO: Remove the sprite and add to inventory list
-        else:
-            print(self.game_manager.time, self.interaction_time)
+        # else:
+            # print(self.game_manager.time, self.interaction_time)
             # print("WIN")
 
     def on_update(self, delta_time: float = 1 / 60):
