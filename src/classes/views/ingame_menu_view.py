@@ -39,6 +39,7 @@ class IngameMenuView(arcade.View):
         # Return to game
         @resume_button.event("on_click")
         def on_click_resume(event):
+            self.manager.disable()
             self.window.show_view(game_view)
 
         @main_menu_button.event("on_click")
@@ -64,6 +65,7 @@ class IngameMenuView(arcade.View):
 
     def on_show_view(self):
         """Called when switching to this view"""
+        self.manager.enable()
         arcade.set_background_color(C.BACKGROUND_COLOR)
 
     def on_draw(self):
