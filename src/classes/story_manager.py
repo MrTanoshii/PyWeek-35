@@ -10,10 +10,9 @@ class StoryManager:
 
     def __init__(self):
         self.story = [
-            "Press `Space` to continue the story.",
-            "Greetings, it is another splendid Meowoment with you here. I hope you can guide me through this mission!",
+            "Greetings Human, I need you to guide me through this mission!. Press `Space` to continue.",
             "Some embawassing videos meowight have found their way onto the metabook servers.",
-            "Just like with all good 'treasure', the videos are stored across the rooms of Metaman HQ.",
+            "The videos are stored somewhere in Face Platforms, Inc's HQ. We need to get them back.",
             "And if things weren't tense enough we have guards patrolling during our little midnight stroll.",
             "They're only human, so turn off the lights with the `E` key at switches and we'll be just fine.",
             "Control me with the `WASD` or arrow keys. The operation begins.",
@@ -65,11 +64,11 @@ class StoryManager:
                 "story": "Oh god it's a memory stick with 62 bitcoin on it. That's about $12 in the bank.",
             },
             "safe_4": {
-                "played": False,
-                "story": "Hard Drive with all my embarassing videos. Wonder if that's everything.",
+                "played": False,   # The Safe we are looking for on level 5
+                "story": "Hard Drive with all my embarrassing videos. I'm so glad you found it!. Now find your way out.",
             },
             "safe_5": {
-                "played": False,
+                "played": False,  # "empty" safe on level 5
                 "story": "Oh, it was just a broken CD. DISAPPOINTED!!! Oh well, there should be another safe somewhere in this room. Keep looking...",
             },
         }

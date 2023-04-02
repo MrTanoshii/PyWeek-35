@@ -34,7 +34,7 @@ class MainMenuView(arcade.View):
 
             self.levels_box1.add(level_button.with_space_around(0, 50, 125, 50))
 
-            self.levels_label_box1.add(level_label.with_space_around(0, 150, 400, 150))
+            self.levels_label_box1.add(level_label.with_space_around(0, 120, 350, 120))
 
         for level in range(4, 6):
             level_button = Preview(name=f"level_{level}", label=f"Level {level}")
@@ -44,7 +44,7 @@ class MainMenuView(arcade.View):
 
             self.levels_box2.add(level_button.with_space_around(425, 50, 0, 50))
 
-            self.levels_label_box2.add(level_label.with_space_around(150, 150, 0, 150))
+            self.levels_label_box2.add(level_label.with_space_around(200, 120, 0, 120))
 
         self.manager.add(self.levels_box1.center_on_screen())
         self.manager.add(self.levels_box2.center_on_screen())
