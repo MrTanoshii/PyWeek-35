@@ -9,9 +9,10 @@ from src.constants import CONSTANTS as C
 class ScoreView(arcade.View):
     STAR_SIZE = 0.085
 
-    def __init__(self, game_view, window):
+    def __init__(self, game_view, window, level):
         """Base class for the 'score' view."""
         super().__init__()
+        self.level = level
         self.window = window
         self.game_view = game_view
         self.sprite_lst = arcade.SpriteList()
@@ -85,4 +86,4 @@ class ScoreView(arcade.View):
         else:
             Guard.roster = None
             self.window.setup(stop_outro=True)
-            self.window.start_level(1)
+            self.window.start_level(self.level)
