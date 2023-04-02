@@ -115,6 +115,7 @@ class GameView(arcade.View):
                 - safe.size.height / 2
             ) * C.WORLD_SCALE
             self.game_manager.safes.append(safe_obj)
+        ServerLight.servers.clear()
         self.game_manager.total_safes_in_level = len(self.game_manager.safes)
 
         for server in self.world.servers.tiled_objects:
