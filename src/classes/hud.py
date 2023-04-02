@@ -67,7 +67,7 @@ class HUD:
                 C.SCREEN_WIDTH // 2,
                 C.SCREEN_HEIGHT * 0.1 // 1,
                 arcade.color.WHITE,
-                font_size=30,
+                font_size=26,
                 multiline=True,
                 width=C.SCREEN_WIDTH * 0.8,
                 anchor_x="center",
