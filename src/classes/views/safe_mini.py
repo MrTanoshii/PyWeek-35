@@ -71,6 +71,8 @@ class SafeMini(arcade.View):
     # If correct, go back to game view
     # TODO: Add a way when won, player cant play minigame again
     def on_key_release(self, _symbol: int, _modifiers: int):
+        if self.key > 500:  # Prevent integer overflow when pressing special keys
+            return
         if self.is_not_full and chr(self.key).isnumeric():
             self.input += chr(self.key)
             self.is_not_full = not len(self.input) == 5
