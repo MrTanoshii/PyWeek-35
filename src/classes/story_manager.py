@@ -15,32 +15,55 @@ class StoryManager:
             "The datacenter is located in the basement of the building.",
             "You have to get there undetected.",
             "Good luck, Agent Whiskers.",
-
             "You need to shut down the lights, so the guards won't see you.",
             "You can do that by pressing the E.",
-
             "You can also use the E to open the safes.",
             "You can use the WASD keys to move.",
-            "Okay then, good luck, Agent Whiskers."
+            "Okay then, good luck, Agent Whiskers.",
         ]
         self.current_story_index = -1
         self.special_story = {
-            "lights_tutorial": {"played": False,
-                                "story": "You need to shut down the lights, so the guards won't see you. You can do that by pressing the E."
-                                },
-            "level_2": {"played": False,
-                                "story": "Great job Agent Whiskers. You have successfully passed the first level. But there is still more to do."
-                                },
-            "level_3": {"played": False,
-                                "story": "Great job Agent Whiskers. You have successfully passed the second level. But there is still more to do."
-                                },
-            "level_4": {"played": False,
-                                "story": "Great job Agent Whiskers. You have successfully passed the third level. But there is still more to do."
-                                },
-            "safes_tutorial": {"played": False, "story": "You can also use the E to open the safes. You can use the WASD keys to move. Okay then, good luck, Agent Whiskers."}
-
+            "lights_tutorial": {
+                "played": False,
+                "story": "You need to shut down the lights, so the guards won't see you. You can do that by pressing the E.",
+            },
+            "level_2": {
+                "played": False,
+                "story": "Great job Agent Whiskers. You have successfully passed the first level. But there is still more to do.",
+            },
+            "level_3": {
+                "played": False,
+                "story": "Great job Agent Whiskers. You have successfully passed the second level. But there is still more to do.",
+            },
+            "level_4": {
+                "played": False,
+                "story": "Great job Agent Whiskers. You have successfully passed the third level. But there is still more to do.",
+            },
+            "safes_tutorial": {
+                "played": False,
+                "story": "You can also use the E to open the safes. You can use the WASD keys to move. Okay then, good luck, Agent Whiskers.",
+            },
+            "safe_0": {
+                "played": False,
+                "story": 'You found old floppy diskette labeled "Windows 95 - 7/24", Now find exit to the next room.',
+            },
+            "safe_1": {
+                "played": False,
+                "story": "You found a vinyl record containing an unreleased album from a Michael Jordan. Go to next level.",
+            },
+            "safe_2": {
+                "played": False,
+                "story": "You found an SD card containing Hunter Biden's Laptop backup. Keep searching",
+            },
+            "safe_3": {
+                "played": False,
+                "story": "You found a memory stick containing a hundreds of Bitcoins. You’re getting closer, keep looking",
+            },
+            "safe_4": {
+                "played": False,
+                "story": "You found Hard Drive with your embarrassing cat video. Now find the exit from the building",
+            },
         }
-        print("story manager initialized")
 
     def next_story(self):
         if self.current_story_index + 1 >= len(self.story):
