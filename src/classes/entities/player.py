@@ -176,9 +176,7 @@ class Player(arcade.Sprite):
                     )                    
                     
                     if self.player_laser.collides_with_list(self.game_manager.walls):
-                        print('blocked by wall')
                         return False
-                    print('inlight')
                     return True
         return False
 
