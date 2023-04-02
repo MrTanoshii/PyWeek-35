@@ -224,10 +224,12 @@ class GameView(arcade.View):
             Guard.end_chase()
 
         # Exit level if safe is open
-        if self.game_manager.safes[0].is_completed:
             if arcade.check_for_collision(self.exit, self.player):
-                self.game_manager.level_completed = True
-                self.game_manager.game_over = True
+                if self.game_manager.safes[0].is_completed:
+                    self.game_manager.level_completed = True
+                    self.game_manager.game_over = True
+                else:
+                    self.hud.set_story_line("HOLD UP Kitty, You need to open the Safe First!")
 
     def on_mouse_press(self, _x, _y, _button, _modifiers):
         """Handle mouse press events."""
@@ -247,7 +249,6 @@ class GameView(arcade.View):
         for safe in self.game_manager.safes:
             safe.on_key_release(key, modifiers)
 
-        self.hud.on_key_release(key, modifiers)
         self.hud.on_key_release(key, modifiers)
 
     def on_resize(self, width: int, height: int):

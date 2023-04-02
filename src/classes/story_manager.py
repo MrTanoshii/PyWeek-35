@@ -76,7 +76,6 @@ class StoryManager:
 
     def next_story(self):
         if self.current_story_index + 1 >= len(self.story):
-            # print("no more story")
             return None
         self.current_story_index += 1
         return self.story[self.current_story_index]
