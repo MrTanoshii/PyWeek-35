@@ -29,12 +29,12 @@ class MainMenuView(arcade.View):
                 name = "tutorial"
             else:
                 name = "example"
-            level_button = Preview(name=f"{name}.tilemap", label=f"Level {level + 1}").with_space_around(0, 50, 0, 50)
+            level_button = Preview(name=f"{name}.tilemap", label=f"Level {level + 1}")
             level_label = arcade.gui.UILabel(text=f"Level {level + 1}", font_size=24, color=arcade.color.WHITE)
 
             level_button.event("on_click")(self.create_on_click(level))
 
-            self.levels_box.add(level_button)
+            self.levels_box.add(level_button.with_space_around(0, 50, 0, 50))
 
             self.levels_label_box.add(level_label.with_space_around(0, 150, 330, 150))
 
