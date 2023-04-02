@@ -40,24 +40,24 @@ class HUD:
     def draw(self):
         """Draw the HUD"""
         self.camera.use()
-        arcade.draw_rectangle_filled(
-            C.SCREEN_WIDTH / 2,
-            C.SCREEN_HEIGHT - 30,
-            C.SCREEN_WIDTH // 4,
-            60,
-            (0, 0, 0, 200),
-        )
+        # arcade.draw_rectangle_filled(
+        #     C.SCREEN_WIDTH / 2,
+        #     C.SCREEN_HEIGHT - 30,
+        #     C.SCREEN_WIDTH // 4,
+        #     60,
+        #     (0, 0, 0, 200),
+        # )
 
-        arcade.draw_text(
-            "Files retrieved: 0/0",
-            C.SCREEN_WIDTH // 2,
-            C.SCREEN_HEIGHT - 30,
-            arcade.color.WHITE,
-            font_size=20,
-            font_name="Minecraft",
-            anchor_x="center",
-            anchor_y="center",
-        )
+        # arcade.draw_text(
+        #     "Files retrieved: 0/0",
+        #     C.SCREEN_WIDTH // 2,
+        #     C.SCREEN_HEIGHT - 30,
+        #     arcade.color.WHITE,
+        #     font_size=20,
+        #     font_name="Minecraft",
+        #     anchor_x="center",
+        #     anchor_y="center",
+        # )
 
         if self.story_line:
             # Draw the text
