@@ -90,8 +90,11 @@ class Player(arcade.Sprite):
         self.animation_counter = 0
         self.current_texture_index = 0
         self.scale = 0.5 * C.WORLD_SCALE
+        self.player_laser = arcade.SpriteSolidColor(1000, 1000, (0,0,0,0))
+        
 
     def on_update(self, delta_time):
+        
         move_x = ((self.keyboard["D"] | self.keyboard["RIGHT"]) * C.MOVEMENT_SPEED) - (
             (self.keyboard["A"] | self.keyboard["LEFT"]) * C.MOVEMENT_SPEED
         )
@@ -160,5 +163,37 @@ class Player(arcade.Sprite):
                 light_x = light.center_x
                 light_y = light.center_y
                 if light.light_radius > math.sqrt((self.center_x - light_x) ** 2 + (self.center_y - light_y) ** 2):
+                    self.player_laser.center_x = light.center_x
+                    self.player_laser.center_y = light.center_y
+                    self.player_laser.set_hit_box([[
+                        0,0
+                    ], [
+                        self.get_distance_from_player(light)
+                        * math.sin(self.get_radians_from_player(light)),
+                        self.get_distance_from_player(light)
+                        * math.cos(self.get_radians_from_player(light)),
+                    ]]
+                    )                    
+                    
+                    if self.player_laser.collides_with_list(self.game_manager.walls):
+                        return False
                     return True
         return False
+
+    def get_radians_from_player(self, light):
+            """Get the distance between the player and the guard"""
+            return arcade.get_angle_radians(
+                light.center_x,
+                light.center_y,
+                self.center_x,
+                self.center_y,
+            )
+
+    def get_distance_from_player(self, light):
+            """Get the distance between the player and the guard"""
+            return math.dist(
+                (light.center_x,
+                light.center_y),
+                (self.center_x,
+                self.center_y)
+            )
