@@ -1,6 +1,8 @@
 import arcade
 import math
 
+from src.classes.story_manager import StoryManager
+
 
 class GameManager(object):
     """Base class for the game manager.
@@ -13,7 +15,7 @@ class GameManager(object):
             cls.instance = super(GameManager, cls).__new__(cls)  # :=
         return cls.instance  # :=
 
-    def __init__(self, game_window=None):
+    def __init__(self, story_manager, game_window=None):
         """
         Constructor.
 
@@ -25,6 +27,7 @@ class GameManager(object):
         self.player = None
         self.collision = None
         self.score = 0
+        self.story_manager = story_manager
 
         self.guards = arcade.SpriteList()
         self.walls: arcade.SpriteList = arcade.SpriteList()
@@ -46,6 +49,7 @@ class GameManager(object):
         self.music_manager = None
         self.player_safes = []
         self.is_caught_by_guard = False
+        self.hud = None
 
     def set_player(self, player):
         self.player = player

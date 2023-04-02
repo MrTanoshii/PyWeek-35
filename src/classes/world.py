@@ -133,6 +133,9 @@ class World:
         self, start: tuple[int, int], destination: tuple[int, int]
     ) -> list[tuple[int, int]] | None:
         """
+        A* algorithm realization
+        Uses manhattan distance as heuristics
+
         :param start: tuple of absolute coordinates of start position
         :param destination: tuple of absolute coordinates of destination position
         :return: list of absolute coordinates or None if path not found

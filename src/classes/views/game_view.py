@@ -25,7 +25,7 @@ class GameView(arcade.View):
         self.level = level
         self.music_manager = None
         self.scene = None
-        self.world = World.load("example.tilemap.json")
+        self.world = None
         self.guard = None
         self.hud = None
         self.light = LightManager()
@@ -40,6 +40,10 @@ class GameView(arcade.View):
 
     def setup(self, music_manager: MusicManager = None):
         """Set up the view."""
+        if self.level == 0:
+            self.world = World.load("tutorial.tilemap.json")
+        else:
+            self.world = World.load("example.tilemap.json")
         self.scene = arcade.Scene.from_tilemap(self.world.map)
 
         # Create and append scaled Wall objects from self.world.walls to self.game_manager.walls
@@ -131,12 +135,20 @@ class GameView(arcade.View):
         self.player = Player()
         self.player.scale = 0.3 * C.WORLD_SCALE
         coords = self.game_manager.world.player_spawn[0].coordinates
-        self.player.scale = 0.2 * C.WORLD_SCALE
-        self.player.center_x = coords.x * C.WORLD_SCALE
-        self.player.center_y = (C.SCREEN_HEIGHT - coords.y - 96) * C.WORLD_SCALE
+        self.player.scale = .2 * C.WORLD_SCALE
+        self.player.center_x = coords.x * C.WORLD_SCALE + self.player.width / 2
+        self.player.center_y = (self.world.height * self.world.tile_size - coords.y) * C.WORLD_SCALE - self.player.height / 2
         self.game_manager.set_player(self.player)
         self.hud = HUD()
+        self.game_manager.hud = self.hud
         self.game_manager.music_manager = music_manager
+
+        if self.level == 2:
+            self.hud.set_story_line(self.game_manager.story_manager.play_story_if_not_played("level_2"))
+        elif self.level == 3:
+            self.hud.set_story_line(self.game_manager.story_manager.play_story_if_not_played("level_3"))
+        elif self.level == 4:
+            self.hud.set_story_line(self.game_manager.story_manager.play_story_if_not_played("level_4"))
 
     def on_show_view(self):
         """Called when switching to this view."""
@@ -246,6 +258,8 @@ class GameView(arcade.View):
 
         for safe in self.game_manager.safes:
             safe.on_key_release(key, modifiers)
+
+        self.hud.on_key_release(key, modifiers)
 
     def on_resize(self, width: int, height: int):
         self.light.on_resize(width, height)

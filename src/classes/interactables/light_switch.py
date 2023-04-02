@@ -89,12 +89,8 @@ class LightSwitch(Interactable):
     def turn_off(self):
         """Turn off the light switch."""
         for light in self.lights:
-            # print(light, light.enabled)
             if light.enabled:
-                # print("turning off")
                 light.toggle()
-                # print(light.enabled)
-        # print(f"{self.name} turned off.")
 
     def on_update(self, delta_time: float = 1 / 60):
         """Update the light switch."""
@@ -102,6 +98,10 @@ class LightSwitch(Interactable):
 
         # Check collision
         if arcade.check_for_collision(self, player):
+            text = GameManager.instance.story_manager.play_story_if_not_played("lights_tutorial")
+            if text:
+                self.game_manager.hud.set_story_line(text)
+
             self.player_collides = True
         else:
             self.player_collides = False
