@@ -175,9 +175,8 @@ class Player(arcade.Sprite):
                     ]]
                     )                    
                     
-                    if self.player_laser.collides_with_list(self.game_manager.walls):
-                        return False
-                    return True
+                    if not self.player_laser.collides_with_list(self.game_manager.walls):
+                        return True
         return False
 
     def get_radians_from_player(self, light):
