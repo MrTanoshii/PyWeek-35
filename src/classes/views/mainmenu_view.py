@@ -27,11 +27,7 @@ class MainMenuView(arcade.View):
         )
 
         for level in range(1, 4):
-            if level == 1:
-                name = "tutorial"
-            else:
-                name = "example"
-            level_button = Preview(name=f"{name}.tilemap", label=f"Level {level}")
+            level_button = Preview(name=f"level_{level}", label=f"Level {level}")
             level_label = arcade.gui.UILabel(text=f"Level {level}", font_size=24, color=arcade.color.WHITE)
 
             level_button.event("on_click")(self.create_on_click(level))
@@ -41,8 +37,7 @@ class MainMenuView(arcade.View):
             self.levels_label_box1.add(level_label.with_space_around(0, 150, 400, 150))
 
         for level in range(4, 6):
-            name = "example"
-            level_button = Preview(name=f"{name}.tilemap", label=f"Level {level}")
+            level_button = Preview(name=f"level_{level}", label=f"Level {level}")
             level_label = arcade.gui.UILabel(text=f"Level {level}", font_size=24, color=arcade.color.WHITE)
 
             level_button.event("on_click")(self.create_on_click(level))

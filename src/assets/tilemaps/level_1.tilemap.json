@@ -240,6 +240,17 @@
                  "width":32,
                  "x":32,
                  "y":352
+                }, 
+                {
+                 "class":"wall",
+                 "height":128,
+                 "id":62,
+                 "name":"",
+                 "rotation":0,
+                 "visible":true,
+                 "width":512,
+                 "x":0,
+                 "y":160
                 }],
          "offsetx":0.25,
          "offsety":1,
@@ -663,7 +674,7 @@
          "y":0
         }],
  "nextlayerid":9,
- "nextobjectid":62,
+ "nextobjectid":63,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.9.1",
