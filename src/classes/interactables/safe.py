@@ -28,7 +28,7 @@ class Safe(Interactable):
             name = f"{type(self).__name__} #{Safe.index_count}"
             Safe.index_count += 1
 
-        self.safe_texture = load_texture("./src/assets/art/safe/usb.png")
+        self.safe_texture = load_texture("./src/assets/art/safe/safe.png")
         self.is_completed = None
         self.game_manager = GameManager.instance
         self.player_collides = False
@@ -36,7 +36,7 @@ class Safe(Interactable):
         self.index = index
 
         super().__init__(name, description, self, *args, **kwargs)
-        self.scale = 0.1
+        self.scale = 1.0
 
     def setup(self):
         """Setup."""
