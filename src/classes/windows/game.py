@@ -29,7 +29,11 @@ class GameWindow(arcade.Window):
 
     def setup(self, stop_outro: bool = False, level: int = 0):
         # Set up the game manager
-        game_manager = GameManager(self.story_manager, self)
+        game_manager = GameManager(
+            self.story_manager,
+            self,
+            set() if self.game_manager is None else self.game_manager.player_safes,
+        )
         self.game_manager = game_manager
         self.game_manager.keyboard = self.keyboard
         game_manager.music_manager = self.music_manager

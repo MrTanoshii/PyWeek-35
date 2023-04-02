@@ -89,7 +89,7 @@ class SafeMini(arcade.View):
                             GameManager.instance.score += 1
                             self.is_ended = True
                             self.parent.is_completed = True
-                            GameManager.instance.player_safes.append(self.safe_index)
+                            GameManager.instance.player_safes.add(self.safe_index)
                             text = GameManager.instance.story_manager.play_story(
                                 f"safe_{self.safe_index}"
                             )
