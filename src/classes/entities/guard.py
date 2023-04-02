@@ -56,10 +56,9 @@ def get_direction_from_angle(angle):
 
 
 class Guard(arcade.Sprite):
-    
     roster = None
     # how long after the chase to wait to play the normal music (keeps the glitching to a minimum)
-    cooldown = .2
+    cooldown = 0.2
     timer = 0
     delta = 0
 
@@ -80,12 +79,12 @@ class Guard(arcade.Sprite):
     @classmethod
     def start_chase(cls):
         cls.timer = 0
-        if MusicManager.instance.get_current_key() != 'chase':
+        if MusicManager.instance.get_current_key() != "chase":
             MusicManager.instance.play_chase()
 
     @classmethod
     def end_chase(cls):
-        if MusicManager.instance.get_current_key() != 'main':
+        if MusicManager.instance.get_current_key() != "main":
             cls.timer += cls.delta
             if cls.timer > cls.cooldown:
                 MusicManager.instance.end_chase()
@@ -153,7 +152,9 @@ class Guard(arcade.Sprite):
 
         # Load animation textures
         self.texture_list = [
-            arcade.load_texture(f"{self.animation_path}/{texture}", hit_box_algorithm="Simple")
+            arcade.load_texture(
+                f"{self.animation_path}/{texture}", hit_box_algorithm="Simple"
+            )
             for texture in os.listdir(self.animation_path)
         ]
 
@@ -180,7 +181,11 @@ class Guard(arcade.Sprite):
         # Configure AI
         self.is_patrolling = True
         self.view_distance = C.GUARD_VIEW_DISTANCE
-        self.fov = arcade.SpriteSolidColor(self.view_distance * 2 * C.LIGHT_VIEW_MULTIPLIER, self.view_distance * 2 * C.LIGHT_VIEW_MULTIPLIER, (0, 0, 0, 128))
+        self.fov = arcade.SpriteSolidColor(
+            self.view_distance * 2 * C.LIGHT_VIEW_MULTIPLIER,
+            self.view_distance * 2 * C.LIGHT_VIEW_MULTIPLIER,
+            (0, 0, 0, 128),
+        )
 
         self.game_manager.guards.append(self)
         self.path = []
@@ -239,42 +244,52 @@ class Guard(arcade.Sprite):
 
         # Determine if the guard sees the player
         if self.fov.collides_with_sprite(self.game_manager.player):
-            self.fov.set_hit_box([
-                [ self.killing_distance * math.sin(self.get_radians_from_player()),
-                    self.killing_distance * math.cos(self.get_radians_from_player()),],
+            self.fov.set_hit_box(
                 [
-                    self.get_distance_from_player() * math.sin(self.get_radians_from_player()),
-                    self.get_distance_from_player() * math.cos(self.get_radians_from_player()),
-                ],])
+                    [
+                        self.killing_distance
+                        * math.sin(self.get_radians_from_player()),
+                        self.killing_distance
+                        * math.cos(self.get_radians_from_player()),
+                    ],
+                    [
+                        self.get_distance_from_player()
+                        * math.sin(self.get_radians_from_player()),
+                        self.get_distance_from_player()
+                        * math.cos(self.get_radians_from_player()),
+                    ],
+                ]
+            )
             stopped = False
-            
+
             if self.fov.collides_with_list(self.game_manager.walls):
                 stopped = True
-            
-            if self.get_distance_from_player() < self.killing_distance:
-                    # Open Main Menu
-                    self.game_manager.game_over = True
-                    MusicManager.instance.end_chase()
-                    # Load Score Screen
 
-                # if the guard is not colliding with a wall
+            if self.get_distance_from_player() < self.killing_distance:
+                # Open Main Menu
+                self.game_manager.game_over = True
+                MusicManager.instance.end_chase()
+                self.game_manager.is_caught_by_guard = True
+                # Load Score Screen
+
+            # if the guard is not colliding with a wall
             if not self.is_colliding and not stopped:
-                    # set the guard to chase the player
-                    self.is_chasing = True
-                    self.is_patrolling = False
-                    self.chase_target = self.game_manager.player
-                    self.chase_target_last_pos = (
-                        self.chase_target.center_x,
-                        self.chase_target.center_y,
-                    )
+                # set the guard to chase the player
+                self.is_chasing = True
+                self.is_patrolling = False
+                self.chase_target = self.game_manager.player
+                self.chase_target_last_pos = (
+                    self.chase_target.center_x,
+                    self.chase_target.center_y,
+                )
 
             # if the guard is colliding with a wall
             else:
-                    # set the guard to patrol
-                    self.is_chasing = False
-                    self.is_patrolling = True
-                    self.chase_target = None
-                    self.chase_target_last_pos = None
+                # set the guard to patrol
+                self.is_chasing = False
+                self.is_patrolling = True
+                self.chase_target = None
+                self.chase_target_last_pos = None
         else:
             self.is_chasing = False
             self.is_patrolling = True
@@ -291,7 +306,9 @@ class Guard(arcade.Sprite):
 
     def update_animation(self):
         """Update the animated texture"""
-        self.texture = self.next_item(self.animation_map[self.direction], self.current_texture_index)
+        self.texture = self.next_item(
+            self.animation_map[self.direction], self.current_texture_index
+        )
 
     def next_item(self, lst: list[arcade.Texture], idx: int):
         """Get the next item in a looping list"""
@@ -347,18 +364,32 @@ class Guard(arcade.Sprite):
 
         self.direction = get_direction_from_angle(self.angle)
 
-        self.path = self.game_manager.world.pathfinding((self.center_x, self.center_y),
-                                                        (self.chase_target.center_x, self.chase_target.center_y))
+        self.path = self.game_manager.world.pathfinding(
+            (self.center_x, self.center_y),
+            (self.chase_target.center_x, self.chase_target.center_y),
+        )
         # print(self.path)
         if self.path:
             if len(self.path) > 1:
-                travel = self.path[1][0] - self.center_x, self.path[1][1] - self.center_y
-                travel = travel[0] / (travel[0] ** 2 + travel[1] ** 2) ** 0.5, travel[1] / (travel[0] ** 2 + travel[1] ** 2) ** 0.5,
+                travel = (
+                    self.path[1][0] - self.center_x,
+                    self.path[1][1] - self.center_y,
+                )
+                travel = (
+                    travel[0] / (travel[0] ** 2 + travel[1] ** 2) ** 0.5,
+                    travel[1] / (travel[0] ** 2 + travel[1] ** 2) ** 0.5,
+                )
                 self.center_x += travel[0] * self.speed * 3
                 self.center_y += travel[1] * self.speed * 3
             else:
-                travel = self.path[0][0] - self.center_x, self.path[0][1] - self.center_y
-                travel = travel[0] / (travel[0] ** 2 + travel[1] ** 2) ** 0.5, travel[1] / (travel[0] ** 2 + travel[1] ** 2) ** 0.5,
+                travel = (
+                    self.path[0][0] - self.center_x,
+                    self.path[0][1] - self.center_y,
+                )
+                travel = (
+                    travel[0] / (travel[0] ** 2 + travel[1] ** 2) ** 0.5,
+                    travel[1] / (travel[0] ** 2 + travel[1] ** 2) ** 0.5,
+                )
                 self.center_x += travel[0] * self.speed * 3
                 self.center_y += travel[1] * self.speed * 3
 
@@ -405,6 +436,7 @@ class Guard(arcade.Sprite):
             self.game_manager.player.center_x,
             self.game_manager.player.center_y,
         )
+
     def get_degrees_from_player(self):
         """Get the distance between the player and the guard"""
         return arcade.get_angle_degrees(
@@ -413,6 +445,7 @@ class Guard(arcade.Sprite):
             self.game_manager.player.center_x,
             self.game_manager.player.center_y,
         )
+
     def get_radians_from_player(self):
         """Get the distance between the player and the guard"""
         return arcade.get_angle_radians(
@@ -421,5 +454,3 @@ class Guard(arcade.Sprite):
             self.game_manager.player.center_x,
             self.game_manager.player.center_y,
         )
-    
-

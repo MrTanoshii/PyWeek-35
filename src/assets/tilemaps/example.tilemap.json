@@ -116,10 +116,16 @@
                  "height":32,
                  "id":114,
                  "name":"Safe 1",
+                 "properties":[
+                        {
+                         "name":"index",
+                         "type":"int",
+                         "value":0
+                        }],
                  "rotation":0,
                  "visible":true,
                  "width":32,
-                 "x":320,
+                 "x":256,
                  "y":192
                 }],
          "opacity":1,

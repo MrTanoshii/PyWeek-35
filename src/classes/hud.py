@@ -31,7 +31,7 @@ class HUD:
             )
             sprite.color = (5, 5, 5)
             self.inventory.append(sprite)
-        self.inventory[2].color = (255, 255, 255)
+        # self.inventory[2].color = (255, 255, 255)
 
         story = GameManager.instance.story_manager
         self.story_line = story.next_story()
@@ -86,6 +86,14 @@ class HUD:
 
         self.inventory.draw()
 
+
+    def on_update(self, delta_time: float):
+        for index, safe in enumerate(self.inventory):
+            if index in GameManager.instance.player_safes:
+                safe.color = (255, 255, 255)
+            else:
+                safe.color = (5, 5, 5)
+
     def on_key_release(self, key, modifiers):
         """Handle key release events."""
         if key == arcade.key.SPACE:
@@ -95,3 +103,4 @@ class HUD:
     def set_story_line(self, story_line):
         """Set story line immediately in game loop."""
         self.story_line = story_line
+
